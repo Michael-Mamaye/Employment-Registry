@@ -11,7 +11,7 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - .:/usr/src/app
+      - .:/src/app
     links:
       - mongodb
   mongodb:
@@ -30,7 +30,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - .:/usr/src/app
+      - .:/src/app
 
 volumes: 
   data:
