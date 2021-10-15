@@ -1,9 +1,15 @@
-import React from 'react';
+import Employees from './Components/Employees';
+import EmployeesToHeader from './Components/EmployeesToHeader';
+
 function App() {
   return (
-    <div className="App">
-      <div>hi Mike</div>
-    </div>
+      <div>
+          
+          <EmployeesToHeader/>
+          <Employees/>
+
+      </div>
+    
   );
 }
 
