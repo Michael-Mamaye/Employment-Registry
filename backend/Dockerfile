@@ -9,4 +9,3 @@ RUN chown -R node /src/app
 USER node
 CMD ["npm","start"]
 
-# ["node", "index.js"]

@@ -7,17 +7,17 @@ services:
       context: backend
       dockerfile: ./Dockerfile
     environment:
-      NODE_ENV: production
+      - MONGO_URI=mongodb://mongodb:27017/EmployeeInformation
     ports:
-      - 5000:5000
+      - "5000:5000"
     volumes:
-      - .:/src/app
-    links:
+      - .:/src/app/
+    depends_on:
       - mongodb
   mongodb:
     image: mongo:latest
     ports: 
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - data:/data/db
   frontend:
@@ -28,9 +28,9 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
-      - .:/src/app
+      - .:/src/app/
 
 volumes: 
   data:

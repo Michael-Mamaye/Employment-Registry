@@ -20,6 +20,6 @@ const employeeSchema=new mongoose.Schema({
 
 })
 
-const EmployeeModel=mongoose.model('EmployeeModel',employeeSchema)
+const Employees=mongoose.model('Employees',employeeSchema)
 
-export default EmployeeModel;
+export default Employees;
