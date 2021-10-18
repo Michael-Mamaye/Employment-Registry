@@ -5,7 +5,7 @@ export const getAllEmployees= async (req,res)=>{
     try{
         const employe=await Employees.find();
         res.status(200).json({
-            status:'successful',
+            status:200,
             data:employe
         })
     }
@@ -27,7 +27,6 @@ export const addNewEmployee= async (req,res)=>{
         else{
             const newEmployee=await Employees.create(req.body);
             res.status(200).json({
-                status:'successfully added',
                 data:newEmployee
             })
         }
@@ -44,7 +43,6 @@ export const updateEmployee= async (req,res)=>{
     try{
         const newEmployee = await Employees.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
         res.status(200).json({
-            status:'successfully updated',
             data:newEmployee
         })
     }
@@ -60,13 +58,13 @@ export const deleteEmployee=async (req,res)=>{
     try{
         await Employees.findByIdAndDelete(req.params.id)
         res.status(200).json({
-            status:'successfully Deleted',
+            status:200,
             
         })
     }
     catch(error)
     {
-       res.status(200).json({
+       res.status(400).json({
            status:"this user doesn't exist"
        })
     }

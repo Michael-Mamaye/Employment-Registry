@@ -1,9 +1,12 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Container, Span } from '../Styles/CompStyles'
 import { Thead,Tbody,Th,Td,Tr, Table } from '../Styles/TableStyles'
 import UpdateEmployee from './UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
+import {connect} from 'react-redux'
+import {deleteEmployees,getEmployees} from '../Actions'
+import EmployeePropType from './PropTypes/EmployeePropType'
 
 const tableHeader=[
     {id:"name",label:'Name'},
@@ -12,11 +15,17 @@ const tableHeader=[
     {id:"Salary",label:'Salary'},
     {id:"action",label:'Actions'}
 ]
-function Employees() {
+const  Employees:React.FC<EmployeePropType>=({state,getEmployees,deleteEmployees})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
+    
+    useEffect(()=>{
+        getEmployees();
+    },[getEmployees])
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
     }
+    console.log('this is the element',state)
+
     return (
         <Container>
             <Table>
@@ -56,4 +65,10 @@ function Employees() {
     )
 }
 
-export default Employees
+const mapStateToProps = (state: any) => {
+	return {
+		emp: state.emp,
+	};
+};
+
+export default connect(mapStateToProps, {getEmployees,deleteEmployees})(Employees);
