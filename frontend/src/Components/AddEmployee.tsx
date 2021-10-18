@@ -2,12 +2,13 @@ import type {FormEvent} from 'react'
 import React from "react";
 import { Dialog} from '../Styles/CompStyles'
 import { Form, Input, Label,CloseButton, SubmitButton, ErrorMessage} from '../Styles/FormStyle'
+import EmployeePropType from './PropTypes/EmployeePropType';
 
 interface TheHandleClick{
     handleClick:()=>void;
 }
 
-export default function AddEmployee({handleClick}:TheHandleClick) {
+export default function AddEmployee({handleClick}:TheHandleClick, {addEmployees}:EmployeePropType) {
     const [error,setError]=React.useState(String);
     const handlSubmit=(event:FormEvent<HTMLFormElement>)=>{
 
@@ -25,7 +26,13 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
             setError('All Fields Are Required')
         }
         else{
-            console.log(firstName.value, lastName.value, birthDate.value, gender.value, salary.value)
+            const values={
+                name:firstName.value.concat(" "+lastName.value),
+                birthDate:birthDate.value,
+                gender:gender.value,
+                salary:salary.value
+            }
+         addEmployees(values)  
         }
     }
 

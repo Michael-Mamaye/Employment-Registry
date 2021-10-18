@@ -1,6 +1,7 @@
 
 export interface getEmployeeActions{
     type:'GET_EMPLOYEES';
+    payload?:any
 }
 export interface addEmployeeActions{
     type:'ADD_EMPLOYEES';

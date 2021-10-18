@@ -24,8 +24,15 @@ interface TheHandleClick{
         {
             setError('All Fields Are Required')
         }
-        else{
-            console.log(firstName.value, lastName.value, birthDate.value, gender.value, salary.value)
+        else{ 
+            const values={
+                name:firstName.value.concat(" "+lastName.value),
+                birthDate:birthDate.value,
+                gender:gender.value,
+                salary:salary.value
+            }
+            console.log('this are the values to be added to db',values)
+            
         }
     }
 

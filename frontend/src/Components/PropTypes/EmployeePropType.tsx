@@ -12,7 +12,7 @@ interface EmployeePropType{
     getEmployees:getEmployeeActionCreator;
     deleteEmployees:deleteEmployeeActionCreator;
     updateEmployees?:updateEmployeeActionCreator;
-    addEmployees?:addEmployeeActionCreator;
+    addEmployees:addEmployeeActionCreator;
 }
 
 export default EmployeePropType;

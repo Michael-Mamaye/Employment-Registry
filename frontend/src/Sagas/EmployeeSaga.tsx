@@ -18,14 +18,15 @@ function* EmployeeSaga():Generator<StrictEffect>{
 function* getAllEmployees(){
     try{
         const res:AxiosResponse = yield call(axiosApi.get,'/')
-        console.log('this is the resposnse',res.data)
+        
         switch(res.status)
         {
             case 200:
                 const data:getEmployeeActions={
                     type:'GET_EMPLOYEES',
-                   
+                    payload:res.data
                 }
+                console.log('this is the resposnse',data)
                 put(data);
         }
     }
@@ -37,12 +38,13 @@ function* getAllEmployees(){
 }
 function* addEmployees({payload}:addEmployeeActions){
     try{
-        const res:AxiosResponse = yield call(axiosApi.post,'/',{
-            payload:payload
-        })
+        const res:AxiosResponse = yield call(axiosApi.post,'/',payload)
+        const resp:AxiosResponse=yield call(axiosApi.get,'/')
+        console.log('this is the data to be posted',resp.data)
         switch(res.status)
         {
             case 201:
+                console.log('this is the data to be added tooo to db',payload)
                 const data:addEmployeeActions={
                     type:'ADD_EMPLOYEES',
                     payload:res.data

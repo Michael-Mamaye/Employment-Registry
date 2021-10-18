@@ -5,7 +5,7 @@ import UpdateEmployee from './UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
-import {deleteEmployees,getEmployees} from '../Actions'
+import {deleteEmployees,getEmployees,addEmployees} from '../Actions'
 import EmployeePropType from './PropTypes/EmployeePropType'
 
 const tableHeader=[
@@ -15,7 +15,7 @@ const tableHeader=[
     {id:"Salary",label:'Salary'},
     {id:"action",label:'Actions'}
 ]
-const  Employees:React.FC<EmployeePropType>=({state,getEmployees,deleteEmployees})=> {
+const  Employees:React.FC<EmployeePropType>=({state,getEmployees,deleteEmployees,addEmployees})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     
     useEffect(()=>{
@@ -71,4 +71,4 @@ const mapStateToProps = (state: any) => {
 	};
 };
 
-export default connect(mapStateToProps, {getEmployees,deleteEmployees})(Employees);
+export default connect(mapStateToProps, {getEmployees,deleteEmployees,addEmployees})(Employees);

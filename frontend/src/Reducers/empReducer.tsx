@@ -1,11 +1,7 @@
 
 let initialState={
-    employees:[
-        {id:'1',name:'asdfsf'},
-        {id:'1',name:'asdfsf'},
-        {id:'1',name:'asdfsf'},
-    ],
-    length:1
+    employees:[],
+    
 
 }
 type Action={
@@ -23,9 +19,11 @@ const empReducer=(state:any=initialState,action:Action)=> {
                 employees:action.payload.data
             }
         case 'GET_EMPLOYEES':
-            console.log('hi miki i am here',state.employees)
+            console.log('hi miki i am here',action.payload)
             return {
-                ...state.employees
+                ...state,
+                employees:action.payload
+                
             }
         case 'DELETE_EMPLOYEES':
             return state
