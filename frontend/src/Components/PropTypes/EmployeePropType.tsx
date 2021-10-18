@@ -3,7 +3,7 @@ import {
     deleteEmployeeActionCreator,
     updateEmployeeActionCreator,
     addEmployeeActionCreator,
-} from '../../Constants/ActionCreatorTypes'
+} from '../../Types/ActionCreatorTypes'
 
 interface EmployeePropType{
     state?:{

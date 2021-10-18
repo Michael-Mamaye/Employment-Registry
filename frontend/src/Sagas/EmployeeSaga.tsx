@@ -1,9 +1,15 @@
 import { takeEvery, put, call, StrictEffect } from 'redux-saga/effects'
-import { ActionTypeConstants,
+import { 
+        gotEmployeeActions,
+        deletedEmployeeActions,
+        updatedEmployeeActions,
+        addedEmployeeActions,
+    
+    ActionTypeConstants,
     getEmployeeActions,
     deleteEmployeeActions,
     updateEmployeeActions,
-    addEmployeeActions } from '../Constants/ActionTypeConstants'
+    addEmployeeActions } from '../Types/ActionTypeConstants'
 import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
 //Watchers
@@ -22,11 +28,10 @@ function* getAllEmployees(){
         switch(res.status)
         {
             case 200:
-                const data:getEmployeeActions={
-                    type:'GET_EMPLOYEES',
-                    payload:res.data
+                const data:gotEmployeeActions={
+                    type:'GOT_EMPLOYEES',
+                    payload
                 }
-                console.log('this is the resposnse',data)
                 put(data);
         }
     }
@@ -45,9 +50,9 @@ function* addEmployees({payload}:addEmployeeActions){
         {
             case 201:
                 console.log('this is the data to be added tooo to db',payload)
-                const data:addEmployeeActions={
-                    type:'ADD_EMPLOYEES',
-                    payload:res.data
+                const data:addedEmployeeActions={
+                    type:'ADDED_EMPLOYEES',
+                    payload
                 }
                 put(data);
         }

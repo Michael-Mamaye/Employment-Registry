@@ -1,7 +1,8 @@
+import {ForEmployee} from './StoreTypes'
 
+//For Action Creator
 export interface getEmployeeActions{
     type:'GET_EMPLOYEES';
-    payload?:any
 }
 export interface addEmployeeActions{
     type:'ADD_EMPLOYEES';
@@ -15,6 +16,26 @@ export interface updateEmployeeActions{
     type:'UPDATE_EMPLOYEES';
     id:string;
     payload:any;
+}
+
+
+//For Reducer
+export interface gotEmployeeActions{
+    type:'GOT_EMPLOYEES';
+    payload:ForEmployee[]
+}
+export interface addedEmployeeActions{
+    type:'ADDED_EMPLOYEES';
+    payload:ForEmployee;
+}
+export interface deletedEmployeeActions{
+    type:'DELETED_EMPLOYEES';
+    id:string;
+}
+export interface updatedEmployeeActions{
+    type:'UPDATED_EMPLOYEES';
+    id:string;
+    payload:ForEmployee;
 }
 
 

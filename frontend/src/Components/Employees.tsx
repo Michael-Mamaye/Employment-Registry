@@ -21,9 +21,11 @@ const  Employees:React.FC<EmployeePropType>=({state,getEmployees,deleteEmployees
     useEffect(()=>{
         getEmployees();
     },[getEmployees])
+
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
     }
+    
     console.log('this is the element',state)
 
     return (
