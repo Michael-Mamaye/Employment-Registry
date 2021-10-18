@@ -27,7 +27,7 @@ export default function AddEmployee({handleClick}:TheHandleClick, {addEmployees}
         }
         else{
             const values={
-                name:firstName.value.concat(" "+lastName.value),
+                name:firstName.value.concat(" " + lastName.value),
                 birthDate:birthDate.value,
                 gender:gender.value,
                 salary:salary.value
