@@ -1,10 +1,21 @@
-export type ForEmployee={
-    status:any;
-    data:any;
+export interface Datum {
+    _id?: string;
+    name: string;
+    dateOfBirth: string;
+    gender: string;
+    salary: number;
+    __v?: number;
 }
 
+
+export type ForEmployee={
+    status:number;
+    data:Array<Object>;
+}
+
+
 interface storeTypes {
-	ForEmployees: ForEmployee[];
+	ForEmployees: ForEmployee;
 }
 
 export default storeTypes;

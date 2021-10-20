@@ -1,36 +1,41 @@
+import {gotEmployeeActions,
+    addedEmployeeActions,
+    updatedEmployeeActions,
+    deletedEmployeeActions
+} from '../Types/ActionTypeConstants'
+import {ForEmployee} from '../Types/StoreTypes'
 
-let initialState={
-    employees:[],
-    
 
-}
-type Action={
-    type:string;
-    id?:string;
-    payload?:any
-}
+type actions=
+        |gotEmployeeActions
+        |addedEmployeeActions
+        |updatedEmployeeActions
+        |deletedEmployeeActions
 
-const empReducer=(state:any=initialState,action:Action)=> {
+const intialState:ForEmployee[]=[]
+
+const empReducer=(state=intialState,action:actions)=> {
+    console.log('hi miki i am here',action)
     switch(action.type)
     {
-        case 'ADD_EMPLOYEES':
-            return {
-                ...state,
-                employees:action.payload.data
-            }
-        case 'GET_EMPLOYEES':
-            console.log('hi miki i am here',action.payload)
+        case 'ADDED_EMPLOYEES':
             return {
                 ...state,
                 employees:action.payload
-                
             }
-        case 'DELETE_EMPLOYEES':
-            return state
-        case 'UPDATE_EMPLOYEES':
+        case 'GOT_EMPLOYEES':
+           
             return {
                 ...state,
-                employees:action.payload.data
+                status:action.payload.status,
+                data:action.payload               
+            }
+        case 'DELETED_EMPLOYEES':
+            return state
+        case 'UPDATED_EMPLOYEES':
+            return {
+                ...state,
+                employees:action.payload
             }
         default:
             return state;

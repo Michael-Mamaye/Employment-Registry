@@ -26,8 +26,6 @@ const  Employees:React.FC<EmployeePropType>=({state,getEmployees,deleteEmployees
         setDialogOpener(!dialogOpener);
     }
     
-    console.log('this is the element',state)
-
     return (
         <Container>
             <Table>

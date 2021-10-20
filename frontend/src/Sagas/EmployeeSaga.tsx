@@ -6,7 +6,6 @@ import {
         addedEmployeeActions,
     
     ActionTypeConstants,
-    getEmployeeActions,
     deleteEmployeeActions,
     updateEmployeeActions,
     addEmployeeActions } from '../Types/ActionTypeConstants'
@@ -23,16 +22,19 @@ function* EmployeeSaga():Generator<StrictEffect>{
 //Workers
 function* getAllEmployees(){
     try{
-        const res:AxiosResponse = yield call(axiosApi.get,'/')
+        const res:AxiosResponse<any> = yield call(axiosApi.get,'/')
         
         switch(res.status)
         {
             case 200:
                 const data:gotEmployeeActions={
                     type:'GOT_EMPLOYEES',
-                    payload
+                    payload: res.data
                 }
+                console.log('this is before putting the data',data)
                 put(data);
+               
+
         }
     }
     catch(error)
@@ -71,8 +73,8 @@ function* deleteEmployees({id}:deleteEmployeeActions){
         switch(res.status)
         {
             case 200:
-                const data:deleteEmployeeActions={
-                    type:'DELETE_EMPLOYEES',
+                const data:deletedEmployeeActions={
+                    type:'DELETED_EMPLOYEES',
                     id,
                 }
                 put(data);
@@ -86,14 +88,14 @@ function* deleteEmployees({id}:deleteEmployeeActions){
 }
 function* updateEmployees({id,payload}:updateEmployeeActions){
     try{
-        const res:AxiosResponse = yield call(axiosApi.post,`/${id}`,{
+        const res:AxiosResponse<any> = yield call(axiosApi.post,`/${id}`,{
             payload:payload
         })
         switch(res.status)
         {
             case 200:
-                const data:updateEmployeeActions={
-                    type:'UPDATE_EMPLOYEES',
+                const data:updatedEmployeeActions={
+                    type:'UPDATED_EMPLOYEES',
                     id,
                     payload:res.data
                 }
