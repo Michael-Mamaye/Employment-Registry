@@ -29,12 +29,10 @@ function* getAllEmployees(){
             case 200:
                 const data:gotEmployeeActions={
                     type:'GOT_EMPLOYEES',
-                    payload: res.data
+                    payload: res.data.data
                 }
-                console.log('this is before putting the data',data)
-                put(data);
-               
-
+                console.log('this is my data on the Data base',data)
+                yield put(data);
         }
     }
     catch(error)
@@ -70,12 +68,14 @@ function* deleteEmployees({id}:deleteEmployeeActions){
         const res:AxiosResponse = yield call(axiosApi.post,'/',{
             id:id
         })
+        const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
         switch(res.status)
         {
             case 200:
                 const data:deletedEmployeeActions={
                     type:'DELETED_EMPLOYEES',
                     id,
+                    payload:resp.data,
                 }
                 put(data);
         }

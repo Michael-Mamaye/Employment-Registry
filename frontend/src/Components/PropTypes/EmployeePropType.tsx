@@ -4,11 +4,10 @@ import {
     updateEmployeeActionCreator,
     addEmployeeActionCreator,
 } from '../../Types/ActionCreatorTypes'
+import { ForEmployee } from '../../Types/StoreTypes';
 
 interface EmployeePropType{
-    state?:{
-        employees:any;
-    }
+    emp:ForEmployee
     getEmployees:getEmployeeActionCreator;
     deleteEmployees:deleteEmployeeActionCreator;
     updateEmployees?:updateEmployeeActionCreator;

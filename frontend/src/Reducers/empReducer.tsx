@@ -1,7 +1,7 @@
 import {gotEmployeeActions,
     addedEmployeeActions,
     updatedEmployeeActions,
-    deletedEmployeeActions
+    deletedEmployeeActions,
 } from '../Types/ActionTypeConstants'
 import {ForEmployee} from '../Types/StoreTypes'
 
@@ -12,7 +12,10 @@ type actions=
         |updatedEmployeeActions
         |deletedEmployeeActions
 
-const intialState:ForEmployee[]=[]
+let intialState:ForEmployee={
+    status:0,
+    data:[]
+}
 
 const empReducer=(state=intialState,action:actions)=> {
     console.log('hi miki i am here',action)
@@ -21,13 +24,13 @@ const empReducer=(state=intialState,action:actions)=> {
         case 'ADDED_EMPLOYEES':
             return {
                 ...state,
-                employees:action.payload
+                status:200,
+                data:action.payload
             }
         case 'GOT_EMPLOYEES':
-           
             return {
                 ...state,
-                status:action.payload.status,
+                status:200,
                 data:action.payload               
             }
         case 'DELETED_EMPLOYEES':

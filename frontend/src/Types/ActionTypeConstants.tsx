@@ -1,4 +1,4 @@
-import {Datum, ForEmployee} from './StoreTypes'
+import {Datum} from './StoreTypes'
 
 //For Action Creator
 export interface getEmployeeActions{
@@ -22,7 +22,7 @@ export interface updateEmployeeActions{
 //For Reducer
 export interface gotEmployeeActions{
     type:'GOT_EMPLOYEES';
-    payload:ForEmployee;
+    payload:Datum;
 }
 export interface addedEmployeeActions{
     type:'ADDED_EMPLOYEES';
@@ -31,6 +31,7 @@ export interface addedEmployeeActions{
 export interface deletedEmployeeActions{
     type:'DELETED_EMPLOYEES';
     id:string;
+    payload:Datum;
 }
 export interface updatedEmployeeActions{
     type:'UPDATED_EMPLOYEES';

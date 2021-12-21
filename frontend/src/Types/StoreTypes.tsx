@@ -7,10 +7,9 @@ export interface Datum {
     __v?: number;
 }
 
-
 export type ForEmployee={
     status:number;
-    data:Array<Object>;
+    data:Datum[];
 }
 
 

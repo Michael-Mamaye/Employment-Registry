@@ -10,8 +10,6 @@ app.use(cors());
 mongoose.connect('mongodb://localhost:27017/EmployeeInformation',
            { useNewUrlParser:true,
              useUnifiedTopology:true,
-            //  useCreateIndex:true,
-            //  useFindAndModify:true
             })
 
 const db=mongoose.connection;
