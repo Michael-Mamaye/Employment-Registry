@@ -5,7 +5,7 @@ import UpdateEmployee from './UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
-import {deleteEmployees,getEmployees,addEmployees} from '../Actions'
+import {deleteEmployees,getEmployees,updateEmployees,addEmployees} from '../Actions'
 import EmployeePropType from './PropTypes/EmployeePropType'
 const tableHeader=[
     {id:"name",label:'Name'},
@@ -14,7 +14,7 @@ const tableHeader=[
     {id:"Salary",label:'Salary'},
     {id:"action",label:'Actions'}
 ]
-const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmployees,addEmployees})=> {
+const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,updateEmployees,deleteEmployees,addEmployees})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
@@ -55,11 +55,16 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                            <Td>{thisData.salary}</Td>
                            <Td>
                                <Span><EditAlt color='blue' size={20} 
-                                onClick={async ()=>{
-                                    await checkIfNotNull(thisData._id)
-                                    handleClick()
-                                   }}/>
-                               </Span> <Span><Delete color='#ff4e83' size={20}/></Span>
+                                    onClick={async ()=>{
+                                        await checkIfNotNull(thisData._id)
+                                        handleClick()
+                                    }}/>
+                               </Span> 
+                               <Span><Delete color='#ff4e83' size={20}
+                                    onClick={async ()=>{
+                                         await checkIfNotNull(thisData._id)
+                                         await deleteEmployees(currentId)
+                                    }}/></Span>
                             </Td>
                    
                        </Tr>
@@ -77,4 +82,4 @@ const mapStateToProps = (state: any) => {
 	};
 };
 
-export default connect(mapStateToProps, {getEmployees,deleteEmployees,addEmployees})(Employees);
+export default connect(mapStateToProps, {getEmployees,deleteEmployees,updateEmployees,addEmployees})(Employees);

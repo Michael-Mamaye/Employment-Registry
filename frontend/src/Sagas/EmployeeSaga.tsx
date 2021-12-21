@@ -44,17 +44,16 @@ function* getAllEmployees(){
 function* addEmployees({payload}:addEmployeeActions){
     try{
         const res:AxiosResponse = yield call(axiosApi.post,'/',payload)
-        const resp:AxiosResponse=yield call(axiosApi.get,'/')
-        console.log('this is the data to be posted',resp.data)
+        const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
+
         switch(res.status)
         {
-            case 201:
-                console.log('this is the data to be added tooo to db',payload)
+            case 200:
                 const data:addedEmployeeActions={
                     type:'ADDED_EMPLOYEES',
-                    payload
+                    payload:resp.data.data
                 }
-                put(data);
+                yield put(data);
         }
     }
     catch(error)
@@ -65,9 +64,7 @@ function* addEmployees({payload}:addEmployeeActions){
 }
 function* deleteEmployees({id}:deleteEmployeeActions){
     try{
-        const res:AxiosResponse = yield call(axiosApi.post,'/',{
-            id:id
-        })
+        const res:AxiosResponse = yield call(axiosApi.delete,`/${id}`)
         const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
         switch(res.status)
         {
@@ -75,9 +72,9 @@ function* deleteEmployees({id}:deleteEmployeeActions){
                 const data:deletedEmployeeActions={
                     type:'DELETED_EMPLOYEES',
                     id,
-                    payload:resp.data,
+                    payload:resp.data.data
                 }
-                put(data);
+                yield put(data);
         }
     }
     catch(error)
@@ -88,18 +85,18 @@ function* deleteEmployees({id}:deleteEmployeeActions){
 }
 function* updateEmployees({id,payload}:updateEmployeeActions){
     try{
-        const res:AxiosResponse<any> = yield call(axiosApi.post,`/${id}`,{
-            payload:payload
-        })
+        const res:AxiosResponse<any> = yield call(axiosApi.put,`/${id}`,payload)
+        const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
         switch(res.status)
         {
             case 200:
                 const data:updatedEmployeeActions={
                     type:'UPDATED_EMPLOYEES',
                     id,
-                    payload:res.data
+                    payload:resp.data.data
                 }
-                put(data);
+
+                yield put(data);
         }
     }
     catch(error)

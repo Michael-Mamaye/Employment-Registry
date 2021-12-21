@@ -34,11 +34,14 @@ const empReducer=(state=intialState,action:actions)=> {
                 data:action.payload               
             }
         case 'DELETED_EMPLOYEES':
-            return state
+            return {
+                state
+            }
         case 'UPDATED_EMPLOYEES':
             return {
                 ...state,
-                employees:action.payload
+                status:200,
+                data:action.payload
             }
         default:
             return state;
