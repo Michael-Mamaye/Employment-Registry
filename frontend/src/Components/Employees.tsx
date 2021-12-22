@@ -7,6 +7,8 @@ import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
 import {deleteEmployees,getEmployees,updateEmployees,addEmployees} from '../Actions'
 import EmployeePropType from './PropTypes/EmployeePropType'
+import { ConfirmationDialog,ConfirmButton,RowGrids,ConfirmationTitle} from '../Styles/CompStyles'
+
 const tableHeader=[
     {id:"name",label:'Name'},
     {id:"Birth Date",label:'Birth Date'},
@@ -18,9 +20,13 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,updateEmpl
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
+    const [opener,setOpener]=React.useState(false)
 
     useEffect(()=>{
+        
         getEmployees();
+        //gettin all employees
+
     },[getEmployees])
 
     const handleClick=()=>{
@@ -35,9 +41,34 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,updateEmpl
         }
        
     }
+
+    const toDeleteTheRow=async (checkId?:string)=>{
+        if(checkId!==undefined)
+        {
+            await setCurrentId(checkId)
+            await setOpener(!opener)
+            
+        }
+    }
     
     return (
         <Container>
+            {opener && 
+                <ConfirmationDialog>
+                    <ConfirmationTitle>are you sure you want to delete ?</ConfirmationTitle>
+                    <RowGrids>
+                        <ConfirmButton color='lightblue'
+                            onClick={async ()=>{
+                                await deleteEmployees(currentId)
+                                setOpener(false)
+                            }}>yes</ConfirmButton>
+                        <ConfirmButton color='pink' 
+                            onClick={async ()=>{
+                                await setOpener(false)
+                            }}>cancel</ConfirmButton>
+                    </RowGrids>
+                </ConfirmationDialog>
+            }
             <Table>
                 <Thead>
                     <Tr>
@@ -46,6 +77,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,updateEmpl
                         ))}
                     </Tr>
                 </Thead>
+
                 <Tbody>
                    {data?.map((thisData)=>(
                        <Tr key={thisData._id}>
@@ -62,8 +94,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,updateEmpl
                                </Span> 
                                <Span><Delete color='#ff4e83' size={20}
                                     onClick={async ()=>{
-                                         await checkIfNotNull(thisData._id)
-                                         await deleteEmployees(currentId)
+                                         await toDeleteTheRow(thisData._id)
                                     }}/></Span>
                             </Td>
                    

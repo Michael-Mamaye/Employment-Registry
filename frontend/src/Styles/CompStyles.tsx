@@ -101,4 +101,51 @@ export const Span=styled.span`
     }
     
 `;
+export const ConfirmationDialog=styled.div`
+    z-index: 100;
+    align-self: center;
+    justify-content: center;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+    max-width: 500px;
+    border-radius:30px ;
+    height: 30vh;
+    text-align: center;
+    align-self: center;
+    background-color: white;
+    box-shadow: 5px 5px 100px rgb(230,230,230),
+                -5px -5px 100px rgb(230,230,230);
+    
+`;
 
+export const ConfirmationTitle=styled.p`
+    font-weight: bold;
+    margin-top:-10%;
+    text-transform: capitalize;
+    font-size: 20px;
+    
+`;
+export const ConfirmButton=styled.button`
+    border: 3px solid ${(props)=>props.color};
+    background-color: white;
+    height: 30px;
+    width:60px;
+    margin: 5px;
+    align-self: center;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: -10px -10px 15px rgb(247,247,247),
+        10px 10px 15px rgb(247,247,247);
+    &:active{
+        border:none;
+    }
+
+    &:hover{
+        background-color: ${(props)=>props.color};
+        border: 3px solid ${(props)=>props.color};
+        cursor: pointer;
+        transform: scale(1.003);
+    }
+`;

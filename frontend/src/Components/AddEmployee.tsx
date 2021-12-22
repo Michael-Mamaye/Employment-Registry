@@ -19,7 +19,7 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
         salary:0,
         gender:''
     })
-    const handleSubmit=(event:any)=>{
+    const handleSubmit=async (event:any)=>{
 
         event.preventDefault()
     
@@ -30,7 +30,8 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
         }
         else{ 
             console.log('this are the values',values)
-            dispatch(addEmployees(values))
+            await dispatch(addEmployees(values))
+            handleClick()
         }
     }
 

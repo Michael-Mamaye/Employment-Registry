@@ -35,7 +35,8 @@ const empReducer=(state=intialState,action:actions)=> {
             }
         case 'DELETED_EMPLOYEES':
             return {
-                state
+                ...state,
+                data:state.data.filter((item)=>item._id!==action.id)
             }
         case 'UPDATED_EMPLOYEES':
             return {

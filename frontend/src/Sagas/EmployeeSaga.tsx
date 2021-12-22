@@ -64,15 +64,14 @@ function* addEmployees({payload}:addEmployeeActions){
 }
 function* deleteEmployees({id}:deleteEmployeeActions){
     try{
-        const res:AxiosResponse = yield call(axiosApi.delete,`/${id}`)
-        const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
+        const res:AxiosResponse<any> = yield call(axiosApi.delete,`/${id}`)
         switch(res.status)
         {
             case 200:
                 const data:deletedEmployeeActions={
                     type:'DELETED_EMPLOYEES',
                     id,
-                    payload:resp.data.data
+                    payload:res.data
                 }
                 yield put(data);
         }
@@ -85,7 +84,7 @@ function* deleteEmployees({id}:deleteEmployeeActions){
 }
 function* updateEmployees({id,payload}:updateEmployeeActions){
     try{
-        const res:AxiosResponse<any> = yield call(axiosApi.put,`/${id}`,payload)
+        const res:AxiosResponse<any> = yield call(axiosApi.patch,`/${id}`,payload)
         const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
         switch(res.status)
         {

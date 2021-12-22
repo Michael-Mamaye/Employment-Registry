@@ -22,7 +22,7 @@ interface ThePropTypes{
         gender:toBeUpdated[0]?.gender
     })
 
-    const handlSubmit=(event:any)=>{
+    const handlSubmit=async (event:any)=>{
 
         event.preventDefault()
     
@@ -33,7 +33,8 @@ interface ThePropTypes{
         }
         else{ 
             console.log('this are the values',values)
-            dispatch(updateEmployees(currentId,values))
+           await dispatch(updateEmployees(currentId,values))
+           handleClick()
         }
     }
     const handleChange=(event:any)=>{
