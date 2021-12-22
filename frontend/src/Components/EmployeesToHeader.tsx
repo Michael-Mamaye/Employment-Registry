@@ -15,6 +15,7 @@ function EmployeesToHeader() {
                     <MainTitle>Employees List</MainTitle>
                     <AddButton onClick={()=>setDialogOpener(!dialogOpener)}>Add Employee</AddButton>
                 </RowGridContainer>
+                <hr style={{border:'1px solid black',width:'100%',marginBottom:'50px'}}/>
                 {dialogOpener&&<AddEmployee handleClick={handleClick}/>}
             </Container>
             
