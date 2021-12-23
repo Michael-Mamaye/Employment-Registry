@@ -31,7 +31,6 @@ function* getAllEmployees(){
                     type:'GOT_EMPLOYEES',
                     payload: res.data.data
                 }
-                console.log('this is my data on the Data base',data)
                 yield put(data);
         }
     }

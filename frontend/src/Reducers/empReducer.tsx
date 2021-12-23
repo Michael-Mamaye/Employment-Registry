@@ -18,7 +18,6 @@ let intialState:ForEmployee={
 }
 
 const empReducer=(state=intialState,action:actions)=> {
-    console.log('hi miki i am here',action)
     switch(action.type)
     {
         case 'ADDED_EMPLOYEES':

@@ -13,12 +13,6 @@ export type ForEmployee={
 }
 
 
-interface storeTypes {
-	ForEmployees: ForEmployee;
-}
-
-export default storeTypes;
-
 
 
 

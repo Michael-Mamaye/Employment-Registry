@@ -5,7 +5,7 @@ import UpdateEmployee from './UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
-import {deleteEmployees,getEmployees,updateEmployees,addEmployees} from '../Actions'
+import {deleteEmployees,getEmployees} from '../Actions'
 import EmployeePropType from './PropTypes/EmployeePropType'
 import { ConfirmationDialog,ConfirmButton,RowGrids,ConfirmationTitle} from '../Styles/CompStyles'
 
@@ -16,7 +16,7 @@ const tableHeader=[
     {id:"Salary",label:'Salary'},
     {id:"action",label:'Actions'}
 ]
-const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,updateEmployees,deleteEmployees,addEmployees})=> {
+const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmployees})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
@@ -113,4 +113,4 @@ const mapStateToProps = (state: any) => {
 	};
 };
 
-export default connect(mapStateToProps, {getEmployees,deleteEmployees,updateEmployees,addEmployees})(Employees);
+export default connect(mapStateToProps, {getEmployees,deleteEmployees})(Employees);

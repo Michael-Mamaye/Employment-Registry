@@ -7,7 +7,7 @@ const app=express()
 
 app.use(cors());
 
-mongoose.connect('mongodb://mongodb:27017/EmployeeInformation',
+mongoose.connect('mongodb://localhost:27017/EmployeeInformation',
            { useNewUrlParser:true,
              useUnifiedTopology:true,
             })
