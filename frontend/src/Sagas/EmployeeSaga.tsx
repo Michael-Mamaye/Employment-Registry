@@ -1,4 +1,4 @@
-import { takeEvery, put, call, StrictEffect } from 'redux-saga/effects'
+import { takeLatest, put, call, StrictEffect } from 'redux-saga/effects'
 import { 
         gotEmployeeActions,
         deletedEmployeeActions,
@@ -13,10 +13,10 @@ import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
 //Watchers
 function* EmployeeSaga():Generator<StrictEffect>{
-    yield takeEvery(ActionTypeConstants.GET_ALL_EMPLOYEE,getAllEmployees);
-    yield takeEvery(ActionTypeConstants.DELETE_EMPLOYEE,deleteEmployees);
-    yield takeEvery(ActionTypeConstants.UPDATE_EMPLOYEE,updateEmployees);
-    yield takeEvery(ActionTypeConstants.ADD_NEW_EMPLOYEE,addEmployees);
+    yield takeLatest(ActionTypeConstants.GET_ALL_EMPLOYEE,getAllEmployees);
+    yield takeLatest(ActionTypeConstants.DELETE_EMPLOYEE,deleteEmployees);
+    yield takeLatest(ActionTypeConstants.UPDATE_EMPLOYEE,updateEmployees);
+    yield takeLatest(ActionTypeConstants.ADD_NEW_EMPLOYEE,addEmployees);
 }
 
 //Workers
