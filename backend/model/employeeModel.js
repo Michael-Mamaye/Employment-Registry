@@ -14,9 +14,15 @@ const employeeSchema=new mongoose.Schema({
          required:[true,'Employee Gender Is Required']
      },
      salary:{
-         type:Number,
-         required:[true,'The Employee Salary Information Is Required']
-     }
+            type:Number,
+            required:[true,'Amount Is Required']
+        },
+    startDate:{
+            type:Date,
+            required:[true,'Start Date Is Required'],
+            default:Date.now
+        },
+     
 
 })
 
