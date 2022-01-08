@@ -15,7 +15,8 @@ type actions=
         |gotTopThreePaidEmployeeActions
         
 let intialState:ForEmployee={
-    status:0,
+    totalEmployees:0,
+    totalSalary:0,
     data:[]
 }
 
@@ -25,30 +26,34 @@ const empReducer=(state=intialState,action:actions)=> {
         case 'ADDED_EMPLOYEES':
             return {
                 ...state,
-                status:200,
-                data:action.payload
+                totalSalary:action.payload.totalSalary,
+                totalEmployees:action.payload.totalEmployees,
+                data:action.payload.data 
             }
         case 'GOT_EMPLOYEES':
             return {
                 ...state,
-                status:200,
-                data:action.payload               
+                totalSalary:action.payload.totalSalary,
+                totalEmployees:action.payload.totalEmployees,
+                data:action.payload.data               
             }
         case 'GOT_TOP_PAID_EMPLOYEES':
             return {
                 ...state,
-                status:200,
-                data:action.payload               
+                totalSalary:action.payload.totalSalary,
+                totalEmployees:action.payload.totalEmployees,
+                data:action.payload.data                 
             }
         case 'DELETED_EMPLOYEES':
             return {
                 ...state,
-                data:state.data.filter((item)=>item._id!==action.id)
+                data:state.data.filter((item)=>item._id!==action.id),
+                totalSalary:action.payload.totalSalary,
+                totalEmployees:action.payload.totalEmployees,
             }
         case 'UPDATED_EMPLOYEES':
             return {
                 ...state,
-                status:200,
                 data:action.payload
             }
         default:

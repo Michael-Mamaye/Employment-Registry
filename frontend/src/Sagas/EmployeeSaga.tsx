@@ -24,6 +24,7 @@ function* EmployeeSaga():Generator<StrictEffect>{
 //Workers
 function* getAllEmployees(){
     try{
+       
         const res:AxiosResponse<any> = yield call(axiosApi.get,'/')
         
         switch(res.status)
@@ -31,7 +32,7 @@ function* getAllEmployees(){
             case 200:
                 const data:gotEmployeeActions={
                     type:'GOT_EMPLOYEES',
-                    payload: res.data.data
+                    payload: res.data
                 }
                 yield put(data);
         }
@@ -44,6 +45,7 @@ function* getAllEmployees(){
 }
 function* getTopThreePaidEmployees(){
     try{
+
         const res:AxiosResponse<any> = yield call(axiosApi.get,'/topThreePaid')
         
         switch(res.status)
@@ -51,7 +53,7 @@ function* getTopThreePaidEmployees(){
             case 200:
                 const data:gotTopThreePaidEmployeeActions={
                     type:'GOT_TOP_PAID_EMPLOYEES',
-                    payload: res.data.data
+                    payload: res.data
                 }
                 yield put(data);
         }
@@ -72,7 +74,7 @@ function* addEmployees({payload}:addEmployeeActions){
             case 200:
                 const data:addedEmployeeActions={
                     type:'ADDED_EMPLOYEES',
-                    payload:resp.data.data
+                    payload:resp.data
                 }
                 yield put(data);
         }

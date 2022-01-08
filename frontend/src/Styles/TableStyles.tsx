@@ -15,8 +15,10 @@ export const Th=styled.th`
     height: 1.5rem;
     padding:10px ;
     text-align: left;
+    z-index: 10;
     border: 1px solid lightblue;
     border-collapse: collapse;
+    
 `;
 export const Tr=styled.tr`
     border: none;

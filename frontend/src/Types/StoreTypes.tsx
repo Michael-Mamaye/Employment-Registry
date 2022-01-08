@@ -10,7 +10,8 @@ export interface Datum {
 }
 
 export type ForEmployee={
-    status:number;
+    totalEmployees:number,
+    totalSalary:number,
     data:Datum[];
 }
 

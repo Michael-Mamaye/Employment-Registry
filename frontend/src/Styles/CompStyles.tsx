@@ -8,6 +8,40 @@ export const Container=styled.div`
     align-self: center;
     
 `;
+export const BoxForTotals=styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+    border: lightblue 5px solid;
+    border-radius:10px;
+    &:hover{
+        transform: scale(1.03);
+        cursor: pointer;
+    }
+`;
+export const Textp=styled.p`
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    align-self: center;
+    background-color: lightblue;
+`;
+export const RowGridBox=styled.div`
+    margin: auto;
+    display: flex;
+    flex-direction: Row;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    align-self: center;
+    
+`;
 export const RowGridContainer=styled.div`
     margin: auto;
     display: flex;
@@ -49,7 +83,7 @@ export const Dialog=styled.div`
     z-index: 100;
     align-self: center;
     position: fixed;
-    margin-top: 2%;
+    margin-top: -20px;
     display: flex;
     flex-direction: column;
     width: 70vw;
@@ -67,7 +101,7 @@ export const EditDialog=styled.div`
     z-index: 100;
     align-self: center;
     position: fixed;
-    margin-top: 1%;
+    margin-top: -100px;
     display: flex;
     flex-direction: column;
     width: 80vw;
@@ -94,13 +128,18 @@ export const MainRowGrids=styled.div`
     width: 100vw;
     align-self: center;
     align-items: center;
-    margin-left: 30px;
+    margin: -10px;
 `;
 export const MainDashboradContainer=styled.div`
     width: 80vw;
+    padding-top: 30px;
+    min-height: 100%;
     align-self: center;
     align-items: center;
-    margin-left: 30px;
+    margin-left: auto;
+    @media(min-width:1100px){
+        overflow-x: hidden;
+    }
 `;
 export const Span=styled.span`
     margin: 0;
@@ -114,6 +153,21 @@ export const Span=styled.span`
     }
     
 `;
+export const SideBar=styled.div`
+    margin: auto;
+    display: flex;
+    position: fixed;
+    top: 0vh;
+    z-index: 100;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height:100vh;
+    box-shadow: black 0.1px 0px 2px;
+    width: 20vw;
+    background-color: lightblue;
+    
+`
 export const ConfirmationDialog=styled.div`
     z-index: 100;
     align-self: center;

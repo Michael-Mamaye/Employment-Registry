@@ -4,8 +4,14 @@ import Employees from "../model/employeeModel.js";
 export const getAllEmployees= async (req,res)=>{
     try{
         const employe=await Employees.find();
+        const totalSalary=()=>{
+            let total=0;
+            employe.filter((miki)=> total+=miki.salary)
+            return total;
+        }
         res.status(200).json({
-            status:200,
+            totalEmployees:employe.length,
+            totalSalary:totalSalary(),
             data:employe
         })
     }
@@ -17,12 +23,18 @@ export const getAllEmployees= async (req,res)=>{
 
 //used to return top three salary paid
 
-export const getTopThreePaid=async()=>{
+export const getTopThreePaid=async(req,res)=>{
     try{
         const employe=await Employees.find().sort({salary:-1}).limit(3);
-        
+        const employeesNumber=await  Employees.find();
+        const totalSalary=()=>{
+            let total=0;
+            employeesNumber.filter((miki)=> total+=miki.salary)
+            return total;
+        }
         res.status(200).json({
-            status:200,
+            totalEmployees:employeesNumber.length,
+            totalSalary:totalSalary(),
             data:employe
         })
     }
@@ -37,8 +49,13 @@ export const addNewEmployee= async (req,res)=>{
     try{
         const {name,dateOfBirth,gender,salary,email}= req.body
 
-        const exists=await Employees.findOne(req.body.email)
-
+        const exists=await Employees.findOne({email:req.body.email})
+        const employe=await Employees.find();
+        const totalSalary=()=>{
+            let total=0;
+            employe.filter((miki)=> total+=miki.salary)
+            return total;
+        }
         if(exists!=null)
         {
             res.status(400).json({
@@ -49,6 +66,8 @@ export const addNewEmployee= async (req,res)=>{
         {   const newEmployee=await Employees.create({name,dateOfBirth,gender,salary,email});
 
             res.status(200).json({
+                totalEmployees:employe.length,
+                totalSalary:totalSalary(),
                 data:newEmployee
             })
         }
@@ -79,8 +98,15 @@ export const updateEmployee= async (req,res)=>{
 export const deleteEmployee=async (req,res)=>{
     try{
         await Employees.findByIdAndDelete(req.params.id)
+        const employe=await Employees.find();
+        const totalSalary=()=>{
+            let total=0;
+            employe.filter((miki)=> total+=miki.salary)
+            return total;
+        }
         res.status(200).json({
-            status:200,
+            totalEmployees:employe.length,
+            totalSalary:totalSalary(),
             
         })
     }

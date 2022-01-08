@@ -11,6 +11,7 @@ import { ConfirmationDialog,ConfirmButton,RowGrids,ConfirmationTitle} from '../S
 
 const tableHeader=[
     {id:"name",label:'Name'},
+    {id:"email",label:'Email'},
     {id:"Birth Date",label:'Birth Date'},
     {id:"Gender",label:'Gender'},
     {id:"Salary",label:'Salary'},
@@ -69,39 +70,44 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                     </RowGrids>
                 </ConfirmationDialog>
             }
-            <Table>
-                <Thead>
-                    <Tr>
-                        {tableHeader.map((head)=>(
-                            <Th key={head.id}>{head.label}</Th>
-                        ))}
-                    </Tr>
-                </Thead>
+            <div style={{height:'50vh'}}>
+                <Table>
+                    <Thead>
+                        <Tr>
+                            {tableHeader.map((head)=>(
+                                <Th key={head.id}>{head.label}</Th>
+                            ))}
+                        </Tr>
+                    </Thead>
 
-                <Tbody>
-                   {data?.map((thisData)=>(
-                       <Tr key={thisData._id}>
-                           <Td>{thisData.name}</Td>
-                           <Td>{thisData.dateOfBirth}</Td>
-                           <Td>{thisData.gender}</Td>
-                           <Td>{thisData.salary}</Td>
-                           <Td>
-                               <Span><EditAlt color='blue' size={20} 
-                                    onClick={async ()=>{
-                                        await checkIfNotNull(thisData._id)
-                                        handleClick()
-                                    }}/>
-                               </Span> 
-                               <Span><Delete color='#ff4e83' size={20}
-                                    onClick={async ()=>{
-                                         await toDeleteTheRow(thisData._id)
-                                    }}/></Span>
-                            </Td>
-                   
-                       </Tr>
-                   ))}
-                </Tbody>
-            </Table>
+                    <Tbody>
+                    {data?.map((thisData)=>(
+                        <Tr key={thisData._id}>
+                            <Td>{thisData.name}</Td>
+                            <Td>{thisData.email}</Td>
+                            <Td>{thisData.dateOfBirth}</Td>
+                            <Td>{thisData.gender}</Td>
+                            <Td>{thisData.salary}</Td>
+                            <Td>
+                                <Span><EditAlt color='blue' size={20} 
+                                        onClick={async ()=>{
+                                            await checkIfNotNull(thisData._id)
+                                            handleClick()
+                                        }}/>
+                                </Span> 
+                                <Span><Delete color='#ff4e83' size={20}
+                                        onClick={async ()=>{
+                                            await toDeleteTheRow(thisData._id)
+                                        }}/></Span>
+                                </Td>
+                    
+                        </Tr>
+                    ))}
+                    </Tbody>
+                </Table>
+            </div>
+            
+
             {dialogOpener&&<UpdateEmployee toBeUpdated={toBeUpdated} currentId={currentId} handleClick={handleClick}/>}
         </Container>
     )
