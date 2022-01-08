@@ -19,7 +19,8 @@ interface ThePropTypes{
         name:toBeUpdated[0]?.name,
         dateOfBirth:toBeUpdated[0]?.dateOfBirth,
         salary:toBeUpdated[0]?.salary,
-        gender:toBeUpdated[0]?.gender
+        gender:toBeUpdated[0]?.gender,
+        email:toBeUpdated[0]?.email
     })
 
     const handlSubmit=async (event:any)=>{
@@ -52,7 +53,15 @@ interface ThePropTypes{
                                 onChange={(event)=>{
                                     setError('')
                                     handleChange(event)
-                                }} placeholder='First Name'/>  
+                                }} placeholder='Name'/>  
+                    </RowGrids>
+                    <RowGrids>
+                        <Label >Email</Label>
+                        <Input name='email' value={values.email} 
+                                onChange={(event)=>{
+                                    setError('')
+                                    handleChange(event)
+                                }} placeholder='Email'/>  
                     </RowGrids>
                     <RowGrids>
                         <Label>Birth Date</Label>

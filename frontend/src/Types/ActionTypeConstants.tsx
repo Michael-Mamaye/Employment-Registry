@@ -4,6 +4,9 @@ import {Datum} from './StoreTypes'
 export interface getEmployeeActions{
     type:'GET_EMPLOYEES';
 }
+export interface getTopThreePaidEmployeeActions{
+    type:'GET_TOP_PAID_EMPLOYEES';
+}
 export interface addEmployeeActions{
     type:'ADD_EMPLOYEES';
     payload:Datum;
@@ -22,6 +25,10 @@ export interface updateEmployeeActions{
 //For Reducer
 export interface gotEmployeeActions{
     type:'GOT_EMPLOYEES';
+    payload:Datum;
+}
+export interface gotTopThreePaidEmployeeActions{
+    type:'GOT_TOP_PAID_EMPLOYEES';
     payload:Datum;
 }
 export interface addedEmployeeActions{
@@ -44,5 +51,6 @@ export const ActionTypeConstants={
     ADD_NEW_EMPLOYEE:'ADD_EMPLOYEES',
     DELETE_EMPLOYEE:'DELETE_EMPLOYEES',
     GET_ALL_EMPLOYEE:'GET_EMPLOYEES',
-    UPDATE_EMPLOYEE:'UPDATE_EMPLOYEES'
+    UPDATE_EMPLOYEE:'UPDATE_EMPLOYEES',
+    GET_TOP_THREE_PAID_EMPLOYEE:'GET_TOP_THREE_PAID_EMPLOYEES'
 }

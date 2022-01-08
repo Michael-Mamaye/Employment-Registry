@@ -4,6 +4,7 @@ export interface Datum {
     dateOfBirth: string;
     gender: string;
     salary: number;
+    email:string;
     startDate?:string;
     __v?: number;
 }

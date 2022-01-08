@@ -1,10 +1,13 @@
 import {getEmployeeActions,
         deleteEmployeeActions,
         updateEmployeeActions,
-        addEmployeeActions } from './ActionTypeConstants'
+        addEmployeeActions,
+        getTopThreePaidEmployeeActions } from './ActionTypeConstants'
 import { Datum } from './StoreTypes';
 
 export type getEmployeeActionCreator = () => getEmployeeActions;
+
+export type getTopThreePaidEmployeeActionCreator = () => getTopThreePaidEmployeeActions;
 
 export type deleteEmployeeActionCreator = (id: string) => deleteEmployeeActions;
         

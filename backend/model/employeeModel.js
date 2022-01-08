@@ -5,6 +5,10 @@ const employeeSchema=new mongoose.Schema({
          type:String,
          required:[true,'Employee Name Is Required']
      },
+     email:{
+        type:String,
+        required:[true,'Email Is Required']
+     },
      dateOfBirth:{
          type:String,
          required:[true,'Employee Birth Date Is Required']

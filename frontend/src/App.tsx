@@ -1,12 +1,9 @@
-import Employees from './Components/Employees';
-import EmployeesToHeader from './Components/EmployeesToHeader';
-
+import MainDashboard from "./Components/Dashboard/MainDashboard";
 function App() {
   return (
       <div>
           
-          <EmployeesToHeader/>
-          <Employees/>
+          <MainDashboard/>
 
       </div>
     

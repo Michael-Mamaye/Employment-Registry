@@ -17,14 +17,15 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
         name:'',
         dateOfBirth:'',
         salary:0,
-        gender:''
+        gender:'',
+        email:''
     })
     const handleSubmit=async (event:any)=>{
 
         event.preventDefault()
     
 
-        if(values.name==="" || values.dateOfBirth==='' || values.gender==='' || values.salary.toString()==='')
+        if(values.name==="" || values.dateOfBirth==='' || values.gender===''|| values.email==='' || values.salary.toString()==='')
         {
             setError('All Fields Are Required')
         }
@@ -50,6 +51,12 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
                         setError('')
                         handleChange(event)
                         }} placeholder='Name'/>
+                    <Label >Email</Label>
+                    <Input name='email' type='text'
+                        onChange={(event)=>{
+                        setError('')
+                        handleChange(event)
+                        }} placeholder='Email'/>
                     
                     <Label>Birth Date</Label>
                     <Input name='dateOfBirth'

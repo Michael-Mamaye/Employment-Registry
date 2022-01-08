@@ -88,8 +88,21 @@ export const RowGrids=styled.div`
     margin-left: 30px;
     width: 20vw;
 `;
+export const MainRowGrids=styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    align-self: center;
+    align-items: center;
+    margin-left: 30px;
+`;
+export const MainDashboradContainer=styled.div`
+    width: 80vw;
+    align-self: center;
+    align-items: center;
+    margin-left: 30px;
+`;
 export const Span=styled.span`
-    
     margin: 0;
     padding: 0;
     padding-left: 10px;

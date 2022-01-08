@@ -6,6 +6,11 @@ export const addEmployeeValidation=[
         .isLength({min:1,max:20})
         .withMessage("Name should be less than 20 characters"),
 
+    body('email')
+        .exists()
+        .isEmail()
+        .withMessage('please enter a valid email'),
+
     body('dateOfBirth')
         .exists()
         .isAfter("1900-01-01")
@@ -28,6 +33,10 @@ export const updateEmployeeValidation=[
     body('name')
         .isLength({min:1,max:20})
         .withMessage("Name should be less than 20 characters"),
+
+     body('email')
+        .isEmail()
+        .withMessage('please enter a valid email'),
 
     body('dateOfBirth')
         .isAfter("1900-01-01")
