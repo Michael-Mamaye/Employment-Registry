@@ -48,10 +48,36 @@ export const RowGridContainer=styled.div`
     flex-direction: Row;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: -10px;
     align-self: center;
     
 `;
+export const SearchInput=styled.input`
+    border: none;
+    border: 1px black solid;
+    height: 30px;
+    width: 200px;
+    padding-left: 10px;
+    padding-right: 30px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    outline: none;
+`
+export const FilterButton=styled.button`
+    border: none;
+    height: 30px;
+    width: 80px;
+    font-weight: bold;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.02);
+    }
+`
 export const MainTitle=styled.p`
     font-weight: bold;
     text-transform: capitalize;

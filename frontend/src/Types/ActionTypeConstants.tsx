@@ -45,6 +45,11 @@ export interface updatedEmployeeActions{
     id:string;
     payload:ForEmployee;
 }
+export interface errorEmployeeActions{
+    type:'ERROR_EMPLOYEES';
+    id:string;
+    payload:ForEmployee;
+}
 
 
 export const ActionTypeConstants={

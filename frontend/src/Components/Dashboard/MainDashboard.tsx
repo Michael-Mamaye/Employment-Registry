@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import MainDashboardPropTypes from '../PropTypes/MainDashboardPropTypes'
 
 const MainDashboard:React.FC<MainDashboardPropTypes>=({emp:{data,totalEmployees,totalSalary},getTopThreePaidEmployees,getEmployees})=> {
+   
     return (
         <MainRowGrids>
             <SideBar>
@@ -15,7 +16,7 @@ const MainDashboard:React.FC<MainDashboardPropTypes>=({emp:{data,totalEmployees,
                         getTopThreePaidEmployees() 
                     }}>
                     Three Top Paid</AddButton><br/>
-
+                
                 <AddButton 
                     onClick={()=>{
                         getEmployees() 

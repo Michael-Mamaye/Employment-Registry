@@ -7,7 +7,11 @@ import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
 import {deleteEmployees,getEmployees} from '../Actions'
 import EmployeePropType from './PropTypes/EmployeePropType'
-import { ConfirmationDialog,ConfirmButton,RowGrids,ConfirmationTitle} from '../Styles/CompStyles'
+import { ConfirmationDialog,ConfirmButton,RowGrids,ConfirmationTitle,SearchInput,FilterButton
+} from '../Styles/CompStyles'
+import {Search} from '@styled-icons/fa-solid/Search'
+import { Datum } from '../Types/StoreTypes';
+
 
 const tableHeader=[
     {id:"name",label:'Name'},
@@ -22,6 +26,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
     const [opener,setOpener]=React.useState(false)
+    const [filtered,setFiltered]=React.useState<Datum[]>()
 
     useEffect(()=>{
         
@@ -51,7 +56,28 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
             
         }
     }
-    
+    const handleSearch=(searchText:string)=>{
+
+        searchText=searchText.toLocaleLowerCase();
+
+        const filt=data.filter((item)=>(
+            item.name.toLocaleLowerCase().includes(searchText)||
+            item.salary.toString().includes(searchText)||
+            item.dateOfBirth.toLocaleLowerCase().includes(searchText)||
+            item.email.toLocaleLowerCase().includes(searchText)||
+            item.gender.toLocaleLowerCase().includes(searchText)
+        ))
+        setFiltered(filt);
+    }
+    const handleFilter=(filteringText:string)=>{
+        filteringText=filteringText.toLocaleLowerCase();
+
+        const filt=data.filter((item)=>(
+            item.gender.toLocaleLowerCase().startsWith(filteringText)
+        ))
+        setFiltered(filt);
+    }
+    const filterdList=()=>filtered?filtered:data;
     return (
         <Container>
             {opener && 
@@ -71,6 +97,12 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                 </ConfirmationDialog>
             }
             <div style={{height:'50vh'}}>
+            <SearchInput onChange={(e)=>handleSearch(e.target.value)}/><Search style={{ marginLeft:'-25px',marginRight:'20px',height:'20px',width:'20px'}}/>
+            <FilterButton onClick={()=>handleFilter('male')}>Male</FilterButton>
+            <FilterButton onClick={()=>handleFilter('female')}>Female</FilterButton>
+            <FilterButton onClick={()=>{
+                    setFiltered(undefined)
+                    getEmployees()}}>All</FilterButton>
                 <Table>
                     <Thead>
                         <Tr>
@@ -81,7 +113,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                     </Thead>
 
                     <Tbody>
-                    {data?.map((thisData)=>(
+                    {filterdList().map((thisData)=>(
                         <Tr key={thisData._id}>
                             <Td>{thisData.name}</Td>
                             <Td>{thisData.email}</Td>

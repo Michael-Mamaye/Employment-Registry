@@ -17,7 +17,7 @@ export const getAllEmployees= async (req,res)=>{
     }
     catch(error)
     {
-        console.log(error)
+        res.status(400).json({error})
     }
 }
 
@@ -40,7 +40,7 @@ export const getTopThreePaid=async(req,res)=>{
     }
     catch(error)
     {
-        console.log(error)
+        res.status(400).json({error})
     }
 }
 
@@ -74,7 +74,7 @@ export const addNewEmployee= async (req,res)=>{
     }
     catch(error)
     {
-        console.log(error)
+        res.status(400).json({error})
     }
 
 }
@@ -89,7 +89,7 @@ export const updateEmployee= async (req,res)=>{
     }
     catch(error)
     {
-        console.log(error)
+        res.status(400).json({error})
     }
 }
 
@@ -113,7 +113,7 @@ export const deleteEmployee=async (req,res)=>{
     catch(error)
     {
        res.status(400).json({
-           status:"this user doesn't exist"
+           message:"this user doesn't exist"
        })
     }
 }

@@ -9,7 +9,8 @@ import {
     ActionTypeConstants,
     deleteEmployeeActions,
     updateEmployeeActions,
-    addEmployeeActions } from '../Types/ActionTypeConstants'
+    addEmployeeActions, 
+    errorEmployeeActions} from '../Types/ActionTypeConstants'
 import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
 //Watchers
@@ -68,7 +69,7 @@ function* addEmployees({payload}:addEmployeeActions){
     try{
         const res:AxiosResponse = yield call(axiosApi.post,'/',payload)
         const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
-
+        
         switch(res.status)
         {
             case 200:
@@ -80,8 +81,8 @@ function* addEmployees({payload}:addEmployeeActions){
         }
     }
     catch(error)
-    {
-        console.log(error)
+    {   
+        
     }
     
 }
@@ -101,14 +102,16 @@ function* deleteEmployees({id}:deleteEmployeeActions){
     }
     catch(error)
     {
-        console.log(error)
+        console.log('this is the error',error)
     }
     
 }
 function* updateEmployees({id,payload}:updateEmployeeActions){
     try{
         const res:AxiosResponse<any> = yield call(axiosApi.patch,`/${id}`,payload)
+        
         const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
+        
         switch(res.status)
         {
             case 200:
@@ -119,11 +122,23 @@ function* updateEmployees({id,payload}:updateEmployeeActions){
                 }
 
                 yield put(data);
+                break;
+            default:
+                
+                const Item:errorEmployeeActions={
+                    type:'ERROR_EMPLOYEES',
+                    id,
+                    payload:resp.data
+                }
+
+                yield put(Item);
+                break;
         }
     }
     catch(error)
     {
-        console.log(error)
+        console.log('this is the error',error)
+        
     }
     
 }
