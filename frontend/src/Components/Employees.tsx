@@ -159,10 +159,11 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
             </SelectButton>            
             
             <input type='checkbox'value={checked} 
+                style={{marginLeft:'10px'}}
                 onChange={()=>{
                     checked==='true'?setChecked('false'):setChecked('true')}}
                 placeholder='Descending'/>
-            <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Descending</label>
+            <label style={{marginLeft:'0px',fontWeight:'bold'}} htmlFor='orderBy'>Descending</label>
                 
                 <Table>
                     <Thead>
