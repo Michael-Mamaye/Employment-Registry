@@ -19,7 +19,7 @@ const tableHeader=[
     {id:"Birth Date",label:'Birth Date'},
     {id:"Gender",label:'Gender'},
     {id:"Salary",label:'Salary'},
-    {id:"currentSalary",label:'CurrentSalary'},
+    {id:"PerWorkTotal",label:'PerWorkTotal'},
     {id:"action",label:'Actions'}
 ]
 const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmployees})=> {
@@ -33,7 +33,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
     useEffect(()=>{
         
         getEmployees();
-        //gettin all employees
+        //getting all employees
 
     },[getEmployees])
 
@@ -49,7 +49,6 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
         }
        
     }
-
     const toDeleteTheRow=async (checkId?:string)=>{
         if(checkId!==undefined)
         {
@@ -69,7 +68,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
             item.email.toLocaleLowerCase().includes(searchText)||
             item.gender.toLocaleLowerCase().includes(searchText)
         ))
-        setFiltered(filt);
+        setFiltered(filt)
     }
     const handleFilter=(filteringText:string)=>{
         filteringText=filteringText.toLocaleLowerCase();
@@ -77,9 +76,11 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
         const filt=data.filter((item)=>(
             item.gender.toLocaleLowerCase().startsWith(filteringText)
         ))
-        setFiltered(filt);
+      setFiltered(filt)
+        
     }
     const filterdList=()=>filtered?filtered:data;
+   
     const daysBetween =(theDate?:string)=>{
         const dateof=theDate?theDate:'';
         return data[0].startDate? new Date().getDate() - new Date(dateof).getDate():0;
@@ -109,7 +110,8 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
             <FilterButton onClick={()=>handleFilter('female')}>Female</FilterButton>
             <FilterButton onClick={()=>{
                     setFiltered(undefined)
-                    getEmployees()}}>All</FilterButton>
+                    getEmployees()
+                    }}>All</FilterButton>
                 <Table>
                     <Thead>
                         <Tr>
@@ -128,7 +130,8 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                             <Td>{thisData.gender}</Td>
                             <Td>{thisData.salary}</Td>
                             <Td>{Math.round(daysBetween(thisData.startDate)*(thisData.salary/30))}</Td>
-                         
+                            {/* <Td>{Math.round(daysBetween(thisData.startDate))} days</Td> */}
+                            
                             <Td>
                                 <Span><EditAlt color='blue' size={20} 
                                         onClick={async ()=>{
@@ -140,7 +143,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                                         onClick={async ()=>{
                                             await toDeleteTheRow(thisData._id)
                                         }}/></Span>
-                                </Td>
+                            </Td>
                     
                         </Tr>
                     ))}

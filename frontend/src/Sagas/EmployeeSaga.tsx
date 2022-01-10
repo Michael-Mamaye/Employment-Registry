@@ -10,7 +10,8 @@ import {
     deleteEmployeeActions,
     updateEmployeeActions,
     addEmployeeActions, 
-    errorEmployeeActions} from '../Types/ActionTypeConstants'
+    errorEmployeeActions,
+    setErrorsNullActions} from '../Types/ActionTypeConstants'
 import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
 //Watchers
@@ -20,6 +21,7 @@ function* EmployeeSaga():Generator<StrictEffect>{
     yield takeLatest(ActionTypeConstants.DELETE_EMPLOYEE,deleteEmployees);
     yield takeLatest(ActionTypeConstants.UPDATE_EMPLOYEE,updateEmployees);
     yield takeLatest(ActionTypeConstants.ADD_NEW_EMPLOYEE,addEmployees);
+    yield takeLatest(ActionTypeConstants.ERROR_OF_EMPLOYEES,setErrorsNull);
 }
 
 //Workers
@@ -109,13 +111,15 @@ function* deleteEmployees({id}:deleteEmployeeActions){
 function* updateEmployees({id,payload}:updateEmployeeActions){
     try{
         const res:AxiosResponse<any> = yield call(axiosApi.patch,`/${id}`,payload)
-        
+       
         const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
         
         switch(res.status)
         {
+            
             case 200:
-                const data:updatedEmployeeActions={
+                
+                const data:updatedEmployeeActions={ 
                     type:'UPDATED_EMPLOYEES',
                     id,
                     payload:resp.data.data
@@ -124,10 +128,9 @@ function* updateEmployees({id,payload}:updateEmployeeActions){
                 yield put(data);
                 break;
             default:
-                
+                console.log(res.data)
                 const Item:errorEmployeeActions={
                     type:'ERROR_EMPLOYEES',
-                    id,
                     payload:resp.data
                 }
 
@@ -143,4 +146,11 @@ function* updateEmployees({id,payload}:updateEmployeeActions){
     
 }
 
+function* setErrorsNull(){
+    const data:setErrorsNullActions={
+        type:'ERROR_EMPLOYEES',
+    }
+
+    yield put(data);
+}
 export default EmployeeSaga

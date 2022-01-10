@@ -20,6 +20,9 @@ export interface updateEmployeeActions{
     id:string;
     payload:Datum;
 }
+export interface setErrorsNullActions{
+    type:'ERROR_EMPLOYEES';
+}
 
 
 //For Reducer
@@ -47,7 +50,6 @@ export interface updatedEmployeeActions{
 }
 export interface errorEmployeeActions{
     type:'ERROR_EMPLOYEES';
-    id:string;
     payload:ForEmployee;
 }
 
@@ -57,5 +59,6 @@ export const ActionTypeConstants={
     DELETE_EMPLOYEE:'DELETE_EMPLOYEES',
     GET_ALL_EMPLOYEE:'GET_EMPLOYEES',
     UPDATE_EMPLOYEE:'UPDATE_EMPLOYEES',
-    GET_TOP_THREE_PAID_EMPLOYEE:'GET_TOP_PAID_EMPLOYEES'
+    GET_TOP_THREE_PAID_EMPLOYEE:'GET_TOP_PAID_EMPLOYEES',
+    ERROR_OF_EMPLOYEES:'ERROR_EMPLOYEES'
 }

@@ -3,6 +3,7 @@ import {gotEmployeeActions,
     updatedEmployeeActions,
     deletedEmployeeActions,
     gotTopThreePaidEmployeeActions,
+    errorEmployeeActions,
 } from '../Types/ActionTypeConstants'
 import {ForEmployee} from '../Types/StoreTypes'
 
@@ -13,11 +14,13 @@ type actions=
         |updatedEmployeeActions
         |deletedEmployeeActions
         |gotTopThreePaidEmployeeActions
+        |errorEmployeeActions
         
 let intialState:ForEmployee={
     totalEmployees:0,
     totalSalary:0,
-    data:[]
+    data:[],
+    error:''
 }
 
 const empReducer=(state=intialState,action:actions)=> {
@@ -55,6 +58,11 @@ const empReducer=(state=intialState,action:actions)=> {
             return {
                 ...state,
                 data:action.payload
+            }
+        case 'ERROR_EMPLOYEES':
+            return {
+                ...state,
+                error:action.payload.error
             }
         default:
             return state;

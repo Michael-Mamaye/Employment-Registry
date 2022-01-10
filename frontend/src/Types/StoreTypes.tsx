@@ -13,6 +13,7 @@ export type ForEmployee={
     totalEmployees:number,
     totalSalary:number,
     data:Datum[];
+    error:string
 }
 
 

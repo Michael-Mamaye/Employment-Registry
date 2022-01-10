@@ -83,6 +83,11 @@ export const addNewEmployee= async (req,res)=>{
 export const updateEmployee= async (req,res)=>{
     try{
         const newEmployee = await Employees.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
+        if(!newEmployee){
+            res.status(404).json({
+                message:"this user does not exist"
+            })
+        }
         res.status(200).json({
             data:newEmployee
         })
@@ -112,7 +117,7 @@ export const deleteEmployee=async (req,res)=>{
     }
     catch(error)
     {
-       res.status(400).json({
+       res.status(404).json({
            message:"this user doesn't exist"
        })
     }
