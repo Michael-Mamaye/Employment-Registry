@@ -82,7 +82,7 @@ function* addEmployees({payload}:addEmployeeActions){
     }
     catch(error)
     {   
-        
+        console.log('this is the error',error)
     }
     
 }

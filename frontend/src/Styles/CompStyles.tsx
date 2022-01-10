@@ -105,6 +105,54 @@ export const AddButton=styled.button`
     }
 
 `;
+export const ProfileImage=styled.div`
+    height:50px;
+    width:50px;
+    margin-right:10px;
+    background:lightblue;
+    border-radius:100%;
+    border:10px solid white;
+    border-style: double;
+`
+export const ProfileShower=styled.div`
+    background-color: white;
+    height: 100px;
+    width: 100%;
+    align-self: center;
+    border-radius: 5px;
+    font-weight: bold;
+    position: absolute;
+    top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+`;
+export const SideBarMenus=styled.button`
+    border: 3px solid lightblue;
+    background-color: white;
+    height: 30px;
+    width: 100%;
+    align-self: center;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: -0.1px -0.1px 1px rgb(247,247,247),
+        0.1px 0.1px 1px rgb(247,247,247);
+    &:active{
+        border:none;
+    }
+    &:focus{
+        background-color: lightblue;
+    }
+    &:hover{
+        background-color: lightblue;
+        border: 3px solid lightblue;
+        cursor: pointer;
+        transform: scale(1.003);
+    }
+
+`;
 export const Dialog=styled.div`
     z-index: 100;
     align-self: center;

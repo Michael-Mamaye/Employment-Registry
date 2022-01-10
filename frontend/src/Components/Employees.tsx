@@ -19,6 +19,7 @@ const tableHeader=[
     {id:"Birth Date",label:'Birth Date'},
     {id:"Gender",label:'Gender'},
     {id:"Salary",label:'Salary'},
+    {id:"currentSalary",label:'CurrentSalary'},
     {id:"action",label:'Actions'}
 ]
 const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmployees})=> {
@@ -27,7 +28,8 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
     const [toBeUpdated,setToBeUpdated]=React.useState({});
     const [opener,setOpener]=React.useState(false)
     const [filtered,setFiltered]=React.useState<Datum[]>()
-
+    
+    
     useEffect(()=>{
         
         getEmployees();
@@ -78,6 +80,11 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
         setFiltered(filt);
     }
     const filterdList=()=>filtered?filtered:data;
+    const daysBetween =(theDate?:string)=>{
+        const dateof=theDate?theDate:'';
+        return data[0].startDate? new Date().getDate() - new Date(dateof).getDate():0;
+    } 
+    
     return (
         <Container>
             {opener && 
@@ -120,6 +127,8 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                             <Td>{thisData.dateOfBirth}</Td>
                             <Td>{thisData.gender}</Td>
                             <Td>{thisData.salary}</Td>
+                            <Td>{Math.round(daysBetween(thisData.startDate)*(thisData.salary/30))}</Td>
+                         
                             <Td>
                                 <Span><EditAlt color='blue' size={20} 
                                         onClick={async ()=>{

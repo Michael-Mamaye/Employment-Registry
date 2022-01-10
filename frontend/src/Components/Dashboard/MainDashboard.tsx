@@ -1,27 +1,30 @@
 import React from 'react'
 import Employees from '../Employees'
 import EmployeesToHeader from '../EmployeesToHeader'
-import { MainRowGrids,MainDashboradContainer, AddButton, SideBar, BoxForTotals, RowGridBox} from '../../Styles/CompStyles'
+import { MainRowGrids,MainDashboradContainer,ProfileImage, SideBarMenus,ProfileShower, SideBar, BoxForTotals, RowGridBox} from '../../Styles/CompStyles'
 import { getTopThreePaidEmployees,getEmployees } from '../../Actions'
 import {connect} from 'react-redux'
 import MainDashboardPropTypes from '../PropTypes/MainDashboardPropTypes'
-
 const MainDashboard:React.FC<MainDashboardPropTypes>=({emp:{data,totalEmployees,totalSalary},getTopThreePaidEmployees,getEmployees})=> {
    
     return (
         <MainRowGrids>
             <SideBar>
-                <AddButton 
+                <ProfileShower>
+                    <ProfileImage/>
+                    <p>Michael Mamaye</p>
+                </ProfileShower>
+                <SideBarMenus 
                     onClick={()=>{
                         getTopThreePaidEmployees() 
                     }}>
-                    Three Top Paid</AddButton><br/>
+                    Three Top Paid</SideBarMenus><br/>
                 
-                <AddButton 
+                <SideBarMenus 
                     onClick={()=>{
                         getEmployees() 
                     }}>
-                    EmployeesList</AddButton>
+                    All Employees</SideBarMenus>
 
             </SideBar>
             <MainDashboradContainer>
