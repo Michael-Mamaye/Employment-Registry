@@ -6,9 +6,11 @@ import {
     getTopThreePaidEmployeeActionCreator
 } from '../Types/ActionCreatorTypes'
 
-export const getEmployees:getEmployeeActionCreator=()=>{
+export const getEmployees:getEmployeeActionCreator=(queryString,ascOrDesc)=>{
     return{
-        type:'GET_EMPLOYEES'
+        type:'GET_EMPLOYEES',
+        queryString:queryString,
+        ascOrDesc:ascOrDesc
     }
 }
 export const getTopThreePaidEmployees:getTopThreePaidEmployeeActionCreator=()=>{

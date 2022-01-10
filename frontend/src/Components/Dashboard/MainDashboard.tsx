@@ -22,7 +22,7 @@ const MainDashboard:React.FC<MainDashboardPropTypes>=({emp:{data,totalEmployees,
                 
                 <SideBarMenus 
                     onClick={()=>{
-                        getEmployees() 
+                        getEmployees('startDate',1) 
                     }}>
                     All Employees</SideBarMenus>
 

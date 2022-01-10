@@ -3,6 +3,8 @@ import {Datum, ForEmployee} from './StoreTypes'
 //For Action Creator
 export interface getEmployeeActions{
     type:'GET_EMPLOYEES';
+    queryString:string;
+    ascOrDesc:Number;
 }
 export interface getTopThreePaidEmployeeActions{
     type:'GET_TOP_PAID_EMPLOYEES';

@@ -11,7 +11,8 @@ import {
     updateEmployeeActions,
     addEmployeeActions, 
     errorEmployeeActions,
-    setErrorsNullActions} from '../Types/ActionTypeConstants'
+    setErrorsNullActions,
+    getEmployeeActions} from '../Types/ActionTypeConstants'
 import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
 //Watchers
@@ -25,10 +26,9 @@ function* EmployeeSaga():Generator<StrictEffect>{
 }
 
 //Workers
-function* getAllEmployees(){
+function* getAllEmployees({queryString,ascOrDesc}:getEmployeeActions){
     try{
-       
-        const res:AxiosResponse<any> = yield call(axiosApi.get,'/')
+        const res:AxiosResponse<any> = yield call(axiosApi.get,`/?sortBy=${queryString}&ascOrDesc=${ascOrDesc}`)
         
         switch(res.status)
         {
@@ -48,6 +48,7 @@ function* getAllEmployees(){
 }
 function* getTopThreePaidEmployees(){
     try{
+
 
         const res:AxiosResponse<any> = yield call(axiosApi.get,'/topThreePaid')
         

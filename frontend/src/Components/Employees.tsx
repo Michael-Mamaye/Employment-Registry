@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import { Container, Span } from '../Styles/CompStyles'
+import { AddButton, Container, PaginationButton, Span } from '../Styles/CompStyles'
 import { Thead,Tbody,Th,Td,Tr, Table } from '../Styles/TableStyles'
 import UpdateEmployee from './UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
@@ -7,10 +7,11 @@ import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
 import {deleteEmployees,getEmployees} from '../Actions'
 import EmployeePropType from './PropTypes/EmployeePropType'
-import { ConfirmationDialog,ConfirmButton,RowGrids,ConfirmationTitle,SearchInput,FilterButton
+import { ConfirmationDialog,ConfirmButton,SelectButton,RowGrids,ConfirmationTitle,SearchInput,FilterButton
 } from '../Styles/CompStyles'
 import {Search} from '@styled-icons/fa-solid/Search'
 import { Datum } from '../Types/StoreTypes';
+import { isElementOfType } from 'react-dom/test-utils';
 
 
 const tableHeader=[
@@ -27,12 +28,12 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
     const [opener,setOpener]=React.useState(false)
-    const [filtered,setFiltered]=React.useState<Datum[]>()
-    
-    
+    const [filtered,setFiltered]=React.useState<Datum[]>() 
+    const [pageState,setPageState]=React.useState(1)
+    const [checked,setChecked]=React.useState('false')
     useEffect(()=>{
         
-        getEmployees();
+        getEmployees('startDate',1);
         //getting all employees
 
     },[getEmployees])
@@ -79,12 +80,41 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
       setFiltered(filt)
         
     }
-    const filterdList=()=>filtered?filtered:data;
-   
     const daysBetween =(theDate?:string)=>{
         const dateof=theDate?theDate:'';
         return data[0].startDate? new Date().getDate() - new Date(dateof).getDate():0;
     } 
+    const pagination=(toBePaged:Datum[],pages:number,rows:number)=>{
+        var trimStart=(pages-1)*rows;
+        var trimEnd=trimStart+rows;
+        var pagedData=toBePaged.slice(trimStart,trimEnd)
+
+        var page=Math.ceil(toBePaged.length/rows)
+
+        return{
+            'data':pagedData,
+            'pages':page
+        }
+    }
+    const filterdList=()=>filtered?filtered:data;
+    var state={
+        'data':filterdList(),
+        'page':pageState,
+        'rows':5,
+    }
+    const changePage=(changePages:string)=>{
+        if(changePages==="next")
+        {
+            if(pageState<(filterdList().length/state.rows))
+            setPageState(pageState+1)
+        }
+        else{
+            if(pageState>1)
+                setPageState(pageState-1)
+        }
+        console.log(pageState)
+    }
+    var allData=pagination(state.data,state.page,state.rows);
     
     return (
         <Container>
@@ -110,8 +140,30 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
             <FilterButton onClick={()=>handleFilter('female')}>Female</FilterButton>
             <FilterButton onClick={()=>{
                     setFiltered(undefined)
-                    getEmployees()
+                    getEmployees('startDate',1)
                     }}>All</FilterButton>
+            <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
+            <SelectButton id='orderBy' 
+                onChange={(e)=>{
+                    if(checked==='true')
+                    {
+                        getEmployees(e.target.value,-1)
+                    }
+                    getEmployees(e.target.value,1)
+
+                }}>
+                    <option value='name'>Name</option>
+                    <option value='salary'>Salary</option>
+                    <option value='dateOfBirth'>BirthDate</option>
+                    <option value='gender'>Gender</option>
+            </SelectButton>            
+            
+            <input type='checkbox'value={checked} 
+                onChange={()=>{
+                    checked==='true'?setChecked('false'):setChecked('true')}}
+                placeholder='Descending'/>
+            <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Descending</label>
+                
                 <Table>
                     <Thead>
                         <Tr>
@@ -122,7 +174,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                     </Thead>
 
                     <Tbody>
-                    {filterdList().map((thisData)=>(
+                    {allData.data.map((thisData)=>(
                         <Tr key={thisData._id}>
                             <Td>{thisData.name}</Td>
                             <Td>{thisData.email}</Td>
@@ -149,6 +201,10 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                     ))}
                     </Tbody>
                 </Table>
+                <div>
+                    <PaginationButton onClick={()=>{changePage("next")}}>next</PaginationButton>
+                    <PaginationButton onClick={()=>{changePage("previous")}}>previous</PaginationButton>
+                </div>
             </div>
             
 

@@ -78,6 +78,23 @@ export const FilterButton=styled.button`
         transform: scale(1.02);
     }
 `
+export const SelectButton=styled.select`
+    border: none;
+    height: 30px;
+    width: 80px;
+    font-weight: bold;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    padding: 5px;
+    background-color: rgb(239, 239, 239);
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.02);
+    }
+`
 export const MainTitle=styled.p`
     font-weight: bold;
     text-transform: capitalize;
@@ -105,6 +122,30 @@ export const AddButton=styled.button`
     }
 
 `;
+export const PaginationButton=styled.button`
+    border: 3px solid lightblue;
+    background-color: white;
+    height: 30px;
+    margin-top: 10px;
+    align-self: center;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-left:5px;
+    float: right;
+    box-shadow: -10px -10px 15px rgb(247,247,247),
+        10px 10px 15px rgb(247,247,247);
+    &:active{
+        border:none;
+    }
+    &:hover{
+        background-color: lightblue;
+        border: 3px solid lightblue;
+        cursor: pointer;
+        transform: scale(1.003);
+    }
+
+`;
+
 export const ProfileImage=styled.div`
     height:50px;
     width:50px;
