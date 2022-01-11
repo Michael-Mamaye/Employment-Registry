@@ -29,7 +29,11 @@ export const getAllEmployees= async (req,res)=>{
 
 export const getTopThreePaid=async(req,res)=>{
     try{
-        const employe=await Employees.find().sort({salary:-1}).limit(3);
+        const {sortBy, ascOrDesc}= req.query
+        const query={
+            [sortBy]:ascOrDesc
+        }
+        const employe=await Employees.find().sort(query).limit(3);
         const employeesNumber=await  Employees.find();
         const totalSalary=()=>{
             let total=0;

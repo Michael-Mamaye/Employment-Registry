@@ -8,7 +8,7 @@ import { Datum } from './StoreTypes';
 
 export type getEmployeeActionCreator = (queryString:string,ascOrDesc:Number) => getEmployeeActions;
 
-export type getTopThreePaidEmployeeActionCreator = () => getTopThreePaidEmployeeActions;
+export type getTopThreePaidEmployeeActionCreator = (queryString:string,ascOrDesc:Number) => getTopThreePaidEmployeeActions;
 
 export type deleteEmployeeActionCreator = (id: string) => deleteEmployeeActions;
         

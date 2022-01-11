@@ -13,9 +13,11 @@ export const getEmployees:getEmployeeActionCreator=(queryString,ascOrDesc)=>{
         ascOrDesc:ascOrDesc
     }
 }
-export const getTopThreePaidEmployees:getTopThreePaidEmployeeActionCreator=()=>{
+export const getTopThreePaidEmployees:getTopThreePaidEmployeeActionCreator=(queryString,ascOrDesc)=>{
     return{
-        type:'GET_TOP_PAID_EMPLOYEES'
+        type:'GET_TOP_PAID_EMPLOYEES',
+        queryString:queryString,
+        ascOrDesc:ascOrDesc
     }
 }
 export const deleteEmployees:deleteEmployeeActionCreator=(id)=>{

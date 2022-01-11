@@ -1,8 +1,6 @@
 import {
     getEmployeeActionCreator,
     deleteEmployeeActionCreator,
-    updateEmployeeActionCreator,
-    addEmployeeActionCreator,
     getTopThreePaidEmployeeActionCreator
 } from '../../Types/ActionCreatorTypes'
 import { ForEmployee } from '../../Types/StoreTypes';

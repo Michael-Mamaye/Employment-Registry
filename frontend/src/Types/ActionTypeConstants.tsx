@@ -8,6 +8,8 @@ export interface getEmployeeActions{
 }
 export interface getTopThreePaidEmployeeActions{
     type:'GET_TOP_PAID_EMPLOYEES';
+    queryString:string;
+    ascOrDesc:Number;
 }
 export interface addEmployeeActions{
     type:'ADD_EMPLOYEES';

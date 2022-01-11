@@ -34,7 +34,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
     useEffect(()=>{
         
         getEmployees('startDate',1);
-        getTopThreePaidEmployees();
+        getTopThreePaidEmployees('startDate',1);
         //getting all employees
 
     },[getEmployees,getTopThreePaidEmployees])
@@ -151,11 +151,17 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
                 onChange={(e)=>{
                     if(checked==='true')
                     {
-                        getEmployees(e.target.value,-1)
+                        if(isTopThree)
+                            getTopThreePaidEmployees(e.target.value,-1)
+                        else
+                            getEmployees(e.target.value,-1)
                     }
                     else
                     {
-                        getEmployees(e.target.value,1)
+                        if(isTopThree)
+                            getTopThreePaidEmployees(e.target.value,1)
+                        else
+                            getEmployees(e.target.value,1)
                     }
                 }}>
                     <option value='startDate'>Start Date</option>
