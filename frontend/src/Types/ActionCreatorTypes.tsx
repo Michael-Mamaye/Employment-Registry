@@ -6,7 +6,7 @@ import {getEmployeeActions,
         setErrorsNullActions} from './ActionTypeConstants'
 import { Datum } from './StoreTypes';
 
-export type getEmployeeActionCreator = (queryString:string,ascOrDesc:Number) => getEmployeeActions;
+export type getEmployeeActionCreator = (queryString:string,ascOrDesc:Number,filterBy?:string) => getEmployeeActions;
 
 export type getTopThreePaidEmployeeActionCreator = (queryString:string,ascOrDesc:Number) => getTopThreePaidEmployeeActions;
 

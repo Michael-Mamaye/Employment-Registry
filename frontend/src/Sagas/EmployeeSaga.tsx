@@ -28,9 +28,11 @@ function* EmployeeSaga():Generator<StrictEffect>{
 }
 
 //Workers
-function* getAllEmployees({queryString,ascOrDesc}:getEmployeeActions){
+function* getAllEmployees({queryString,ascOrDesc,filterBy}:getEmployeeActions){
     try{
-        const res:AxiosResponse<any> = yield call(axiosApi.get,`/?sortBy=${queryString}&ascOrDesc=${ascOrDesc}`)
+        
+        const res:AxiosResponse<any> = filterBy? yield call(axiosApi.get,`/?sortBy=${queryString}&ascOrDesc=${ascOrDesc}&filterBy=${filterBy}`):
+                yield call(axiosApi.get,`/?sortBy=${queryString}&ascOrDesc=${ascOrDesc}`)
         
         switch(res.status)
         {
@@ -131,7 +133,6 @@ function* updateEmployees({id,payload}:updateEmployeeActions){
                 yield put(data);
                 break;
             default:
-                console.log(res.data)
                 const Item:errorEmployeeActions={
                     type:'ERROR_EMPLOYEES',
                     payload:resp.data

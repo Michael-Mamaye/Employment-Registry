@@ -5,6 +5,7 @@ export interface getEmployeeActions{
     type:'GET_EMPLOYEES';
     queryString:string;
     ascOrDesc:Number;
+    filterBy?:string;
 }
 export interface getTopThreePaidEmployeeActions{
     type:'GET_TOP_PAID_EMPLOYEES';

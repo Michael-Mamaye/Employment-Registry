@@ -3,11 +3,12 @@ import Employees from "../model/employeeModel.js";
 //used to fetch employees
 export const getAllEmployees= async (req,res)=>{
     try{
-        const {sortBy, ascOrDesc}= req.query
+        const {sortBy, ascOrDesc,filterBy}= req.query
         const query={
             [sortBy]:ascOrDesc
         }
-        const employe = await Employees.find().sort(query);
+        const employe= filterBy ?  await Employees.find().sort(query).where('gender').equals(filterBy):
+             await Employees.find().sort(query);
         const totalSalary=()=>{
             let total=0;
             employe.filter((miki)=> total+=miki.salary)
@@ -29,11 +30,7 @@ export const getAllEmployees= async (req,res)=>{
 
 export const getTopThreePaid=async(req,res)=>{
     try{
-        const {sortBy, ascOrDesc}= req.query
-        const query={
-            [sortBy]:ascOrDesc
-        }
-        const employe=await Employees.find().sort(query).limit(3);
+        const employe=await Employees.find().sort({salary:-1}).limit(3);
         const employeesNumber=await  Employees.find();
         const totalSalary=()=>{
             let total=0;

@@ -1,17 +1,18 @@
 import React,{useEffect} from 'react'
-import {  Container, PaginationButton, Span } from '../Styles/CompStyles'
-import { Thead,Tbody,Th,Td,Tr, Table } from '../Styles/TableStyles'
-import UpdateEmployee from './UpdateEmployee'
+import {  Container, PaginationButton, Span } from '../../Styles/CompStyles'
+import { Thead,Tbody,Th,Td,Tr, Table } from '../../Styles/TableStyles'
+import UpdateEmployee from '../UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
-import {deleteEmployees,getEmployees,getTopThreePaidEmployees} from '../Actions'
-import EmployeePropType from './PropTypes/EmployeePropType'
-import { ConfirmationDialog,ConfirmButton,SelectButton,RowGrids,ConfirmationTitle,SearchInput,FilterButton
-} from '../Styles/CompStyles'
+import {deleteEmployees,getTopThreePaidEmployees} from '../../Actions'
+import { ConfirmationDialog,ConfirmButton,SelectButton,RowGrids,
+         ConfirmationTitle,SearchInput,FilterButton
+} from '../../Styles/CompStyles'
 import {Search} from '@styled-icons/fa-solid/Search'
-import { Datum } from '../Types/StoreTypes';
-
+import { Datum } from '../../Types/StoreTypes';
+import TopThreeTableProp from './TopThreeTableProp';
+import { MainRowGrids } from '../../Styles/CompStyles';
 
 const tableHeader=[
     {id:"name",label:'Name'},
@@ -22,7 +23,7 @@ const tableHeader=[
     {id:"PerWorkTotal",label:'PerWorkTotal'},
     {id:"action",label:'Actions'}
 ]
-const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,getTopThreePaidEmployees,deleteEmployees,isTopThree})=> {
+const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree},getTopThreePaidEmployees,deleteEmployees})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
@@ -30,16 +31,12 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
     const [filtered,setFiltered]=React.useState<Datum[]>() 
     const [pageState,setPageState]=React.useState(1)
     const [checked,setChecked]=React.useState('false')
-    const [genderFilter]=React.useState<string>()
-
-
     useEffect(()=>{
         
-        getEmployees('startDate',1);
         getTopThreePaidEmployees('startDate',1);
         //getting all employees
 
-    },[getEmployees,getTopThreePaidEmployees])
+    },[getTopThreePaidEmployees])
 
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
@@ -47,7 +44,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
     const checkIfNotNull=async (checkId?:string)=>{
         if(checkId!==undefined)
         {
-           let TobeBeUpdated= await data.filter((item)=>item._id===checkId);
+           let TobeBeUpdated= await topThree.filter((item)=>item._id===checkId);
             setToBeUpdated(TobeBeUpdated);
             await setCurrentId(checkId)
         }
@@ -64,8 +61,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
     const handleSearch=(searchText:string)=>{
 
         searchText=searchText.toLocaleLowerCase();
-        const theData=isTopThree?topThree:data;
-        const filt=theData.filter((item)=>(
+        const filt=topThree.filter((item)=>(
             item.name.toLocaleLowerCase().includes(searchText)||
             item.salary.toString().includes(searchText)||
             item.dateOfBirth.toLocaleLowerCase().includes(searchText)||
@@ -88,7 +84,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
     // }
     const daysBetween =(theDate?:string)=>{
         const dateof=theDate?theDate:'';
-        return data[0].startDate? new Date().getDate() - new Date(dateof).getDate():0;
+        return topThree[0].startDate? new Date().getDate() - new Date(dateof).getDate():0;
     } 
     const pagination=(toBePaged:Datum[],pages:number,rows:number)=>{
         var trimStart=(pages-1)*rows;
@@ -102,7 +98,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
             'pages':page
         }
     }
-    const filterdList=()=>filtered?filtered:(isTopThree?topThree:data);
+    const filterdList=()=>filtered?filtered:topThree;
     var state={
         'data':filterdList(),
         'page':pageState,
@@ -122,7 +118,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
     var allData=pagination(state.data,state.page,state.rows);
     
     return (
-        <Container>
+        <div style={{marginLeft:'-70vw',marginTop:'10vh'}}>
             {opener && 
                 <ConfirmationDialog>
                     <ConfirmationTitle>are you sure you want to delete ?</ConfirmationTitle>
@@ -141,30 +137,22 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
             }
             <div style={{height:'50vh'}}>
             <SearchInput onChange={(e)=>handleSearch(e.target.value)}/><Search style={{ marginLeft:'-25px',marginRight:'20px',height:'20px',width:'20px'}}/>
-            <FilterButton onClick={()=>getEmployees('startDate',1,'male')}>Male</FilterButton>
-            <FilterButton onClick={()=>getEmployees('startDate',1,'female')}>Female</FilterButton>
+            <FilterButton onClick={()=>getTopThreePaidEmployees('startDate',1)}>Male</FilterButton>
+            <FilterButton onClick={()=>getTopThreePaidEmployees('startDate',1)}>Female</FilterButton>
             <FilterButton onClick={()=>{
                     setFiltered(undefined)
-                    getEmployees('startDate',1)
+                    getTopThreePaidEmployees('startDate',1)
                     }}>All</FilterButton>
             <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
             <SelectButton id='orderBy' 
                 onChange={(e)=>{
                     if(checked==='true')
                     {
-                        if(!isTopThree)
-                            if(genderFilter)
-                                getEmployees(e.target.value,-1,genderFilter)
-                            else
-                                getEmployees(e.target.value,-1)
+                        getTopThreePaidEmployees(e.target.value,-1)
                     }
                     else
                     {
-                        if(!isTopThree)
-                            if(genderFilter)
-                                getEmployees(e.target.value,1,genderFilter)
-                            else
-                                getEmployees(e.target.value,1)
+                       getTopThreePaidEmployees(e.target.value,1)
                     }
                 }}>
                     <option value='startDate'>Start Date</option>
@@ -218,6 +206,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
                     ))}
                     </Tbody>
                 </Table>
+
                 <div>
                     <PaginationButton onClick={()=>{changePage("next")}}>next</PaginationButton>
                     <PaginationButton onClick={()=>{changePage("previous")}}>previous</PaginationButton>
@@ -226,7 +215,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
             
 
             {dialogOpener&&<UpdateEmployee toBeUpdated={toBeUpdated} currentId={currentId} handleClick={handleClick}/>}
-        </Container>
+        </div>
     )
 }
 
@@ -236,4 +225,4 @@ const mapStateToProps = (state: any) => {
 	};
 };
 
-export default connect(mapStateToProps, {getEmployees,getTopThreePaidEmployees,deleteEmployees})(Employees);
+export default connect(mapStateToProps, {getTopThreePaidEmployees,deleteEmployees})(TopThreeTable);

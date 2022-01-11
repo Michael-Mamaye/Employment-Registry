@@ -4,7 +4,7 @@ import { getTopThreePaidEmployees,getEmployees } from '../../Actions'
 import {connect} from 'react-redux'
 
 import { useNavigate } from 'react-router-dom';
-import SideBarMenuProps from '../PropTypes/sideBarMenuProps';
+import SideBarMenuProps from '../PropTypes/SideBarMenuProps';
 
 const SideBarMenu:React.FC<SideBarMenuProps>=()=> {
    const navigate=useNavigate();

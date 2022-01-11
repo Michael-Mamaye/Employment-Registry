@@ -2,13 +2,14 @@ import MainDashboard from "./Components/Dashboard/MainDashboard";
 import {Routes,Route} from 'react-router-dom'
 import { MainRowGrids } from "./Styles/CompStyles";
 import SideBarMenu from './Components/Dashboard/SiderBarMenu';
+import TopThreeTable from "./Components/TopThree/TopThreeTable";
 function App() {
   return (
     <MainRowGrids>
         <SideBarMenu/>
         <Routes>
             <Route path='/' element={<MainDashboard isTopThree={false}/>}/>
-            <Route path='/topThreePaid' element={<MainDashboard isTopThree={true}/>}/>
+            <Route path='/topThreePaid' element={<TopThreeTable/>}/>
         </Routes>
     </MainRowGrids>
   );
