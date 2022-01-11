@@ -20,7 +20,7 @@ let intialState:ForEmployee={
     totalEmployees:0,
     totalSalary:0,
     data:[],
-    error:''
+    topThree:[],
 }
 
 const empReducer=(state=intialState,action:actions)=> {
@@ -45,7 +45,7 @@ const empReducer=(state=intialState,action:actions)=> {
                 ...state,
                 totalSalary:action.payload.totalSalary,
                 totalEmployees:action.payload.totalEmployees,
-                data:action.payload.data                 
+                topThree:action.payload.data                 
             }
         case 'DELETED_EMPLOYEES':
             return {
@@ -62,7 +62,6 @@ const empReducer=(state=intialState,action:actions)=> {
         case 'ERROR_EMPLOYEES':
             return {
                 ...state,
-                error:action.payload.error
             }
         default:
             return state;

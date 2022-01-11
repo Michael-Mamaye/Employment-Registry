@@ -11,6 +11,8 @@ interface EmployeePropType{
     emp:ForEmployee
     getEmployees:getEmployeeActionCreator;
     deleteEmployees:deleteEmployeeActionCreator;
+    getTopThreePaidEmployees:getTopThreePaidEmployeeActionCreator;
+    isTopThree:boolean;
 }
 
 export default EmployeePropType;

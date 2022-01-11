@@ -8,6 +8,7 @@ interface MainDashboardPropTypes{
     emp:ForEmployee;
     getTopThreePaidEmployees:getTopThreePaidEmployeeActionCreator;
     getEmployees:getEmployeeActionCreator;
+    isTopThree:boolean;
 }
 
 export default MainDashboardPropTypes;

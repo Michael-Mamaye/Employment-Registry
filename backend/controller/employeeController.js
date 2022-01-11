@@ -3,12 +3,11 @@ import Employees from "../model/employeeModel.js";
 //used to fetch employees
 export const getAllEmployees= async (req,res)=>{
     try{
-        const queryParameterSortBy = req.query.sortBy
-        
-        const queryParameterAscOrDesc = req.query.ascOrDesc
-        console.log(queryParameterSortBy,queryParameterAscOrDesc)
-
-        const employe = await Employees.find().sort(queryParameterSortBy);
+        const {sortBy, ascOrDesc}= req.query
+        const query={
+            [sortBy]:ascOrDesc
+        }
+        const employe = await Employees.find().sort(query);
         const totalSalary=()=>{
             let total=0;
             employe.filter((miki)=> total+=miki.salary)

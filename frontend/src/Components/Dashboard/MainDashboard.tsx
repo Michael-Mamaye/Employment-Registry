@@ -1,32 +1,16 @@
 import React from 'react'
 import Employees from '../Employees'
 import EmployeesToHeader from '../EmployeesToHeader'
-import { MainRowGrids,MainDashboradContainer,ProfileImage, SideBarMenus,ProfileShower, SideBar, BoxForTotals, RowGridBox} from '../../Styles/CompStyles'
+import { MainRowGrids,MainDashboradContainer,BoxForTotals, RowGridBox} from '../../Styles/CompStyles'
 import { getTopThreePaidEmployees,getEmployees } from '../../Actions'
 import {connect} from 'react-redux'
 import MainDashboardPropTypes from '../PropTypes/MainDashboardPropTypes'
-const MainDashboard:React.FC<MainDashboardPropTypes>=({emp:{data,totalEmployees,totalSalary},getTopThreePaidEmployees,getEmployees})=> {
-   
+
+
+const MainDashboard:React.FC<MainDashboardPropTypes>=({emp:{totalEmployees,totalSalary},isTopThree})=> {
+  
     return (
         <MainRowGrids>
-            <SideBar>
-                <ProfileShower>
-                    <ProfileImage/>
-                    <p>Michael Mamaye</p>
-                </ProfileShower>
-                <SideBarMenus 
-                    onClick={()=>{
-                        getTopThreePaidEmployees() 
-                    }}>
-                    Three Top Paid</SideBarMenus><br/>
-                
-                <SideBarMenus 
-                    onClick={()=>{
-                        getEmployees('startDate',1) 
-                    }}>
-                    All Employees</SideBarMenus>
-
-            </SideBar>
             <MainDashboradContainer>
                 <RowGridBox>
                     <BoxForTotals>
@@ -43,7 +27,7 @@ const MainDashboard:React.FC<MainDashboardPropTypes>=({emp:{data,totalEmployees,
                     </BoxForTotals>
                 </RowGridBox>
                 <EmployeesToHeader/>
-                <Employees/>
+                <Employees isTopThree={isTopThree}/>
                 
              </MainDashboradContainer>
         </MainRowGrids>

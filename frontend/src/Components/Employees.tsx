@@ -1,17 +1,16 @@
 import React,{useEffect} from 'react'
-import { AddButton, Container, PaginationButton, Span } from '../Styles/CompStyles'
+import {  Container, PaginationButton, Span } from '../Styles/CompStyles'
 import { Thead,Tbody,Th,Td,Tr, Table } from '../Styles/TableStyles'
 import UpdateEmployee from './UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
-import {deleteEmployees,getEmployees} from '../Actions'
+import {deleteEmployees,getEmployees,getTopThreePaidEmployees} from '../Actions'
 import EmployeePropType from './PropTypes/EmployeePropType'
 import { ConfirmationDialog,ConfirmButton,SelectButton,RowGrids,ConfirmationTitle,SearchInput,FilterButton
 } from '../Styles/CompStyles'
 import {Search} from '@styled-icons/fa-solid/Search'
 import { Datum } from '../Types/StoreTypes';
-import { isElementOfType } from 'react-dom/test-utils';
 
 
 const tableHeader=[
@@ -23,7 +22,7 @@ const tableHeader=[
     {id:"PerWorkTotal",label:'PerWorkTotal'},
     {id:"action",label:'Actions'}
 ]
-const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmployees})=> {
+const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,getTopThreePaidEmployees,deleteEmployees,isTopThree})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
@@ -31,12 +30,14 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
     const [filtered,setFiltered]=React.useState<Datum[]>() 
     const [pageState,setPageState]=React.useState(1)
     const [checked,setChecked]=React.useState('false')
+    console.log(topThree,"this is is top three",isTopThree)
     useEffect(()=>{
         
         getEmployees('startDate',1);
+        getTopThreePaidEmployees();
         //getting all employees
 
-    },[getEmployees])
+    },[getEmployees,getTopThreePaidEmployees])
 
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
@@ -61,8 +62,8 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
     const handleSearch=(searchText:string)=>{
 
         searchText=searchText.toLocaleLowerCase();
-
-        const filt=data.filter((item)=>(
+        const theData=isTopThree?topThree:data;
+        const filt=theData.filter((item)=>(
             item.name.toLocaleLowerCase().includes(searchText)||
             item.salary.toString().includes(searchText)||
             item.dateOfBirth.toLocaleLowerCase().includes(searchText)||
@@ -72,9 +73,12 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
         setFiltered(filt)
     }
     const handleFilter=(filteringText:string)=>{
+        
         filteringText=filteringText.toLocaleLowerCase();
 
-        const filt=data.filter((item)=>(
+        const theData=isTopThree?topThree:data;
+
+        const filt=theData.filter((item)=>(
             item.gender.toLocaleLowerCase().startsWith(filteringText)
         ))
       setFiltered(filt)
@@ -96,7 +100,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
             'pages':page
         }
     }
-    const filterdList=()=>filtered?filtered:data;
+    const filterdList=()=>filtered?filtered:(isTopThree?topThree:data);
     var state={
         'data':filterdList(),
         'page':pageState,
@@ -149,12 +153,15 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data},getEmployees,deleteEmpl
                     {
                         getEmployees(e.target.value,-1)
                     }
-                    getEmployees(e.target.value,1)
-
+                    else
+                    {
+                        getEmployees(e.target.value,1)
+                    }
                 }}>
+                    <option value='startDate'>Start Date</option>
                     <option value='name'>Name</option>
                     <option value='salary'>Salary</option>
-                    <option value='dateOfBirth'>BirthDate</option>
+                    <option value='dateOfBirth'>Birth Date</option>
                     <option value='gender'>Gender</option>
             </SelectButton>            
             
@@ -220,4 +227,4 @@ const mapStateToProps = (state: any) => {
 	};
 };
 
-export default connect(mapStateToProps, {getEmployees,deleteEmployees})(Employees);
+export default connect(mapStateToProps, {getEmployees,getTopThreePaidEmployees,deleteEmployees})(Employees);

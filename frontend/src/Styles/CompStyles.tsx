@@ -81,7 +81,7 @@ export const FilterButton=styled.button`
 export const SelectButton=styled.select`
     border: none;
     height: 30px;
-    width: 80px;
+    width: 100px;
     font-weight: bold;
     border-top-right-radius:10px;
     border-bottom-left-radius:10px;
@@ -92,7 +92,6 @@ export const SelectButton=styled.select`
     background-color: rgb(239, 239, 239);
     &:hover{
         cursor: pointer;
-        transform: scale(1.02);
     }
 `
 export const MainTitle=styled.p`
@@ -132,8 +131,8 @@ export const PaginationButton=styled.button`
     font-weight: bold;
     margin-left:5px;
     float: right;
-    box-shadow: -10px -10px 15px rgb(247,247,247),
-        10px 10px 15px rgb(247,247,247);
+    box-shadow: -5px -5px 5px rgb(247,247,247),
+        5px 5px 5px rgb(247,247,247);
     &:active{
         border:none;
     }
@@ -175,6 +174,7 @@ export const SideBarMenus=styled.button`
     background-color: white;
     height: 30px;
     width: 100%;
+    margin-top: 20px;
     align-self: center;
     border-radius: 5px;
     font-weight: bold;

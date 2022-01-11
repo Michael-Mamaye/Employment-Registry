@@ -5,7 +5,7 @@ import {Provider} from 'react-redux'
 import {createStore,applyMiddleware} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
-
+import {BrowserRouter as Router} from 'react-router-dom'
 import reducers from './Reducers'
 import EmployeeSaga from './Sagas/EmployeeSaga'
 
@@ -18,11 +18,13 @@ const store=createStore(
 sagaMiddleware.run(EmployeeSaga)
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Router>
+      <Provider store={store}>
           <React.StrictMode>
             <App />
           </React.StrictMode>
-  </Provider>
+      </Provider>
+  </Router>
 ,
   document.getElementById('root')
 );
