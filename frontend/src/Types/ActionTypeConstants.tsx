@@ -1,6 +1,11 @@
-import {Datum, ForEmployee} from './StoreTypes'
+import {Datum,filterTypes, ForEmployee} from './StoreTypes'
 
 //For Action Creator
+export interface setUserStateActions{
+    type:'USER_STATE';
+    employeesState?:filterTypes;
+    topThreeState?:filterTypes;
+}
 export interface getEmployeeActions{
     type:'GET_EMPLOYEES';
     queryString:string;
@@ -11,6 +16,7 @@ export interface getTopThreePaidEmployeeActions{
     type:'GET_TOP_PAID_EMPLOYEES';
     queryString:string;
     ascOrDesc:Number;
+    filterBy?:string;
 }
 export interface addEmployeeActions{
     type:'ADD_EMPLOYEES';
@@ -65,5 +71,6 @@ export const ActionTypeConstants={
     GET_ALL_EMPLOYEE:'GET_EMPLOYEES',
     UPDATE_EMPLOYEE:'UPDATE_EMPLOYEES',
     GET_TOP_THREE_PAID_EMPLOYEE:'GET_TOP_PAID_EMPLOYEES',
-    ERROR_OF_EMPLOYEES:'ERROR_EMPLOYEES'
+    ERROR_OF_EMPLOYEES:'ERROR_EMPLOYEES',
+    SET_USER_STATE:'SET_USER_STATE'
 }

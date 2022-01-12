@@ -1,4 +1,4 @@
-import { takeLatest, put, call, StrictEffect } from 'redux-saga/effects'
+import { takeLatest, put, call, StrictEffect, select } from 'redux-saga/effects'
 import { 
         gotEmployeeActions,
         deletedEmployeeActions,
@@ -13,9 +13,11 @@ import {
     errorEmployeeActions,
     setErrorsNullActions,
     getEmployeeActions,
-    getTopThreePaidEmployeeActions} from '../Types/ActionTypeConstants'
+    getTopThreePaidEmployeeActions,
+    setUserStateActions} from '../Types/ActionTypeConstants'
 import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
+import { ForEmployee } from '../Types/StoreTypes';
 
 //Watchers
 function* EmployeeSaga():Generator<StrictEffect>{
@@ -25,12 +27,15 @@ function* EmployeeSaga():Generator<StrictEffect>{
     yield takeLatest(ActionTypeConstants.UPDATE_EMPLOYEE,updateEmployees);
     yield takeLatest(ActionTypeConstants.ADD_NEW_EMPLOYEE,addEmployees);
     yield takeLatest(ActionTypeConstants.ERROR_OF_EMPLOYEES,setErrorsNull);
+    yield takeLatest(ActionTypeConstants.SET_USER_STATE,setUserState);
 }
 
 //Workers
 function* getAllEmployees({queryString,ascOrDesc,filterBy}:getEmployeeActions){
+   
+    const filter:ForEmployee = yield select((state: any) => state.emp)
+    console.log(filter)
     try{
-        
         const res:AxiosResponse<any> = filterBy? yield call(axiosApi.get,`/?sortBy=${queryString}&ascOrDesc=${ascOrDesc}&filterBy=${filterBy}`):
                 yield call(axiosApi.get,`/?sortBy=${queryString}&ascOrDesc=${ascOrDesc}`)
         
@@ -50,11 +55,11 @@ function* getAllEmployees({queryString,ascOrDesc,filterBy}:getEmployeeActions){
     }
     
 }
-function* getTopThreePaidEmployees({queryString,ascOrDesc}:getTopThreePaidEmployeeActions){
+function* getTopThreePaidEmployees({queryString,ascOrDesc,filterBy}:getTopThreePaidEmployeeActions){
     try{
-
-
-        const res:AxiosResponse<any> = yield call(axiosApi.get,`/topThreePaid?sortBy=${queryString}&ascOrDesc=${ascOrDesc}`)
+        const res:AxiosResponse<any> = filterBy? yield call(axiosApi.get,`/topThreePaid?sortBy=${queryString}&ascOrDesc=${ascOrDesc}&filterBy=${filterBy}`):
+                        yield call(axiosApi.get,`/topThreePaid?sortBy=${queryString}&ascOrDesc=${ascOrDesc}`)
+        
         
         switch(res.status)
         {
@@ -153,6 +158,16 @@ function* updateEmployees({id,payload}:updateEmployeeActions){
 function* setErrorsNull(){
     const data:setErrorsNullActions={
         type:'ERROR_EMPLOYEES',
+    }
+
+    yield put(data);
+}
+function* setUserState({employeesState,topThreeState}:setUserStateActions){
+    const data:setUserStateActions={
+        type:'USER_STATE',
+        employeesState:employeesState,
+        topThreeState:topThreeState
+
     }
 
     yield put(data);

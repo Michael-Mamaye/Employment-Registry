@@ -4,6 +4,7 @@ import {gotEmployeeActions,
     deletedEmployeeActions,
     gotTopThreePaidEmployeeActions,
     errorEmployeeActions,
+    setUserStateActions,
 } from '../Types/ActionTypeConstants'
 import {ForEmployee} from '../Types/StoreTypes'
 
@@ -15,12 +16,26 @@ type actions=
         |deletedEmployeeActions
         |gotTopThreePaidEmployeeActions
         |errorEmployeeActions
-        
+        |setUserStateActions
+
 let intialState:ForEmployee={
     totalEmployees:0,
     totalSalary:0,
     data:[],
     topThree:[],
+    employeesState:{
+        page:1,
+        filterBy:'both',
+        sortBy:'startDate',
+        ascOrDesc:1
+    },
+    topThreeState: {
+        page:1,
+        filterBy:'both',
+        sortBy:'startDate',
+        ascOrDesc:1,
+    },
+
 }
 
 const empReducer=(state=intialState,action:actions)=> {
@@ -38,7 +53,7 @@ const empReducer=(state=intialState,action:actions)=> {
                 ...state,
                 totalSalary:action.payload.totalSalary,
                 totalEmployees:action.payload.totalEmployees,
-                data:action.payload.data               
+                data:action.payload.data,            
             }
         case 'GOT_TOP_PAID_EMPLOYEES':
             return {
@@ -62,6 +77,13 @@ const empReducer=(state=intialState,action:actions)=> {
         case 'ERROR_EMPLOYEES':
             return {
                 ...state,
+            }
+        case 'USER_STATE':
+            return{
+                ...state,
+                employeesState:action.employeesState,
+                topThreeState:action.topThreeState
+
             }
         default:
             return state;

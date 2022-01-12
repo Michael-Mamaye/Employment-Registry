@@ -1,18 +1,17 @@
 import React,{useEffect} from 'react'
-import {  Container, PaginationButton, Span } from '../../Styles/CompStyles'
+import {  PaginationButton, Span } from '../../Styles/CompStyles'
 import { Thead,Tbody,Th,Td,Tr, Table } from '../../Styles/TableStyles'
 import UpdateEmployee from '../UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
-import {deleteEmployees,getTopThreePaidEmployees} from '../../Actions'
+import {deleteEmployees,setUserStates,getTopThreePaidEmployees} from '../../Actions'
 import { ConfirmationDialog,ConfirmButton,SelectButton,RowGrids,
          ConfirmationTitle,SearchInput,FilterButton
 } from '../../Styles/CompStyles'
 import {Search} from '@styled-icons/fa-solid/Search'
 import { Datum } from '../../Types/StoreTypes';
 import TopThreeTableProp from './TopThreeTableProp';
-import { MainRowGrids } from '../../Styles/CompStyles';
 
 const tableHeader=[
     {id:"name",label:'Name'},
@@ -23,7 +22,7 @@ const tableHeader=[
     {id:"PerWorkTotal",label:'PerWorkTotal'},
     {id:"action",label:'Actions'}
 ]
-const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree},getTopThreePaidEmployees,deleteEmployees})=> {
+const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree},setUserStates,getTopThreePaidEmployees,deleteEmployees})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
@@ -31,12 +30,12 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree},getTopThreePai
     const [filtered,setFiltered]=React.useState<Datum[]>() 
     const [pageState,setPageState]=React.useState(1)
     const [checked,setChecked]=React.useState('false')
+
     useEffect(()=>{
-        
         getTopThreePaidEmployees('startDate',1);
         //getting all employees
 
-    },[getTopThreePaidEmployees])
+    },[getTopThreePaidEmployees,setUserStates])
 
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
@@ -225,4 +224,4 @@ const mapStateToProps = (state: any) => {
 	};
 };
 
-export default connect(mapStateToProps, {getTopThreePaidEmployees,deleteEmployees})(TopThreeTable);
+export default connect(mapStateToProps, {setUserStates,getTopThreePaidEmployees,deleteEmployees})(TopThreeTable);

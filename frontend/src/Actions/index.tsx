@@ -3,8 +3,17 @@ import {
     deleteEmployeeActionCreator,
     updateEmployeeActionCreator,
     addEmployeeActionCreator,
-    getTopThreePaidEmployeeActionCreator
+    getTopThreePaidEmployeeActionCreator,
+    setUserStateCreator
 } from '../Types/ActionCreatorTypes'
+
+export const setUserStates:setUserStateCreator=(employeesState,topThreeState)=>{
+    return{
+        type:'USER_STATE',
+        employeesState:employeesState,
+        topThreeState:topThreeState
+    }
+}
 
 export const getEmployees:getEmployeeActionCreator=(queryString,ascOrDesc,filterBy)=>{
     
@@ -15,11 +24,12 @@ export const getEmployees:getEmployeeActionCreator=(queryString,ascOrDesc,filter
         filterBy:filterBy,
     }
 }
-export const getTopThreePaidEmployees:getTopThreePaidEmployeeActionCreator=(queryString,ascOrDesc)=>{
+export const getTopThreePaidEmployees:getTopThreePaidEmployeeActionCreator=(queryString,ascOrDesc,filterBy)=>{
     return{
         type:'GET_TOP_PAID_EMPLOYEES',
         queryString:queryString,
-        ascOrDesc:ascOrDesc
+        ascOrDesc:ascOrDesc,
+        filterBy:filterBy
     }
 }
 export const deleteEmployees:deleteEmployeeActionCreator=(id)=>{

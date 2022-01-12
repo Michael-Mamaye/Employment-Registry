@@ -5,7 +5,7 @@ import UpdateEmployee from './UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
-import {deleteEmployees,getEmployees,getTopThreePaidEmployees} from '../Actions'
+import {deleteEmployees,setUserStates,getEmployees,getTopThreePaidEmployees} from '../Actions'
 import EmployeePropType from './PropTypes/EmployeePropType'
 import { ConfirmationDialog,ConfirmButton,SelectButton,RowGrids,ConfirmationTitle,SearchInput,FilterButton
 } from '../Styles/CompStyles'
@@ -22,25 +22,30 @@ const tableHeader=[
     {id:"PerWorkTotal",label:'PerWorkTotal'},
     {id:"action",label:'Actions'}
 ]
-const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,getTopThreePaidEmployees,deleteEmployees,isTopThree})=> {
+const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState},setUserStates,getEmployees,deleteEmployees,isTopThree})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
     const [opener,setOpener]=React.useState(false)
     const [filtered,setFiltered]=React.useState<Datum[]>() 
+    const [sortBy,setSortBy]=React.useState<string>('male')
     const [pageState,setPageState]=React.useState(1)
     const [checked,setChecked]=React.useState('false')
     const [genderFilter]=React.useState<string>()
-
-
+    
     useEffect(()=>{
         
-        getEmployees('startDate',1);
-        getTopThreePaidEmployees('startDate',1);
+        getEmployees('startDate',1)
+
         //getting all employees
 
-    },[getEmployees,getTopThreePaidEmployees])
-
+    },[getEmployees,employeesState])
+    const employeesStateToBeStored={
+        sortBy:sortBy,
+        filterBy:genderFilter,
+        ascOrDesc:checked,
+        page:pageState
+    }
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
     }
@@ -141,18 +146,23 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
             }
             <div style={{height:'50vh'}}>
             <SearchInput onChange={(e)=>handleSearch(e.target.value)}/><Search style={{ marginLeft:'-25px',marginRight:'20px',height:'20px',width:'20px'}}/>
-            <FilterButton onClick={()=>getEmployees('startDate',1,'male')}>Male</FilterButton>
-            <FilterButton onClick={()=>getEmployees('startDate',1,'female')}>Female</FilterButton>
-            <FilterButton onClick={()=>{
+            <FilterButton 
+                    onClick={async ()=>{
+                        await getEmployees('startDate',1,'male')
+                    }}>Male</FilterButton>
+            <FilterButton 
+                    onClick={async ()=>{
+                        await getEmployees('startDate',1,'female')
+                    }}>Female</FilterButton>
+            <FilterButton onClick={async ()=>{
                     setFiltered(undefined)
-                    getEmployees('startDate',1)
+                    await getEmployees('startDate',1)
                     }}>All</FilterButton>
             <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
             <SelectButton id='orderBy' 
                 onChange={(e)=>{
                     if(checked==='true')
                     {
-                        if(!isTopThree)
                             if(genderFilter)
                                 getEmployees(e.target.value,-1,genderFilter)
                             else
@@ -160,7 +170,6 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree},getEmployees,g
                     }
                     else
                     {
-                        if(!isTopThree)
                             if(genderFilter)
                                 getEmployees(e.target.value,1,genderFilter)
                             else
@@ -236,4 +245,4 @@ const mapStateToProps = (state: any) => {
 	};
 };
 
-export default connect(mapStateToProps, {getEmployees,getTopThreePaidEmployees,deleteEmployees})(Employees);
+export default connect(mapStateToProps, {getEmployees,setUserStates,getTopThreePaidEmployees,deleteEmployees})(Employees);

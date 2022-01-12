@@ -30,6 +30,12 @@ export const getAllEmployees= async (req,res)=>{
 
 export const getTopThreePaid=async(req,res)=>{
     try{
+        // const {sortBy, ascOrDesc,filterBy}= req.query
+        // const query={
+        //     [sortBy]:ascOrDesc
+        // }
+        // const employe= filterBy ?  await Employees.find().sort(query).where('gender').equals(filterBy):
+        //      await Employees.find().sort(query);
         const employe=await Employees.find().sort({salary:-1}).limit(3);
         const employeesNumber=await  Employees.find();
         const totalSalary=()=>{

@@ -3,12 +3,16 @@ import {getEmployeeActions,
         updateEmployeeActions,
         addEmployeeActions,
         getTopThreePaidEmployeeActions, 
-        setErrorsNullActions} from './ActionTypeConstants'
-import { Datum } from './StoreTypes';
+        setErrorsNullActions,
+        setUserStateActions
+} from './ActionTypeConstants'
+import { Datum,filterTypes } from './StoreTypes';
+
+export type setUserStateCreator=(employeesState?:filterTypes,topThreeState?:filterTypes)=>setUserStateActions;
 
 export type getEmployeeActionCreator = (queryString:string,ascOrDesc:Number,filterBy?:string) => getEmployeeActions;
 
-export type getTopThreePaidEmployeeActionCreator = (queryString:string,ascOrDesc:Number) => getTopThreePaidEmployeeActions;
+export type getTopThreePaidEmployeeActionCreator = (queryString:string,ascOrDesc:Number,filterBy?:string) => getTopThreePaidEmployeeActions;
 
 export type deleteEmployeeActionCreator = (id: string) => deleteEmployeeActions;
         
