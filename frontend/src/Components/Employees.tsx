@@ -28,24 +28,37 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState}
     const [toBeUpdated,setToBeUpdated]=React.useState({});
     const [opener,setOpener]=React.useState(false)
     const [filtered,setFiltered]=React.useState<Datum[]>() 
-    const [sortBy,setSortBy]=React.useState<string>('male')
+    const [sortBy,setSortBy]=React.useState<string>('startDate')
     const [pageState,setPageState]=React.useState(1)
-    const [checked,setChecked]=React.useState('false')
-    const [genderFilter]=React.useState<string>()
+    var asc='false'
+    if(employeesState.ascOrDesc===-1)
+    {
+        asc='true'
+    }
+    const [checked,setChecked]=React.useState(asc)
+    const [genderFilter,setGenderFilter]=React.useState<string>()
+    const [isChanged,setIsChanged]=React.useState(false)
     
     useEffect(()=>{
-        
-        getEmployees('startDate',1)
-
+        getEmployees()
+        if(isChanged){
+            setUserStates({
+                sortBy:sortBy,
+                filterBy:genderFilter?genderFilter:'both',
+                ascOrDesc:checked==='true'?-1:1
+            })
+        getEmployees()
+        }
         //getting all employees
-
-    },[getEmployees,employeesState])
-    const employeesStateToBeStored={
-        sortBy:sortBy,
-        filterBy:genderFilter,
-        ascOrDesc:checked,
-        page:pageState
-    }
+    },[getEmployees,isChanged,sortBy,genderFilter,checked,pageState,setUserStates])
+   
+    // const employeesStateToBeStored={
+    //     sortBy:sortBy,
+    //     filterBy:genderFilter,
+    //     ascOrDesc:checked,
+    //     page:pageState
+    // }
+    
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
     }
@@ -148,34 +161,51 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState}
             <SearchInput onChange={(e)=>handleSearch(e.target.value)}/><Search style={{ marginLeft:'-25px',marginRight:'20px',height:'20px',width:'20px'}}/>
             <FilterButton 
                     onClick={async ()=>{
-                        await getEmployees('startDate',1,'male')
+                        await setGenderFilter('male')
+                        
+                        await setIsChanged(true);
+                        
+                        await getEmployees()
+                        
                     }}>Male</FilterButton>
             <FilterButton 
                     onClick={async ()=>{
-                        await getEmployees('startDate',1,'female')
+                        await setGenderFilter('female')
+                        
+                        await setIsChanged(true);
+
+                        await getEmployees()
                     }}>Female</FilterButton>
             <FilterButton onClick={async ()=>{
                     setFiltered(undefined)
-                    await getEmployees('startDate',1)
+                    await getEmployees()
                     }}>All</FilterButton>
             <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
+            
             <SelectButton id='orderBy' 
-                onChange={(e)=>{
+                onChange={async (e)=>{
+                    
+                    await setSortBy(e.target.value)
+                    
+                    await setIsChanged(true);
+
                     if(checked==='true')
                     {
                             if(genderFilter)
-                                getEmployees(e.target.value,-1,genderFilter)
+                                getEmployees()
                             else
-                                getEmployees(e.target.value,-1)
+                                getEmployees()
                     }
                     else
                     {
                             if(genderFilter)
-                                getEmployees(e.target.value,1,genderFilter)
+                                getEmployees()
                             else
-                                getEmployees(e.target.value,1)
+                                getEmployees()
                     }
-                }}>
+                }}
+                value={employeesState.sortBy}
+                >
                     <option value='startDate'>Start Date</option>
                     <option value='name'>Name</option>
                     <option value='salary'>Salary</option>
@@ -183,10 +213,13 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState}
                     <option value='gender'>Gender</option>
             </SelectButton>            
             
-            <input type='checkbox'value={checked} 
+            <input type='checkbox'value={checked} checked={checked==='true'?true:false}
                 style={{marginLeft:'10px'}}
                 onChange={()=>{
-                    checked==='true'?setChecked('false'):setChecked('true')}}
+                    
+                    checked==='true'?setChecked('false'):setChecked('true')
+                    setIsChanged(true)
+                }}
                 placeholder='Descending'/>
             <label style={{marginLeft:'0px',fontWeight:'bold'}} htmlFor='orderBy'>Descending</label>
                 

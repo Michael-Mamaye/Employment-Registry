@@ -7,6 +7,7 @@ export const getAllEmployees= async (req,res)=>{
         const query={
             [sortBy]:ascOrDesc
         }
+        console.log(filterBy)
         const employe= filterBy ?  await Employees.find().sort(query).where('gender').equals(filterBy):
              await Employees.find().sort(query);
         const totalSalary=()=>{

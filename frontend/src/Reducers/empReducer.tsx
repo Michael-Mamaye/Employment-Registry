@@ -24,13 +24,11 @@ let intialState:ForEmployee={
     data:[],
     topThree:[],
     employeesState:{
-        page:1,
         filterBy:'both',
         sortBy:'startDate',
         ascOrDesc:1
     },
     topThreeState: {
-        page:1,
         filterBy:'both',
         sortBy:'startDate',
         ascOrDesc:1,

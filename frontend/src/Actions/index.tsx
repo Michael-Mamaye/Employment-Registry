@@ -15,13 +15,10 @@ export const setUserStates:setUserStateCreator=(employeesState,topThreeState)=>{
     }
 }
 
-export const getEmployees:getEmployeeActionCreator=(queryString,ascOrDesc,filterBy)=>{
+export const getEmployees:getEmployeeActionCreator=()=>{
     
     return{
         type:'GET_EMPLOYEES',
-        queryString:queryString,
-        ascOrDesc:ascOrDesc,
-        filterBy:filterBy,
     }
 }
 export const getTopThreePaidEmployees:getTopThreePaidEmployeeActionCreator=(queryString,ascOrDesc,filterBy)=>{

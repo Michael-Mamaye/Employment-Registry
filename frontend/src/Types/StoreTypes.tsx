@@ -19,7 +19,6 @@ export type ForEmployee={
 }
 
 export type filterTypes={
-    page:number,
     filterBy:string,
     sortBy:string,
     ascOrDesc:number

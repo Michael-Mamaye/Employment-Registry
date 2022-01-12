@@ -10,7 +10,7 @@ import { Datum,filterTypes } from './StoreTypes';
 
 export type setUserStateCreator=(employeesState?:filterTypes,topThreeState?:filterTypes)=>setUserStateActions;
 
-export type getEmployeeActionCreator = (queryString:string,ascOrDesc:Number,filterBy?:string) => getEmployeeActions;
+export type getEmployeeActionCreator = () => getEmployeeActions;
 
 export type getTopThreePaidEmployeeActionCreator = (queryString:string,ascOrDesc:Number,filterBy?:string) => getTopThreePaidEmployeeActions;
 
