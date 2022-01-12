@@ -13,7 +13,9 @@ import {
     errorEmployeeActions,
     setErrorsNullActions,
     getTopThreePaidEmployeeActions,
-    setUserStateActions} from '../Types/ActionTypeConstants'
+    setUserStateActions
+} from '../Types/ActionTypeConstants'
+
 import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
 import { ForEmployee } from '../Types/StoreTypes';
@@ -33,11 +35,10 @@ function* EmployeeSaga():Generator<StrictEffect>{
 function* getAllEmployees(){
    
     const filter:ForEmployee = yield select((state: any) => state.emp)
-    console.log(filter.employeesState)
+
     console.log(filter)
 
     const filt=filter.employeesState;
-    console.log(filt.filterBy)
     try{
         const res:AxiosResponse<any> =yield call(axiosApi.get,`/?sortBy=${filt.sortBy}&ascOrDesc=${filt.ascOrDesc}&filterBy=${filt.filterBy}`)
                 
@@ -59,10 +60,16 @@ function* getAllEmployees(){
     
 }
 function* getTopThreePaidEmployees({queryString,ascOrDesc,filterBy}:getTopThreePaidEmployeeActions){
+    const filter:ForEmployee = yield select((state: any) => state.emp)
+    console.log(filter.topThreeState)
+    console.log(filter)
+
+    const filt=filter.topThreeState;
+    console.log(filt.filterBy)
+
     try{
-        const res:AxiosResponse<any> = filterBy? yield call(axiosApi.get,`/topThreePaid?sortBy=${queryString}&ascOrDesc=${ascOrDesc}&filterBy=${filterBy}`):
-                        yield call(axiosApi.get,`/topThreePaid?sortBy=${queryString}&ascOrDesc=${ascOrDesc}`)
-        
+        const res:AxiosResponse<any> = yield call(axiosApi.get,`/topThreePaid?sortBy=${filt.sortBy}&ascOrDesc=${filt.ascOrDesc}&filterBy=${filt.filterBy}`);
+                        
         
         switch(res.status)
         {

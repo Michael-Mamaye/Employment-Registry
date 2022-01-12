@@ -7,8 +7,7 @@ export const getAllEmployees= async (req,res)=>{
         const query={
             [sortBy]:ascOrDesc
         }
-        console.log(filterBy)
-        const employe= filterBy ?  await Employees.find().sort(query).where('gender').equals(filterBy):
+        const employe= filterBy!=='both' ?  await Employees.find().sort(query).where('gender').equals(filterBy):
              await Employees.find().sort(query);
         const totalSalary=()=>{
             let total=0;
@@ -31,12 +30,6 @@ export const getAllEmployees= async (req,res)=>{
 
 export const getTopThreePaid=async(req,res)=>{
     try{
-        // const {sortBy, ascOrDesc,filterBy}= req.query
-        // const query={
-        //     [sortBy]:ascOrDesc
-        // }
-        // const employe= filterBy ?  await Employees.find().sort(query).where('gender').equals(filterBy):
-        //      await Employees.find().sort(query);
         const employe=await Employees.find().sort({salary:-1}).limit(3);
         const employeesNumber=await  Employees.find();
         const totalSalary=()=>{

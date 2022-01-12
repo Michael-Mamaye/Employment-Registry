@@ -22,7 +22,7 @@ const tableHeader=[
     {id:"PerWorkTotal",label:'PerWorkTotal'},
     {id:"action",label:'Actions'}
 ]
-const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState},setUserStates,getEmployees,deleteEmployees,isTopThree})=> {
+const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesState},setUserStates,getEmployees,deleteEmployees,isTopThree})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
@@ -40,17 +40,19 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState}
     const [isChanged,setIsChanged]=React.useState(false)
     
     useEffect(()=>{
-        getEmployees()
+        
         if(isChanged){
             setUserStates({
                 sortBy:sortBy,
                 filterBy:genderFilter?genderFilter:'both',
                 ascOrDesc:checked==='true'?-1:1
-            })
+            },topThreeState
+            )
         getEmployees()
         }
+        getEmployees()
         //getting all employees
-    },[getEmployees,isChanged,sortBy,genderFilter,checked,pageState,setUserStates])
+    },[getEmployees,isChanged,topThreeState,sortBy,genderFilter,checked,pageState,setUserStates])
    
     // const employeesStateToBeStored={
     //     sortBy:sortBy,
@@ -82,8 +84,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState}
     const handleSearch=(searchText:string)=>{
 
         searchText=searchText.toLocaleLowerCase();
-        const theData=isTopThree?topThree:data;
-        const filt=theData.filter((item)=>(
+        const filt=data.filter((item)=>(
             item.name.toLocaleLowerCase().includes(searchText)||
             item.salary.toString().includes(searchText)||
             item.dateOfBirth.toLocaleLowerCase().includes(searchText)||
@@ -120,7 +121,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState}
             'pages':page
         }
     }
-    const filterdList=()=>filtered?filtered:(isTopThree?topThree:data);
+    const filterdList=()=>filtered?filtered:data
     var state={
         'data':filterdList(),
         'page':pageState,
@@ -178,6 +179,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThree,employeesState}
                     }}>Female</FilterButton>
             <FilterButton onClick={async ()=>{
                     setFiltered(undefined)
+                    await setGenderFilter('both')
                     await getEmployees()
                     }}>All</FilterButton>
             <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
