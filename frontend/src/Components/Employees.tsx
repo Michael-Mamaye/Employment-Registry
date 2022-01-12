@@ -139,7 +139,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
         }
     }
     var allData=pagination(state.data,state.page,state.rows);
-    
+      
     return (
         <Container>
             {opener && 
