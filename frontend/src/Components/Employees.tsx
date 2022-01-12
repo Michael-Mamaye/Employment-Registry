@@ -223,6 +223,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                     setIsChanged(true)
                 }}
                 placeholder='Descending'/>
+            
             <label style={{marginLeft:'0px',fontWeight:'bold'}} htmlFor='orderBy'>Descending</label>
                 
                 <Table>
@@ -262,6 +263,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                     ))}
                     </Tbody>
                 </Table>
+                
                 <div>
                     <PaginationButton onClick={()=>{changePage("next")}}>next</PaginationButton>
                     <PaginationButton onClick={()=>{changePage("previous")}}>previous</PaginationButton>
