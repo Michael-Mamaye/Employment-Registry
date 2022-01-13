@@ -5,6 +5,7 @@ import {gotEmployeeActions,
     gotTopThreePaidEmployeeActions,
     errorEmployeeActions,
     setUserStateActions,
+    gotUsersByNameActions,
 } from '../Types/ActionTypeConstants'
 import {ForEmployee} from '../Types/StoreTypes'
 
@@ -16,6 +17,7 @@ type actions=
         |deletedEmployeeActions
         |gotTopThreePaidEmployeeActions
         |errorEmployeeActions
+        |gotUsersByNameActions
         |setUserStateActions
 
 let intialState:ForEmployee={
@@ -33,7 +35,7 @@ let intialState:ForEmployee={
         sortBy:'startDate',
         ascOrDesc:1,
     },
-
+    namedData:[],
 }
 
 const empReducer=(state=intialState,action:actions)=> {
@@ -81,7 +83,11 @@ const empReducer=(state=intialState,action:actions)=> {
                 ...state,
                 employeesState:action.employeesState,
                 topThreeState:action.topThreeState
-
+            }
+        case 'GOT_DATA_BY_NAME':
+            return{
+                ...state,
+                namedData:action.payload.data
             }
         default:
             return state;

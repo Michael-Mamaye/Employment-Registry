@@ -6,6 +6,10 @@ export interface setUserStateActions{
     employeesState?:filterTypes;
     topThreeState?:filterTypes;
 }
+export interface getUsersByNameActions{
+    type:'GET_DATA_BY_NAME';
+    name:string
+}
 export interface getEmployeeActions{
     type:'GET_EMPLOYEES';
 }
@@ -36,6 +40,10 @@ export interface setErrorsNullActions{
 //For Reducer
 export interface gotEmployeeActions{
     type:'GOT_EMPLOYEES';
+    payload:ForEmployee;
+}
+export interface gotUsersByNameActions{
+    type:'GOT_DATA_BY_NAME';
     payload:ForEmployee;
 }
 export interface gotTopThreePaidEmployeeActions{
@@ -69,5 +77,7 @@ export const ActionTypeConstants={
     UPDATE_EMPLOYEE:'UPDATE_EMPLOYEES',
     GET_TOP_THREE_PAID_EMPLOYEE:'GET_TOP_PAID_EMPLOYEES',
     ERROR_OF_EMPLOYEES:'ERROR_EMPLOYEES',
-    SET_USER_STATE:'SET_USER_STATE'
+    SET_USER_STATE:'SET_USER_STATE',
+    GET_DATA_BY_NAME:'GET_DATA_BY_NAME',
+
 }

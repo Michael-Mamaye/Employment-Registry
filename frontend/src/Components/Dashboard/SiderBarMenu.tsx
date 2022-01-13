@@ -29,10 +29,15 @@ const SideBarMenu:React.FC<SideBarMenuProps>=()=> {
                         navigate('/topThreePaid')
                     }}
                     >
-                    Three Top Paid</SideBarMenus><br/>
+                    Three Top Paid</SideBarMenus>
+                
+                <SideBarMenus 
+                    onClick={()=>{
+                        navigate('/paySalary') 
+                    }}>
+                    Pay Salaries</SideBarMenus>
                 
                 
-
             </SideBar>
             
         </MainRowGrids>

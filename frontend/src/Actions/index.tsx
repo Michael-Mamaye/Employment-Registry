@@ -4,7 +4,8 @@ import {
     updateEmployeeActionCreator,
     addEmployeeActionCreator,
     getTopThreePaidEmployeeActionCreator,
-    setUserStateCreator
+    setUserStateCreator,
+    getUsersByNameActionCreator
 } from '../Types/ActionCreatorTypes'
 
 export const setUserStates:setUserStateCreator=(employeesState,topThreeState)=>{
@@ -12,6 +13,13 @@ export const setUserStates:setUserStateCreator=(employeesState,topThreeState)=>{
         type:'USER_STATE',
         employeesState:employeesState,
         topThreeState:topThreeState
+    }
+}
+export const getUsersByName:getUsersByNameActionCreator=(name)=>{
+    
+    return{
+        type:'GET_DATA_BY_NAME',
+        name:name,
     }
 }
 

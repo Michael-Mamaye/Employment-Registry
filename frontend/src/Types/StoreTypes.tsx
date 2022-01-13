@@ -15,6 +15,7 @@ export type ForEmployee={
     topThree:Datum[];
     employeesState:filterTypes;
     topThreeState:filterTypes;
+    namedData:Datum[];
     
 }
 

@@ -13,7 +13,9 @@ import {
     errorEmployeeActions,
     setErrorsNullActions,
     getTopThreePaidEmployeeActions,
-    setUserStateActions
+    setUserStateActions,
+    getUsersByNameActions,
+    gotUsersByNameActions
 } from '../Types/ActionTypeConstants'
 
 import axiosApi from '../Api/axiosAPi'
@@ -29,6 +31,7 @@ function* EmployeeSaga():Generator<StrictEffect>{
     yield takeLatest(ActionTypeConstants.ADD_NEW_EMPLOYEE,addEmployees);
     yield takeLatest(ActionTypeConstants.ERROR_OF_EMPLOYEES,setErrorsNull);
     yield takeLatest(ActionTypeConstants.SET_USER_STATE,setUserState);
+    yield takeLatest(ActionTypeConstants.GET_DATA_BY_NAME,getUsersByName);
 }
 
 //Workers
@@ -58,6 +61,28 @@ function* getAllEmployees(){
         console.log(error)
     }
     
+}
+function* getUsersByName({name}:getUsersByNameActions){
+    try{
+       
+        const res:AxiosResponse<any> = yield call(axiosApi.get,`/byname?name=${name}`);
+                        
+        console.log(res.data)
+        
+        switch(res.status)
+        {
+            case 200:
+                const data:gotUsersByNameActions={
+                    type:'GOT_DATA_BY_NAME',
+                    payload: res.data
+                }
+                yield put(data);
+        }
+    }
+    catch(error)
+    {
+        console.log(error)
+    }
 }
 function* getTopThreePaidEmployees({queryString,ascOrDesc,filterBy}:getTopThreePaidEmployeeActions){
     const filter:ForEmployee = yield select((state: any) => state.emp)

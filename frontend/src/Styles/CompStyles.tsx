@@ -1,5 +1,64 @@
 import styled from "styled-components"
 
+export const StyledP=styled.p`
+    padding:2px;
+    background-color: #ececec;
+    width: 100%;
+    margin-top: 5px;
+    &:hover{
+        cursor: pointer;
+        background-color: #e2e1e1;
+      
+    }
+`
+export const AutoComplete=styled.div`
+    z-index: 100;
+    position: fixed;
+    text-align: center;
+    padding:10px;
+    padding-left:10px;
+    width: 170px;
+    border: 0.5px solid #535353;
+    scroll-behavior:smooth;
+    scrollbar-::before{
+        scrollbar-width: 1px;
+        
+    }
+    border-top: none;
+    margin-left: -60px;
+    overflow-y:scroll;
+    background-color: white;
+    box-shadow: 0.1px 0.1px 0.1px rgb(230,230,230);
+    max-height: 110px;
+`;
+export const DeleteButton=styled.button`
+    margin-top:20px;
+    margin-left: 40px;
+    padding:5px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: #ff1e00c8;
+    font-weight: bolder;
+    color: white;
+    &:hover{
+        cursor: pointer;
+        background-color: #ff1e00d6;
+    }
+`
+export const EditButton=styled.button`
+    margin-top:20px;
+    margin-left: 40px;
+    padding:10px;
+    background-color: #00d9ffc7;
+`
+export const DecoratedText=styled.p`
+    padding: 10px;
+    font-weight: bolder;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: auto;
+    margin-left: 10px;
+`
 export const Container=styled.div`
     margin: auto;
     display: flex;
@@ -8,6 +67,15 @@ export const Container=styled.div`
     align-self: center;
     
 `;
+export const DashboardGrids=styled.div`
+    margin-left:-70vw;
+    margin-top:10vh;
+`
+export const EmpProfileImage=styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+`
 export const BoxForTotals=styled.div`
     display: flex;
     flex-direction: column;
@@ -50,7 +118,6 @@ export const RowGridContainer=styled.div`
     width: 100%;
     margin-bottom: -10px;
     align-self: center;
-    
 `;
 export const SearchInput=styled.input`
     border: none;

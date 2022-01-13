@@ -4,11 +4,14 @@ import {getEmployeeActions,
         addEmployeeActions,
         getTopThreePaidEmployeeActions, 
         setErrorsNullActions,
-        setUserStateActions
+        setUserStateActions,
+        getUsersByNameActions
 } from './ActionTypeConstants'
 import { Datum,filterTypes } from './StoreTypes';
 
 export type setUserStateCreator=(employeesState?:filterTypes,topThreeState?:filterTypes)=>setUserStateActions;
+
+export type getUsersByNameActionCreator=(name:string)=>getUsersByNameActions
 
 export type getEmployeeActionCreator = () => getEmployeeActions;
 

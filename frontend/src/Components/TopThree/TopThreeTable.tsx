@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import {  PaginationButton, Span } from '../../Styles/CompStyles'
+import {  DashboardGrids, PaginationButton, Span } from '../../Styles/CompStyles'
 import { Thead,Tbody,Th,Td,Tr, Table } from '../../Styles/TableStyles'
 import UpdateEmployee from '../UpdateEmployee'
 import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
@@ -133,7 +133,7 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},
     var allData=pagination(state.data,state.page,state.rows);
     
     return (
-        <div style={{marginLeft:'-70vw',marginTop:'10vh'}}>
+        <DashboardGrids>
             {opener && 
                 <ConfirmationDialog>
                     <ConfirmationTitle>are you sure you want to delete ?</ConfirmationTitle>
@@ -240,7 +240,7 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},
             
 
             {dialogOpener&&<UpdateEmployee toBeUpdated={toBeUpdated} currentId={currentId} handleClick={handleClick}/>}
-        </div>
+        </DashboardGrids>
     )
 }
 

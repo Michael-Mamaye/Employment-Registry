@@ -11,7 +11,7 @@ import { ConfirmationDialog,ConfirmButton,SelectButton,RowGrids,ConfirmationTitl
 } from '../Styles/CompStyles'
 import {Search} from '@styled-icons/fa-solid/Search'
 import { Datum } from '../Types/StoreTypes';
-
+import {useNavigate} from 'react-router-dom'
 
 const tableHeader=[
     {id:"name",label:'Name'},
@@ -24,6 +24,7 @@ const tableHeader=[
 ]
 const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesState},setUserStates,getEmployees,deleteEmployees,isTopThree})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
+    const navigate=useNavigate();
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
     const [opener,setOpener]=React.useState(false)
@@ -237,7 +238,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
 
                     <Tbody>
                     {allData.data.map((thisData)=>(
-                        <Tr key={thisData._id}>
+                        <Tr key={thisData._id} onClick={()=>{navigate(`/employees/${thisData._id}`)}}>
                             <Td>{thisData.name}</Td>
                             <Td>{thisData.email}</Td>
                             <Td>{thisData.dateOfBirth}</Td>

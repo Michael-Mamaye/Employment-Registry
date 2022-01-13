@@ -1,5 +1,18 @@
 import Employees from "../model/employeeModel.js";
-
+//used to fetch employees by their name
+export const getUsersByName=async(req,res)=>{
+    try{
+        const {name}=req.query
+        const employe=await Employees.find({'name':{'$regex':`${name}`}});
+        res.status(200).json({
+            data:employe
+        })
+    }
+    catch(error)
+    {
+        res.status(400).json({error})
+    }
+}
 //used to fetch employees
 export const getAllEmployees= async (req,res)=>{
     try{
