@@ -43,7 +43,7 @@ const EmployeeDetail:React.FC<EmployeeDetailProp>=({emp:{data},getEmployees})=> 
                     Items.map((Item)=>(
                         <div key={Item._id}>
                             <DecoratedText>{Item.name}</DecoratedText>
-                            <DecoratedText>Salary<span style={{marginLeft:'50px'}}>{Item.salary}</span></DecoratedText>
+                            <DecoratedText>Salary<span style={{marginLeft:'50px'}}>{Item.salary.salary}</span></DecoratedText>
                             <DecoratedText>birthDate<span style={{marginLeft:'50px'}}>{Item.dateOfBirth}</span></DecoratedText>
                             <DecoratedText>gender<span style={{marginLeft:'50px'}}>{Item.gender}</span></DecoratedText>
                         </div>

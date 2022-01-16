@@ -40,7 +40,9 @@ const EmployeeDetail:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName}
             <div style={{marginLeft:'10vw',marginTop:'20vh'}}>
                 <RowGrids>
                     <Label htmlFor='searchName'> Name: </Label>
-                    <Input id='searchName' value={filtered?filtered[0]?.name:nameValue}
+                    <Input id='searchName'
+                        autoComplete='off'
+                        value={filtered?filtered[0]?.name:nameValue}
                         onClick={()=>{
                             setFiltered(undefined)
                         }}
@@ -68,7 +70,7 @@ const EmployeeDetail:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName}
 
                 <RowGrids >
                     <Label htmlFor='salaries'> Salary: </Label>
-                    <Input disabled={false} id='salaries'value={filtered?filtered[0]?.salary:''}></Input>
+                    <Input disabled={false} id='salaries'value={filtered?filtered[0]?.salary.salary:''}></Input>
                 </RowGrids>
                 <RowGrids>
                     <Label htmlFor='payment'> start Date: </Label>

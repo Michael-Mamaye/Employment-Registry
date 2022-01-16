@@ -30,8 +30,16 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
             setError('All Fields Are Required')
         }
         else{ 
-            console.log('this are the values',values)
-            await dispatch(addEmployees(values))
+            const theValues={
+                name:values.name,
+                dateOfBirth:values.dateOfBirth,
+                salary:{
+                    salary:values.salary
+                },
+                gender:values.gender,
+                email:values.email
+            }
+            await dispatch(addEmployees(theValues))
             handleClick()
         }
     }

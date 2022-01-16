@@ -210,8 +210,8 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},
                             <Td>{thisData.email}</Td>
                             <Td>{thisData.dateOfBirth}</Td>
                             <Td>{thisData.gender}</Td>
-                            <Td>{thisData.salary}</Td>
-                            <Td>{Math.round(daysBetween(thisData.startDate)*(thisData.salary/30))}</Td>
+                            <Td>{thisData.salary.salary}</Td>
+                            <Td>{Math.round(daysBetween(thisData.startDate)*(thisData.salary.salary/30))}</Td>
                             {/* <Td>{Math.round(daysBetween(thisData.startDate))} days</Td> */}
                             
                             <Td>

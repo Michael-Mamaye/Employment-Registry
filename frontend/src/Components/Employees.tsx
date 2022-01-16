@@ -106,8 +106,9 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
     //   setFiltered(filt)
         
     // }
-    const daysBetween =(theDate?:string)=>{
-        const dateof=theDate?theDate:'';
+    const daysBetween = (theDate?:string)=>{
+        const dateof= theDate?theDate:new Date().getDate()-1;
+        console.log(new Date().getDate() - new Date(dateof).getDate())
         return data[0].startDate? new Date().getDate() - new Date(dateof).getDate():0;
     } 
     const pagination=(toBePaged:Datum[],pages:number,rows:number)=>{
@@ -238,25 +239,41 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
 
                     <Tbody>
                     {allData.data.map((thisData)=>(
-                        <Tr key={thisData._id} onClick={()=>{navigate(`/employees/${thisData._id}`)}}>
-                            <Td>{thisData.name}</Td>
-                            <Td>{thisData.email}</Td>
-                            <Td>{thisData.dateOfBirth}</Td>
-                            <Td>{thisData.gender}</Td>
-                            <Td>{thisData.salary}</Td>
-                            <Td>{Math.round(daysBetween(thisData.startDate)*(thisData.salary/30))}</Td>
+                        <Tr key={thisData._id}>
+                            <Td 
+                            onClick={()=>{navigate(`/employees/${thisData._id}`)}}
+                            >{thisData?.name}</Td>
+                            <Td
+                            onClick={()=>{navigate(`/employees/${thisData._id}`)}}
+                            >{thisData?.email}</Td>
+                            <Td
+                            onClick={()=>{navigate(`/employees/${thisData._id}`)}}
+                            >{thisData?.dateOfBirth}</Td>
+                            <Td
+                            onClick={()=>{navigate(`/employees/${thisData._id}`)}}
+                            >{thisData?.gender}</Td>
+                            <Td
+                            onClick={()=>{navigate(`/employees/${thisData._id}`)}}
+                            >{thisData?.salary.salary}</Td>
+                            {console.log(daysBetween(thisData?.startDate))}
+                            <Td
+                            onClick={()=>{navigate(`/employees/${thisData._id}`)}}
+                            >{Math.round(daysBetween(thisData?.startDate)*(thisData.salary.salary/30))}</Td>
                             {/* <Td>{Math.round(daysBetween(thisData.startDate))} days</Td> */}
                             
                             <Td>
-                                <Span><EditAlt color='blue' size={20} 
+                                <Span><EditAlt color='blue' 
+                                        style={{zIndex:100}}
+                                        size={20} 
                                         onClick={async ()=>{
                                             await checkIfNotNull(thisData._id)
                                             handleClick()
                                         }}/>
                                 </Span> 
                                 <Span><Delete color='#ff4e83' size={20}
+                                        style={{zIndex:100}}
                                         onClick={async ()=>{
-                                            await toDeleteTheRow(thisData._id)
+                                            await toDeleteTheRow(thisData?._id)
                                         }}/></Span>
                             </Td>
                     

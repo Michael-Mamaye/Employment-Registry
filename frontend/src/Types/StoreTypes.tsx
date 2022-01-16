@@ -3,7 +3,12 @@ export interface Datum {
     name: string;
     dateOfBirth: string;
     gender: string;
-    salary: number;
+    salary: {
+        _id?: string;
+        salary: number;
+        salaryDate?: string;
+        _v?:string;
+    };
     email:string;
     startDate?:string;
     __v?: number;

@@ -21,10 +21,10 @@ export const addEmployeeValidation=[
         .isLength({ max: 6, min: 4 })
         .withMessage("Please enter valid gender"),
         
-    body('salary')
-        .exists()
-        .isFloat({ max: 500000, min: 5000 })
-        .withMessage("salary should be between 5000 and 500,000"),
+    // body('salary')
+    //     .exists()
+    //     .isFloat({ max: 500000, min: 5000 })
+    //     .withMessage("salary should be between 5000 and 500,000"),
 ]
 
 
@@ -46,7 +46,7 @@ export const updateEmployeeValidation=[
         .isLength({max:6,min:4})
         .withMessage("please enter valid gender"),
 
-    body('salary')
-        .isFloat({ max: 500000, min: 5000 })
-        .withMessage("salary should be between 5000 and 500,000"),
+    // body('salary')
+    //     .isFloat({ max: 500000, min: 5000 })
+    //     .withMessage("salary should be between 5000 and 500,000"),
 ]

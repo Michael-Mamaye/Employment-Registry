@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-
-const employeeSchema=new mongoose.Schema({
+const Schema=mongoose.Schema
+const employeeSchema=new Schema({
      name:{
          type:String,
          required:[true,'Employee Name Is Required']
@@ -15,12 +15,15 @@ const employeeSchema=new mongoose.Schema({
      },
      gender:{
          type:String,
-         required:[true,'Employee Gender Is Required']
+         required:[true,'Employee Gender Is Required'],
+         enum:['male','female']
      },
-     salary:{
-            type:Number,
-            required:[true,'Amount Is Required']
-        },
+    salary:{
+        type:Schema.Types.ObjectId, 
+        ref:'SalaryModel',
+        required:[true,'salary information is required']
+    },
+
     startDate:{
             type:Date,
             required:[true,'Start Date Is Required'],
@@ -29,7 +32,6 @@ const employeeSchema=new mongoose.Schema({
      
 
 })
-
 const Employees=mongoose.model('Employees',employeeSchema)
 
 export default Employees;

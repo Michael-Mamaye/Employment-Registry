@@ -33,8 +33,16 @@ interface ThePropTypes{
             setError('All Fields Are Required')
         }
         else{ 
-            console.log('this are the values',values)
-           await dispatch(updateEmployees(currentId,values))
+            const theValues={
+                name:values.name,
+                dateOfBirth:values.dateOfBirth,
+                salary:{
+                    salary:values.salary
+                },
+                gender:values.gender,
+                email:values.email
+            }
+           await dispatch(updateEmployees(currentId,theValues))
            handleClick()
         }
     }
