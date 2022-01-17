@@ -34,7 +34,7 @@ const EmployeeDetail:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName}
     }, [setFetchedData,fetchedData,namedData,itemId])
   
     
-
+    const datenow=new Date().getDate()
     return (
         <DashboardGrids>
             <div style={{marginLeft:'10vw',marginTop:'20vh'}}>
@@ -74,7 +74,7 @@ const EmployeeDetail:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName}
                 </RowGrids>
                 <RowGrids>
                     <Label htmlFor='payment'> start Date: </Label>
-                    <Input disabled={false} id='payment'value={filtered?filtered[0]?.startDate:''}></Input>
+                    <Input disabled={false} id='payment'value={filtered?filtered[0]?.startDate?.slice(0,10):''}></Input>
                 </RowGrids>
 
             </div>

@@ -4,7 +4,7 @@ import salaryModel from "../model/SalaryModel.js";
 export const getUsersByName=async(req,res)=>{
     try{
         const {name}=req.query
-        const employe=await Employees.find({'name':{'$regex':`${name}`}}).populate('salary');
+        const employe=await Employees.find({'name':{'$regex':`${name}`}}).populate('salary').limit(10);
         res.status(200).json({
             data:employe
         })
@@ -18,12 +18,12 @@ export const getUsersByName=async(req,res)=>{
 export const getAllEmployees= async (req,res)=>{
     try{
         const {sortBy, ascOrDesc,filterBy}= req.query
-        console.log(req.query)
+        
         const query={ 
             [sortBy]:ascOrDesc
         }
         const employe=filterBy!=='both' ?  await Employees.find().populate('salary').sort(query).where('gender').equals(filterBy):
-                                        await Employees.find().populate('salary');
+                                        await Employees.find().populate('salary').sort(query);
         
 
         
@@ -121,13 +121,11 @@ export const updateEmployee= async (req,res)=>{
     try{
         const {name,email,gender,dateOfBirth,salary}=req.body
         
-        if(salary) 
-            {
-                const emps=await Employees.find({_id:req.params.id}).populate('salary')
+
+        const emps=await Employees.find({_id:req.params.id}).populate('salary')
                 await salaryModel.findByIdAndUpdate(emps[0].salary._id,salary,{new:true,runValidators:true})
         
-            }
-        const newEmployee = await Employees.findByIdAndUpdate(req.params.id,{name,email,gender,dateOfBirth,salary},{new:true,runValidators:true})
+        const newEmployee = await Employees.findByIdAndUpdate(req.params.id,{name,email,gender,dateOfBirth,salary:emps[0].salary._id},{new:true,runValidators:true})
         
         if(!newEmployee){
             res.status(404).json({

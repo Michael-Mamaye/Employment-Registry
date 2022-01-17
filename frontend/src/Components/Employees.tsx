@@ -41,17 +41,19 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
     const [isChanged,setIsChanged]=React.useState(false)
     
     useEffect(()=>{
-        
         if(isChanged){
-            setUserStates({
+            setUserStates(
+                {
                 sortBy:sortBy,
                 filterBy:genderFilter?genderFilter:'both',
                 ascOrDesc:checked==='true'?-1:1
-            },topThreeState
+                },
+                topThreeState
             )
         getEmployees()
         }
         getEmployees()
+        
         //getting all employees
     },[getEmployees,isChanged,topThreeState,sortBy,genderFilter,checked,pageState,setUserStates])
    

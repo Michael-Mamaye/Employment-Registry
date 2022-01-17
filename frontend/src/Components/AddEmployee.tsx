@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import { addEmployees } from "../Actions";
+import { addEmployees, getEmployees } from "../Actions";
 import { Dialog} from '../Styles/CompStyles'
 import { Form, Input, Label,CloseButton, SubmitButton, ErrorMessage} from '../Styles/FormStyle'
 import {useDispatch} from 'react-redux'
