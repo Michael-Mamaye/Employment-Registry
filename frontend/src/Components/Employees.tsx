@@ -19,7 +19,6 @@ const tableHeader=[
     {id:"Birth Date",label:'Birth Date'},
     {id:"Gender",label:'Gender'},
     {id:"Salary",label:'Salary'},
-    {id:"PerWorkTotal",label:'PerWorkTotal'},
     {id:"action",label:'Actions'}
 ]
 const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesState},setUserStates,getEmployees,deleteEmployees,isTopThree})=> {
@@ -54,15 +53,9 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
         }
         getEmployees()
         
-        //getting all employees
-    },[getEmployees,isChanged,topThreeState,sortBy,genderFilter,checked,pageState,setUserStates])
+    },[getEmployees,isChanged,employeesState,topThreeState,sortBy,genderFilter,checked,setUserStates])
    
-    // const employeesStateToBeStored={
-    //     sortBy:sortBy,
-    //     filterBy:genderFilter,
-    //     ascOrDesc:checked,
-    //     page:pageState
-    // }
+    
     
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
@@ -89,30 +82,14 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
         searchText=searchText.toLocaleLowerCase();
         const filt=data.filter((item)=>(
             item.name.toLocaleLowerCase().includes(searchText)||
-            item.salary.toString().includes(searchText)||
+            item.coreSalary.toString().includes(searchText)||
             item.dateOfBirth.toLocaleLowerCase().includes(searchText)||
             item.email.toLocaleLowerCase().includes(searchText)||
             item.gender.toLocaleLowerCase().includes(searchText)
         ))
         setFiltered(filt)
     }
-    // const handleFilter=(filteringText:string)=>{
-        
-    //     filteringText=filteringText.toLocaleLowerCase();
 
-    //     const theData=isTopThree?topThree:data;
-
-    //     const filt=theData.filter((item)=>(
-    //         item.gender.toLocaleLowerCase().startsWith(filteringText)
-    //     ))
-    //   setFiltered(filt)
-        
-    // }
-    const daysBetween = (theDate?:string)=>{
-        const dateof= theDate?theDate:new Date().getDate()-1;
-        console.log(new Date().getDate() - new Date(dateof).getDate())
-        return data[0].startDate? new Date().getDate() - new Date(dateof).getDate():0;
-    } 
     const pagination=(toBePaged:Datum[],pages:number,rows:number)=>{
         var trimStart=(pages-1)*rows;
         var trimEnd=trimStart+rows;
@@ -143,7 +120,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
         }
     }
     var allData=pagination(state.data,state.page,state.rows);
-      
+    
     return (
         <Container>
             {opener && 
@@ -256,13 +233,8 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                             >{thisData?.gender}</Td>
                             <Td
                             onClick={()=>{navigate(`/employees/${thisData._id}`)}}
-                            >{thisData?.salary.salary}</Td>
-                            {console.log(daysBetween(thisData?.startDate))}
-                            <Td
-                            onClick={()=>{navigate(`/employees/${thisData._id}`)}}
-                            >{Math.round(daysBetween(thisData?.startDate)*(thisData.salary.salary/30))}</Td>
-                            {/* <Td>{Math.round(daysBetween(thisData.startDate))} days</Td> */}
-                            
+                            >{thisData?.coreSalary}</Td>
+                           
                             <Td>
                                 <Span><EditAlt color='blue' 
                                         style={{zIndex:100}}

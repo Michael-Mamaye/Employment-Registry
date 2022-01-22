@@ -18,7 +18,7 @@ interface ThePropTypes{
     const [values,setValues]=React.useState({
         name:toBeUpdated[0]?.name,
         dateOfBirth:toBeUpdated[0]?.dateOfBirth,
-        salary:toBeUpdated[0]?.salary,
+        coreSalary:toBeUpdated[0]?.coreSalary,
         gender:toBeUpdated[0]?.gender,
         email:toBeUpdated[0]?.email
     })
@@ -28,7 +28,7 @@ interface ThePropTypes{
         event.preventDefault()
     
 
-        if(values.name==="" || values.dateOfBirth==='' || values.gender==='' || values.salary.toString()==='')
+        if(values.name==="" || values.dateOfBirth==='' || values.gender==='' || values.coreSalary.toString()==='')
         {
             setError('All Fields Are Required')
         }
@@ -36,9 +36,8 @@ interface ThePropTypes{
             const theValues={
                 name:values.name,
                 dateOfBirth:values.dateOfBirth,
-                salary:{
-                    salary:values.salary
-                },
+                coreSalary:values.coreSalary,
+                salary:toBeUpdated.salary,
                 gender:values.gender,
                 email:values.email
             }
@@ -96,11 +95,11 @@ interface ThePropTypes{
                     </RowGrids>
                     <RowGrids>
                         <Label>Salary</Label>
-                        <Input name="salary" 
+                        <Input name="coreSalary" 
                                 onChange={(event)=>{
                                     setError('')
                                     handleChange(event)
-                                }} value={values.salary} type='number' placeholder='Salary'/>
+                                }} value={values.coreSalary} type='number' placeholder='Salary'/>
                     </RowGrids>
                     
                         {error && <ErrorMessage color='red'>{error}</ErrorMessage>}

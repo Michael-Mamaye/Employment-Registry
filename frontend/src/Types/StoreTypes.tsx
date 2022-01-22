@@ -1,14 +1,16 @@
+export interface salType{
+        _id?: string;
+        salary: number;
+        salaryDate: string;
+        _v?:string;
+}
 export interface Datum {
     _id?: string;
     name: string;
+    coreSalary:number;
     dateOfBirth: string;
     gender: string;
-    salary: {
-        _id?: string;
-        salary: number;
-        salaryDate?: string;
-        _v?:string;
-    };
+    salary?: salType[];
     email:string;
     startDate?:string;
     __v?: number;

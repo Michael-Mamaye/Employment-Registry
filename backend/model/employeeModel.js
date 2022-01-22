@@ -18,17 +18,22 @@ const employeeSchema=new Schema({
          required:[true,'Employee Gender Is Required'],
          enum:['male','female']
      },
-    salary:{
+     coreSalary:{
+         type:Number,
+         required:[true,'Core Salary Is Required'],
+     },
+    salary:[
+        {
         type:Schema.Types.ObjectId, 
         ref:'SalaryModel',
-        required:[true,'salary information is required']
-    },
+        }
+    ],
 
     startDate:{
-            type:Date,
-            required:[true,'Start Date Is Required'],
-            default:Date.now
-        },
+        type:Date,
+        required:[true,'Start Date Is Required'],
+        default:Date.now
+    },
      
 
 })

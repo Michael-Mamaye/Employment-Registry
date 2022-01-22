@@ -15,7 +15,8 @@ import {
     getTopThreePaidEmployeeActions,
     setUserStateActions,
     getUsersByNameActions,
-    gotUsersByNameActions
+    gotUsersByNameActions,
+    paySalaryActions
 } from '../Types/ActionTypeConstants'
 
 import axiosApi from '../Api/axiosAPi'
@@ -32,6 +33,7 @@ function* EmployeeSaga():Generator<StrictEffect>{
     yield takeLatest(ActionTypeConstants.ERROR_OF_EMPLOYEES,setErrorsNull);
     yield takeLatest(ActionTypeConstants.SET_USER_STATE,setUserState);
     yield takeLatest(ActionTypeConstants.GET_DATA_BY_NAME,getUsersByName);
+    yield takeLatest(ActionTypeConstants.PAY_EMPLOYEES,paySalary);
 }
 
 //Workers
@@ -115,6 +117,28 @@ function* getTopThreePaidEmployees({queryString,ascOrDesc,filterBy}:getTopThreeP
 function* addEmployees({payload}:addEmployeeActions){
     try{
         const res:AxiosResponse = yield call(axiosApi.post,'/',payload)
+        const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
+        
+        switch(res.status)
+        {
+            case 200:
+                const data:addedEmployeeActions={
+                    type:'ADDED_EMPLOYEES',
+                    payload:resp.data
+                }
+                yield put(data);
+        }
+    }
+    catch(error)
+    {   
+        console.log('this is the error',error)
+    }
+    
+}
+function* paySalary({payload,id,salary}:paySalaryActions){
+    try{
+        console.log('hi mike, I am here waiting you',payload,salary)
+        const res:AxiosResponse = yield call(axiosApi.post,`/paySalary/${id}`,{payload,salary})
         const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
         
         switch(res.status)

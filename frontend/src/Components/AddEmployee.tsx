@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import { addEmployees, getEmployees } from "../Actions";
+import { addEmployees} from "../Actions";
 import { Dialog} from '../Styles/CompStyles'
 import { Form, Input, Label,CloseButton, SubmitButton, ErrorMessage} from '../Styles/FormStyle'
 import {useDispatch} from 'react-redux'
@@ -16,7 +16,7 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
     const [values,setValues]=React.useState({
         name:'',
         dateOfBirth:'',
-        salary:0,
+        coreSalary:0,
         gender:'',
         email:''
     })
@@ -25,7 +25,7 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
         event.preventDefault()
     
 
-        if(values.name==="" || values.dateOfBirth==='' || values.gender===''|| values.email==='' || values.salary.toString()==='')
+        if(values.name==="" || values.dateOfBirth==='' || values.gender===''|| values.email==='' || values.coreSalary.toString()==='')
         {
             setError('All Fields Are Required')
         }
@@ -33,9 +33,7 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
             const theValues={
                 name:values.name,
                 dateOfBirth:values.dateOfBirth,
-                salary:{
-                    salary:values.salary
-                },
+                coreSalary:values.coreSalary,
                 gender:values.gender,
                 email:values.email
             }

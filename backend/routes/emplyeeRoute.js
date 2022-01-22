@@ -1,4 +1,4 @@
-import {getAllEmployees,getUsersByName,addNewEmployee,updateEmployee,deleteEmployee, getTopThreePaid} from "../controller/employeeController.js";
+import {getAllEmployees,getUsersByName,addNewEmployee,updateEmployee,deleteEmployee, getTopThreePaid, paySalaryOfEmployee} from "../controller/employeeController.js";
 import express from 'express'
 import {addEmployeeValidation,updateEmployeeValidation} from "../validation/employeeValidation.js";
 import employeeValidationResult from "../validation/employeeValidationResult.js";
@@ -11,8 +11,13 @@ router.route('/')
 
 router.route('/topThreePaid')
       .get(getTopThreePaid)
+
 router.route('/byname')
       .get(getUsersByName)
+
+router.route('/paySalary/:id')
+      .post(paySalaryOfEmployee)
+      
 router.route('/:id')
       .patch(updateEmployeeValidation,employeeValidationResult,updateEmployee)
       .delete(deleteEmployee)

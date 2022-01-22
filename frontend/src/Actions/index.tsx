@@ -5,7 +5,8 @@ import {
     addEmployeeActionCreator,
     getTopThreePaidEmployeeActionCreator,
     setUserStateCreator,
-    getUsersByNameActionCreator
+    getUsersByNameActionCreator,
+    paySalaryActionCreator
 } from '../Types/ActionCreatorTypes'
 
 export const setUserStates:setUserStateCreator=(employeesState,topThreeState)=>{
@@ -54,5 +55,13 @@ export const addEmployees:addEmployeeActionCreator=(payload)=>{
     return{
         type:'ADD_EMPLOYEES',
         payload:payload
+    }
+}
+export const paySalary:paySalaryActionCreator=(payload,id,salary)=>{
+    return{
+        type:'PAY_EMPLOYEES',
+        payload:payload,
+        id:id,
+        salary:salary
     }
 }

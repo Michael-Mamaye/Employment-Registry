@@ -19,10 +19,9 @@ const tableHeader=[
     {id:"Birth Date",label:'Birth Date'},
     {id:"Gender",label:'Gender'},
     {id:"Salary",label:'Salary'},
-    {id:"PerWorkTotal",label:'PerWorkTotal'},
     {id:"action",label:'Actions'}
 ]
-const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},setUserStates,getTopThreePaidEmployees,deleteEmployees})=> {
+const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState,employeesState},setUserStates,getTopThreePaidEmployees,deleteEmployees})=> {
     const [dialogOpener,setDialogOpener]=React.useState(false)
     const [currentId,setCurrentId]=React.useState('');
     const [toBeUpdated,setToBeUpdated]=React.useState({});
@@ -41,8 +40,9 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},
     const [isChanged,setIsChanged]=React.useState(false)
     
     useEffect(()=>{
+        
         if(isChanged){
-            setUserStates({
+            setUserStates(employeesState,{
                 sortBy:sortBy,
                 filterBy:genderFilter?genderFilter:'both',
                 ascOrDesc:checked==='true'?-1:1
@@ -51,7 +51,7 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},
         getTopThreePaidEmployees('startDate',1);
         //getting all employees
 
-    },[getTopThreePaidEmployees,isChanged,genderFilter,sortBy,checked,setUserStates])
+    },[getTopThreePaidEmployees,employeesState,isChanged,genderFilter,sortBy,checked,setUserStates])
 
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
@@ -78,29 +78,14 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},
         searchText=searchText.toLocaleLowerCase();
         const filt=topThree.filter((item)=>(
             item.name.toLocaleLowerCase().includes(searchText)||
-            item.salary.toString().includes(searchText)||
+            item.coreSalary.toString().includes(searchText)||
             item.dateOfBirth.toLocaleLowerCase().includes(searchText)||
             item.email.toLocaleLowerCase().includes(searchText)||
             item.gender.toLocaleLowerCase().includes(searchText)
         ))
         setFiltered(filt)
     }
-    // const handleFilter=(filteringText:string)=>{
-        
-    //     filteringText=filteringText.toLocaleLowerCase();
-
-    //     const theData=isTopThree?topThree:data;
-
-    //     const filt=theData.filter((item)=>(
-    //         item.gender.toLocaleLowerCase().startsWith(filteringText)
-    //     ))
-    //   setFiltered(filt)
-        
-    // }
-    const daysBetween =(theDate?:string)=>{
-        const dateof=theDate?theDate:'';
-        return topThree[0].startDate? new Date().getDate() - new Date(dateof).getDate():0;
-    } 
+   
     const pagination=(toBePaged:Datum[],pages:number,rows:number)=>{
         var trimStart=(pages-1)*rows;
         var trimEnd=trimStart+rows;
@@ -210,10 +195,8 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},
                             <Td>{thisData.email}</Td>
                             <Td>{thisData.dateOfBirth}</Td>
                             <Td>{thisData.gender}</Td>
-                            <Td>{thisData.salary.salary}</Td>
-                            <Td>{Math.round(daysBetween(thisData.startDate)*(thisData.salary.salary/30))}</Td>
-                            {/* <Td>{Math.round(daysBetween(thisData.startDate))} days</Td> */}
-                            
+                            <Td>{thisData.coreSalary}</Td>
+                           
                             <Td>
                                 <Span><EditAlt color='blue' size={20} 
                                         onClick={async ()=>{
@@ -240,6 +223,7 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState},
             
 
             {dialogOpener&&<UpdateEmployee toBeUpdated={toBeUpdated} currentId={currentId} handleClick={handleClick}/>}
+        
         </DashboardGrids>
     )
 }

@@ -5,9 +5,12 @@ import {getEmployeeActions,
         getTopThreePaidEmployeeActions, 
         setErrorsNullActions,
         setUserStateActions,
-        getUsersByNameActions
+        getUsersByNameActions,
+        paySalaryActions,
 } from './ActionTypeConstants'
-import { Datum,filterTypes } from './StoreTypes';
+import { Datum,filterTypes, salType } from './StoreTypes';
+
+export type paySalaryActionCreator=(payload: Datum,id:string,salary:salType)=>paySalaryActions;
 
 export type setUserStateCreator=(employeesState?:filterTypes,topThreeState?:filterTypes)=>setUserStateActions;
 

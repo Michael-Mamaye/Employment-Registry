@@ -1,4 +1,4 @@
-import {Datum,filterTypes, ForEmployee} from './StoreTypes'
+import {Datum,filterTypes, ForEmployee, salType} from './StoreTypes'
 
 //For Action Creator
 export interface setUserStateActions{
@@ -6,6 +6,13 @@ export interface setUserStateActions{
     employeesState?:filterTypes;
     topThreeState?:filterTypes;
 }
+export interface paySalaryActions{
+    type:'PAY_EMPLOYEES';
+    payload:Datum;
+    id:string;
+    salary:salType;
+}
+
 export interface getUsersByNameActions{
     type:'GET_DATA_BY_NAME';
     name:string
@@ -79,5 +86,5 @@ export const ActionTypeConstants={
     ERROR_OF_EMPLOYEES:'ERROR_EMPLOYEES',
     SET_USER_STATE:'SET_USER_STATE',
     GET_DATA_BY_NAME:'GET_DATA_BY_NAME',
-
+    PAY_EMPLOYEES:'PAY_EMPLOYEES',
 }

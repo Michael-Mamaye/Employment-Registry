@@ -1,5 +1,46 @@
 import Employees from "../model/employeeModel.js";
 import salaryModel from "../model/SalaryModel.js";
+
+export const paySalaryOfEmployee= async (req,res)=>{
+    try{
+        const {salary}=req.body
+        
+        const newSalary=await salaryModel.create(salary)
+
+        const emps=await Employees.find({_id:req.params.id})
+
+
+        const Listofemps=emps[0].salary;
+
+        Listofemps.push(newSalary._id)
+
+        const newEmployee=await Employees.findByIdAndUpdate(req.params.id,
+            {
+                salary:Listofemps,
+            },
+        )
+        const employe=await Employees.find().populate('salary');
+
+        const totalSalary=()=>{
+            let total=0;
+            employe.filter((miki)=> total+=miki.salary.salary)
+            return total;
+        }
+        
+        res.status(200).json({
+            totalEmployees:employe.length,
+            totalSalary:totalSalary(),
+            data:newEmployee
+        })
+
+    }
+    catch(error)
+    {
+        res.status(400).json({error})
+    }
+
+}
+
 //used to fetch employees by their name
 export const getUsersByName=async(req,res)=>{
     try{
@@ -23,13 +64,11 @@ export const getAllEmployees= async (req,res)=>{
             [sortBy]:ascOrDesc
         }
         const employe=filterBy!=='both' ?  await Employees.find().populate('salary').sort(query).where('gender').equals(filterBy):
-                                        await Employees.find().populate('salary').sort(query);
-        
+                            await Employees.find().populate('salary').sort(query);
 
-        
         const totalSalary=()=>{
             let total=0;
-            employe.filter((miki)=> total+=miki.salary.salary)
+            employe.filter((miki)=> total+=miki.coreSalary)
             return total;
         }
         res.status(200).json({
@@ -48,10 +87,7 @@ export const getAllEmployees= async (req,res)=>{
 
 export const getTopThreePaid=async(req,res)=>{
     try{
-        const employe=await Employees.find().populate({
-            path:'salary',
-            options:{sort:{salary:-1}}
-        }).limit(3);
+        const employe=await Employees.find().populate('salary').limit(3);
         const employeesNumber=await  Employees.find().populate('salary');
         const totalSalary=()=>{
             let total=0;
@@ -73,7 +109,7 @@ export const getTopThreePaid=async(req,res)=>{
 //used to add employees
 export const addNewEmployee= async (req,res)=>{
     try{
-        const {name,dateOfBirth,gender,salary,email}= req.body
+        const {name,dateOfBirth,gender,coreSalary,email}= req.body
 
         const exists=await Employees.findOne({email:req.body.email})
         
@@ -84,14 +120,12 @@ export const addNewEmployee= async (req,res)=>{
             })
         }
         else
-        {   
-            const newSalary=await salaryModel.create(salary)
-            
+        {      
             const newEmployee=await Employees.create({
                 name,
                 dateOfBirth,
                 gender,
-                salary:newSalary._id,
+                coreSalary,
                 email
             });
             const employe=await Employees.find().populate('salary');
@@ -121,11 +155,12 @@ export const updateEmployee= async (req,res)=>{
     try{
         const {name,email,gender,dateOfBirth,salary}=req.body
         
-
+        console.log(req.body);
         const emps=await Employees.find({_id:req.params.id}).populate('salary')
-                await salaryModel.findByIdAndUpdate(emps[0].salary._id,salary,{new:true,runValidators:true})
+
+        await salaryModel.findByIdAndUpdate(emps[0].salary._id,salary,{new:true,runValidators:true})
         
-        const newEmployee = await Employees.findByIdAndUpdate(req.params.id,{name,email,gender,dateOfBirth,salary:emps[0].salary._id},{new:true,runValidators:true})
+        const newEmployee = await Employees.findByIdAndUpdate(req.params.id,{name,email,gender,dateOfBirth},{new:true,runValidators:true})
         
         if(!newEmployee){
             res.status(404).json({
@@ -147,11 +182,14 @@ export const updateEmployee= async (req,res)=>{
 export const deleteEmployee=async (req,res)=>{
     try{
         const emps=await Employees.find({_id:req.params.id}).populate('salary')
-
+        for(let i=0;i<emps[0].salary.length;i++)
+        {
+            await salaryModel.findByIdAndDelete(emps[0].salary[i]._id)
+        }
+        
         await Employees.findByIdAndDelete(req.params.id)
-
-        await salaryModel.findByIdAndDelete(emps[0].salary._id)
-
+        
+         
         const employe=await Employees.find().populate('salary');
         const totalSalary=()=>{
             let total=0;
