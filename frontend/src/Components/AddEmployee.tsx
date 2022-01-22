@@ -85,7 +85,7 @@ export default function AddEmployee({handleClick}:TheHandleClick) {
                     </div>
                     
                     <Label>Salary</Label>
-                    <Input name="salary" 
+                    <Input name="coreSalary" 
                         onChange={(event)=>{
                         setError('')
                         handleChange(event)

@@ -39,8 +39,12 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
     const [genderFilter,setGenderFilter]=React.useState<string>()
     const [isChanged,setIsChanged]=React.useState(false)
     
+   
+
     useEffect(()=>{
+        
         if(isChanged){
+            
             setUserStates(
                 {
                 sortBy:sortBy,
@@ -49,11 +53,12 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                 },
                 topThreeState
             )
-        getEmployees()
+            getEmployees()
+            setIsChanged(false)
         }
-        getEmployees()
+            getEmployees()
         
-    },[getEmployees,isChanged,employeesState,topThreeState,sortBy,genderFilter,checked,setUserStates])
+    },[getEmployees,isChanged,checked,sortBy,genderFilter,setUserStates,topThreeState,setIsChanged])
    
     
     
@@ -146,7 +151,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                         await setGenderFilter('male')
                         
                         await setIsChanged(true);
-                        
+
                         await getEmployees()
                         
                     }}>Male</FilterButton>
@@ -159,9 +164,12 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                         await getEmployees()
                     }}>Female</FilterButton>
             <FilterButton onClick={async ()=>{
-                    setFiltered(undefined)
                     await setGenderFilter('both')
+                    
+                    await setIsChanged(true);
+
                     await getEmployees()
+                    
                     }}>All</FilterButton>
             <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
             

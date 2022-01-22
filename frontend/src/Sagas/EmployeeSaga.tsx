@@ -41,12 +41,14 @@ function* getAllEmployees(){
    
     const filter:ForEmployee = yield select((state: any) => state.emp)
 
-    console.log(filter)
-
     const filt=filter.employeesState;
+
+    console.log(filt)
     try{
+        
         const res:AxiosResponse<any> =yield call(axiosApi.get,`/?sortBy=${filt.sortBy}&ascOrDesc=${filt.ascOrDesc}&filterBy=${filt.filterBy}`)
-                
+        
+        console.log(res)
         
         switch(res.status)
         {

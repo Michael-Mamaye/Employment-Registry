@@ -72,9 +72,9 @@ export const DashboardGrids=styled.div`
     margin-top:10vh;
 `
 export const EmpProfileImage=styled.img`
-    width: 100px;
-    height: 100px;
-    border-radius: 100%;
+    width: 20vw;
+    border: 3px solid black;
+    border-style: double;
 `
 export const BoxForTotals=styled.div`
     display: flex;

@@ -6,8 +6,10 @@ import { Input, Label } from '../../Styles/FormStyle';
 import PaySalariesProp from './PaySalariesProp';
 import { Datum } from '../../Types/StoreTypes';
 import {useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 const PaySalaries:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName})=> {
     const dispatch=useDispatch()
+    const navigate=useNavigate()
     const [filled,setFilled]=React.useState(false)
     const [fetchedData,setFetchedData]=React.useState<Datum[]>()
     const [itemId,setItemId]=React.useState<string>()
@@ -52,6 +54,12 @@ const PaySalaries:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName})=>
             }
             console.log(mk)
             await dispatch(paySalary(filtered[0],id,mk))
+            
+            setNameValue('')
+            setValues({
+                salary:0,
+                salaryDate:''
+            })
         }
     }
     

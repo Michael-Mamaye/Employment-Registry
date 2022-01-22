@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React,{useEffect} from 'react'
 import EmployeeDetailProp from './EmployeeDetailProp'
 import { Thead,Tbody,Th,Td,Tr, Table } from '../../Styles/TableStyles'
-import { PaginationButton,DashboardGrids, DecoratedText, EmpProfileImage,SelectButton,SearchInput} from '../../Styles/CompStyles'
+import { PaginationButton,DashboardGrids, DecoratedText, EmpProfileImage,SelectButton,SearchInput, RowGrids} from '../../Styles/CompStyles'
 import {Search} from '@styled-icons/fa-solid/Search'
 import { Datum } from '../../Types/StoreTypes';
 import { deleteEmployees, getEmployees } from '../../Actions';
@@ -70,58 +70,57 @@ const EmployeeDetail:React.FC<EmployeeDetailProp>=({emp:{data,topThreeState},get
     
     return (
         <DashboardGrids>
-           
-            <EmpProfileImage src={Image1} alt='profile_picture'/>
-            <div>
-                {
-                    allData.data.map((Item)=>(
-                        <div key={Item._id}>
-                            <DecoratedText>{Item.name}</DecoratedText>
-                            <DecoratedText>Salary<span style={{marginLeft:'50px'}}>{Item.coreSalary}</span></DecoratedText>
-                            <DecoratedText>birthDate<span style={{marginLeft:'50px'}}>{Item.dateOfBirth}</span></DecoratedText>
-                            <DecoratedText>gender<span style={{marginLeft:'50px'}}>{Item.gender}</span></DecoratedText>
-                        </div>
-                    ))
-                }
-                 
-            <div style={{height:'50vh'}}>
-            <SearchInput onChange={(e)=>handleSearch(e.target.value)}/><Search style={{ marginLeft:'-25px',marginRight:'20px',height:'20px',width:'20px'}}/>
+            <RowGrids>
+                <EmpProfileImage src={Image1} alt='profile_picture'/>
             
-            <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
-            <SelectButton id='orderBy' >
-                    <option value='startDate'>Start Date</option>
-                    <option value='name'>Name</option>
-                    <option value='salary'>Salary</option>
-                    <option value='dateOfBirth'>Birth Date</option>
-                    <option value='gender'>Gender</option>
-            </SelectButton>            
-             
-                <Table>
-                    <Thead>
-                        <Tr>
-                            {tableHeader.map((head)=>(
-                                <Th key={head.id}>{head.label}</Th>
-                            ))}
-                        </Tr>
-                    </Thead>
+                    {
+                        allData.data.map((Item)=>(
+                            <div key={Item._id}>
+                                <DecoratedText>{Item.name}</DecoratedText>
+                                <DecoratedText>Salary<span style={{marginLeft:'50px'}}>{Item.coreSalary}</span></DecoratedText>
+                                <DecoratedText>birthDate<span style={{marginLeft:'50px'}}>{Item.dateOfBirth}</span></DecoratedText>
+                                <DecoratedText>gender<span style={{marginLeft:'50px'}}>{Item.gender}</span></DecoratedText>
+                            </div>
+                        ))
+                    }
+            </RowGrids>  
+                <div style={{height:'50vh',width:'60vw'}}>
+                    <SearchInput onChange={(e)=>handleSearch(e.target.value)}/><Search style={{ marginLeft:'-25px',marginRight:'20px',height:'20px',width:'20px'}}/>
+                    
+                    <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
+                    <SelectButton id='orderBy' >
+                            <option value='startDate'>Start Date</option>
+                            <option value='name'>Name</option>
+                            <option value='salary'>Salary</option>
+                            <option value='dateOfBirth'>Birth Date</option>
+                            <option value='gender'>Gender</option>
+                    </SelectButton>            
+                
+                    <Table>
+                        <Thead>
+                            <Tr>
+                                {tableHeader.map((head)=>(
+                                    <Th key={head.id}>{head.label}</Th>
+                                ))}
+                            </Tr>
+                        </Thead>
 
-                    <Tbody>
-                    {allData.data[0]?.salary?.map((thisData)=>(
-                        <Tr key={thisData._id}>
-                            <Td>{thisData.salary}</Td>
-                            <Td>{thisData.salaryDate}</Td>
-                        </Tr>
-                    ))}
-                    </Tbody>
-                </Table>
+                        <Tbody>
+                        {allData.data[0]?.salary?.map((thisData)=>(
+                            <Tr key={thisData._id}>
+                                <Td>{thisData.salary}</Td>
+                                <Td>{thisData.salaryDate}</Td>
+                            </Tr>
+                        ))}
+                        </Tbody>
+                    </Table>
 
-                <div>
-                    <PaginationButton onClick={()=>{changePage("next")}}>next</PaginationButton>
-                    <PaginationButton onClick={()=>{changePage("previous")}}>previous</PaginationButton>
+                    <div>
+                        <PaginationButton onClick={()=>{changePage("next")}}>next</PaginationButton>
+                        <PaginationButton onClick={()=>{changePage("previous")}}>previous</PaginationButton>
+                    </div>
                 </div>
-            </div>
             
-            </div>
         </DashboardGrids>
     )
 }

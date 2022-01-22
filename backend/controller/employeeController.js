@@ -63,8 +63,8 @@ export const getAllEmployees= async (req,res)=>{
         const query={ 
             [sortBy]:ascOrDesc
         }
-        const employe=filterBy!=='both' ?  await Employees.find().populate('salary').sort(query).where('gender').equals(filterBy):
-                            await Employees.find().populate('salary').sort(query);
+        const employe=filterBy!=='both' ?  await Employees.find().sort(query).where('gender').equals(filterBy).populate('salary'):
+                            await Employees.find().sort(query).populate('salary');
 
         const totalSalary=()=>{
             let total=0;
