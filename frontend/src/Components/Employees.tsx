@@ -85,6 +85,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
     const handleSearch=(searchText:string)=>{
 
         searchText=searchText.toLocaleLowerCase();
+        
         const filt=data.filter((item)=>(
             item.name.toLocaleLowerCase().includes(searchText)||
             item.coreSalary.toString().includes(searchText)||
