@@ -63,7 +63,7 @@ export const getAllEmployees= async (req,res)=>{
         const query={ 
             [sortBy]:ascOrDesc
         }
-        const employe=filterBy!=='both' ?  await Employees.find().sort(query).where('gender').equals(filterBy).populate('salary'):
+        const employe=filterBy!=='both' ?  await Employees.find().where('gender').equals(filterBy).populate('salary').sort(query):
                             await Employees.find().sort(query).populate('salary');
 
         const totalSalary=()=>{
@@ -121,25 +121,25 @@ export const addNewEmployee= async (req,res)=>{
         }
         else
         {      
-            const newEmployee=await Employees.create({
+            await Employees.create({
                 name,
                 dateOfBirth,
                 gender,
                 coreSalary,
                 email
             });
-            const employe=await Employees.find().populate('salary');
+            const employe = await Employees.find().populate('salary');
 
             const totalSalary=()=>{
                 let total=0;
-                employe.filter((miki)=> total+=miki.salary.salary)
+                employe.filter((miki)=> total+=miki.coreSalary)
                 return total;
             }
             
             res.status(200).json({
                 totalEmployees:employe.length,
                 totalSalary:totalSalary(),
-                data:newEmployee
+                data:employe
             })
         }
     }
@@ -153,22 +153,19 @@ export const addNewEmployee= async (req,res)=>{
 //used to update employees
 export const updateEmployee= async (req,res)=>{
     try{
-        const {name,email,gender,dateOfBirth,salary}=req.body
+        const {name,email,gender,dateOfBirth,coreSalary}=req.body
         
-        console.log(req.body);
-        const emps=await Employees.find({_id:req.params.id}).populate('salary')
+        const newEmployee = await Employees.findByIdAndUpdate(req.params.id,{name,email,gender,dateOfBirth,coreSalary},{new:true,runValidators:true})
+        
+        const employe=await Employees.find().populate('salary');
 
-        await salaryModel.findByIdAndUpdate(emps[0].salary._id,salary,{new:true,runValidators:true})
-        
-        const newEmployee = await Employees.findByIdAndUpdate(req.params.id,{name,email,gender,dateOfBirth},{new:true,runValidators:true})
-        
         if(!newEmployee){
             res.status(404).json({
                 message:"this user does not exist"
             })
         }
         res.status(200).json({
-            data:newEmployee
+            data:employe
         })
     }
     catch(error)
@@ -191,9 +188,10 @@ export const deleteEmployee=async (req,res)=>{
         
          
         const employe=await Employees.find().populate('salary');
+
         const totalSalary=()=>{
             let total=0;
-            employe.filter((miki)=> total+=miki.salary.salary)
+            employe.filter((miki)=> total+=miki.coreSalary)
             return total;
         }
         res.status(200).json({

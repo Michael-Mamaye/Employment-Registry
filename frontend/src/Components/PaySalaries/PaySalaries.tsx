@@ -5,11 +5,9 @@ import {  DashboardGrids,AutoComplete,RowGrids, StyledP, AddButton} from '../../
 import { Input, Label } from '../../Styles/FormStyle';
 import PaySalariesProp from './PaySalariesProp';
 import { Datum } from '../../Types/StoreTypes';
-import {useDispatch} from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 const PaySalaries:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName})=> {
     const dispatch=useDispatch()
-    const navigate=useNavigate()
     const [filled,setFilled]=React.useState(false)
     const [fetchedData,setFetchedData]=React.useState<Datum[]>()
     const [itemId,setItemId]=React.useState<string>()

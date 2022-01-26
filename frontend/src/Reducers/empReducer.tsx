@@ -72,7 +72,7 @@ const empReducer=(state=intialState,action:actions)=> {
         case 'UPDATED_EMPLOYEES':
             return {
                 ...state,
-                data:action.payload
+                data:action.payload.data
             }
         case 'ERROR_EMPLOYEES':
             return {

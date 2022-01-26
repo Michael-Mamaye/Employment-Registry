@@ -22,6 +22,7 @@ import {
 import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
 import { ForEmployee } from '../Types/StoreTypes';
+import { convertToObject } from 'typescript';
 
 //Watchers
 function* EmployeeSaga():Generator<StrictEffect>{
@@ -43,7 +44,7 @@ function* getAllEmployees(){
 
     const filt=filter.employeesState;
 
-    console.log(filt)
+    console.log("this is the sortby",filt)
     try{
         
         const res:AxiosResponse<any> =yield call(axiosApi.get,`/?sortBy=${filt.sortBy}&ascOrDesc=${filt.ascOrDesc}&filterBy=${filt.filterBy}`)
@@ -118,15 +119,14 @@ function* getTopThreePaidEmployees({queryString,ascOrDesc,filterBy}:getTopThreeP
 }
 function* addEmployees({payload}:addEmployeeActions){
     try{
-        const res:AxiosResponse = yield call(axiosApi.post,'/',payload)
-        const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
+        const res:AxiosResponse<any> = yield call(axiosApi.post,'/',payload)
         
         switch(res.status)
         {
             case 200:
                 const data:addedEmployeeActions={
                     type:'ADDED_EMPLOYEES',
-                    payload:resp.data
+                    payload:res.data
                 }
                 yield put(data);
         }
@@ -141,6 +141,7 @@ function* paySalary({payload,id,salary}:paySalaryActions){
     try{
         console.log('hi mike, I am here waiting you',payload,salary)
         const res:AxiosResponse = yield call(axiosApi.post,`/paySalary/${id}`,{payload,salary})
+
         const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
         
         switch(res.status)
@@ -182,8 +183,6 @@ function* deleteEmployees({id}:deleteEmployeeActions){
 function* updateEmployees({id,payload}:updateEmployeeActions){
     try{
         const res:AxiosResponse<any> = yield call(axiosApi.patch,`/${id}`,payload)
-       
-        const resp:AxiosResponse<any> = yield call(axiosApi.get,'/')
         
         switch(res.status)
         {
@@ -193,7 +192,7 @@ function* updateEmployees({id,payload}:updateEmployeeActions){
                 const data:updatedEmployeeActions={ 
                     type:'UPDATED_EMPLOYEES',
                     id,
-                    payload:resp.data.data
+                    payload:res.data
                 }
 
                 yield put(data);
@@ -201,7 +200,7 @@ function* updateEmployees({id,payload}:updateEmployeeActions){
             default:
                 const Item:errorEmployeeActions={
                     type:'ERROR_EMPLOYEES',
-                    payload:resp.data
+                    payload:res.data
                 }
 
                 yield put(Item);

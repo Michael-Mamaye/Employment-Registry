@@ -199,7 +199,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                 >
                     <option value='startDate'>Start Date</option>
                     <option value='name'>Name</option>
-                    <option value='salary'>Salary</option>
+                    <option value='coreSalary'>Salary</option>
                     <option value='dateOfBirth'>Birth Date</option>
                     <option value='gender'>Gender</option>
             </SelectButton>            
