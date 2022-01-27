@@ -87,16 +87,9 @@ export const getAllEmployees= async (req,res)=>{
 
 export const getTopThreePaid=async(req,res)=>{
     try{
-        const employe=await Employees.find().populate('salary').limit(3);
-        const employeesNumber=await  Employees.find().populate('salary');
-        const totalSalary=()=>{
-            let total=0;
-            employeesNumber.filter((miki)=> total+=miki.salary.salary)
-            return total;
-        }
+        const employe=await Employees.find().sort({coreSalary:-1}).populate('salary').limit(3);
+        
         res.status(200).json({
-            totalEmployees:employeesNumber.length,
-            totalSalary:totalSalary(),
             data:employe
         })
     }

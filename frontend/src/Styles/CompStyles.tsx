@@ -19,11 +19,6 @@ export const AutoComplete=styled.div`
     padding-left:10px;
     width: 170px;
     border: 0.5px solid #535353;
-    scroll-behavior:smooth;
-    scrollbar-::before{
-        scrollbar-width: 1px;
-        
-    }
     border-top: none;
     margin-left: -60px;
     overflow-y:scroll;
@@ -54,10 +49,10 @@ export const EditButton=styled.button`
 export const DecoratedText=styled.p`
     padding: 10px;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 15px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-top: auto;
-    margin-left: 10px;
+    margin-top:auto;
+    margin-left: 20px;
 `
 export const Container=styled.div`
     margin: auto;
@@ -73,8 +68,9 @@ export const DashboardGrids=styled.div`
 `
 export const EmpProfileImage=styled.img`
     width: 20vw;
-    border: 3px solid black;
-    border-style: double;
+    border: 1px solid black;
+    border-style: groove;
+    height: 30vh;
 `
 export const BoxForTotals=styled.div`
     display: flex;
@@ -304,6 +300,14 @@ export const RowGrids=styled.div`
     margin-left: 30px;
     width: 20vw;
 `;
+export const EmployeDetailRowGrids=styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 60vw;
+    align-self: center;
+    align-items: center;
+    
+`;
 export const MainRowGrids=styled.div`
     display: flex;
     flex-direction: row;
@@ -311,6 +315,7 @@ export const MainRowGrids=styled.div`
     align-self: center;
     align-items: center;
     margin: -10px;
+    scroll-behavior: smooth;
 `;
 export const MainDashboradContainer=styled.div`
     width: 80vw;
@@ -364,6 +369,22 @@ export const ConfirmationDialog=styled.div`
     text-align: center;
     align-self: center;
     background-color: white;
+    box-shadow: 5px 5px 100px rgb(230,230,230),
+                -5px -5px 100px rgb(230,230,230);
+    
+`;
+export const ConfirmationDialog2=styled.div`
+    z-index: 100;
+    justify-content: center;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 67vw;
+    max-width: 500px;
+    border-radius:30px ;
+    height: 40vh;
+    background-color: white;
+    padding-left: 50px;
     box-shadow: 5px 5px 100px rgb(230,230,230),
                 -5px -5px 100px rgb(230,230,230);
     

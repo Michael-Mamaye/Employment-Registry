@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React,{ChangeEvent,useEffect} from 'react'
 import {getUsersByName, paySalary } from '../../Actions';
-import {  DashboardGrids,AutoComplete,RowGrids, StyledP, AddButton} from '../../Styles/CompStyles';
+import {  DashboardGrids,AutoComplete,RowGrids, StyledP, AddButton, ConfirmationDialog2, ConfirmButton} from '../../Styles/CompStyles';
 import { Input, Label } from '../../Styles/FormStyle';
 import PaySalariesProp from './PaySalariesProp';
 import { Datum } from '../../Types/StoreTypes';
@@ -13,9 +13,14 @@ const PaySalaries:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName})=>
     const [itemId,setItemId]=React.useState<string>()
     const [filtered,setFiltered]=React.useState<Datum[]>()
     const [nameValue,setNameValue]=React.useState<string>('')
+    const [changing, setChanging]=React.useState(false)
     const [values,setValues]=React.useState({
         salary:0,
         salaryDate:''
+    })
+    const [errors,setErrors]=React.useState({
+        salaryErr:'',
+        salaryDateErr:''
     })
     
     const handleOnChange=async (e:ChangeEvent<HTMLInputElement>)=>{
@@ -40,7 +45,27 @@ const PaySalaries:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName})=>
   
     const handleSalaryChange=(e:ChangeEvent<HTMLInputElement>)=>{
         const {name,value}=e.target
+        if(name==='salary')
+            setErrors({...errors,salaryErr:''})
+        else if(name==='salaryDate')
+            setErrors({...errors,salaryDateErr:''})
+
         setValues({...values,[name]:value})
+    }
+    const handleChangedPayClick=async ()=>{
+        if(values.salary>0 && values.salaryDate!=='')
+        {
+            handlePayClick()
+        }
+        else{
+            if(values.salary===0){
+                await setErrors({...errors,salaryErr:'please enter valid salary'})
+            }
+            else if(values.salaryDate===''){
+                await setErrors({...errors,salaryDateErr:'please enter salary Date'})
+            }
+        }
+        
     }
     const handlePayClick=async ()=>{
         if(filtered){
@@ -63,6 +88,47 @@ const PaySalaries:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName})=>
     
     return (
         <DashboardGrids>
+             {changing && 
+                <ConfirmationDialog2>
+                    <RowGrids>
+                        <Label htmlFor='salaries'>Salary:</Label>
+                        <Input 
+                            type='number'
+                            style={{marginLeft:'10px'}}
+                            id='salaries'
+                            name='salary' 
+                            onChange={(e)=>handleSalaryChange(e)} 
+                            value={values.salary}
+                            ></Input>
+                    </RowGrids>
+                    {errors.salaryErr && <p style={{marginLeft:'40px',marginTop:'-4px',color:'red'}}>{errors.salaryErr}</p>}
+                    <RowGrids>
+                        <Label htmlFor='payment'>Salary Date:</Label>
+                        <Input style={{marginLeft:'10px'}} 
+                            type='date'     
+                            name='salaryDate'
+                            onChange={(e)=>handleSalaryChange(e)} 
+                            value={values.salaryDate}
+                            id='payment'></Input>
+                    </RowGrids>
+                    {errors.salaryDateErr && <p style={{marginLeft:'40px',marginTop:'-4px',color:'red'}}>{errors.salaryDateErr}</p>}
+                    <RowGrids>
+                        <ConfirmButton color='pink' 
+                            onClick={async ()=>{
+                                setErrors({...errors,salaryErr:'',salaryDateErr:''})
+                                await setChanging(false)
+                            }}>cancel</ConfirmButton>
+                        <AddButton 
+                           style={{marginLeft:'20px',paddingLeft:'20px',paddingRight:'20px'}}
+                            onClick={()=>{
+                                handleChangedPayClick()
+                            }}
+                            >
+                            Pay</AddButton>
+                       
+                    </RowGrids>
+                </ConfirmationDialog2>
+            }
             <div style={{marginLeft:'10vw',marginTop:'20vh'}}>
                 <RowGrids>
                     <Label htmlFor='searchName'> Name: </Label>
@@ -96,38 +162,34 @@ const PaySalaries:React.FC<PaySalariesProp>=({emp:{namedData},getUsersByName})=>
                 </AutoComplete>
 
                 <RowGrids >
-                    <Label htmlFor='salaries'> Salary: {filtered?filtered[0].coreSalary:''}</Label>
-                    <Input 
-                        type='number'
-                        style={{marginLeft:'10px'}}
-                        id='salaries'
-                        name='salary' 
-                        onChange={(e)=>handleSalaryChange(e)} 
-                        value={values.salary}></Input>
+                    <Label htmlFor='salaries'> Salary: <span style={{marginLeft:'10px'}}></span> {filtered?filtered[0].coreSalary:''}</Label>
                 </RowGrids>
 
                 <RowGrids>
-                    <Label htmlFor='payment'> Salary Date: {filtered?filtered[0].startDate?.slice(0,10):''}</Label>
-                   
-                    <Input style={{marginLeft:'10px'}} 
-                        type='date' 
-                        name='salaryDate'
-                        onChange={(e)=>handleSalaryChange(e)} 
-                        id='payment'value={values.salaryDate}></Input>
-              
+                    <Label htmlFor='payment'> Salary Date:<span style={{marginLeft:'10px'}}></span> {filtered?filtered[0].startDate?.slice(0,10):''}</Label>
                 </RowGrids>
-
                 <AddButton 
-                style={{
-                    marginTop:'40px',
-                    marginLeft:'50px',
-                    width:'100px'
-                }}
-                onClick={()=>{
-                    handlePayClick()
-                }}
-                >
-                    Pay</AddButton>
+                    style={{
+                        marginTop:'40px',
+                        width:'100px'
+                    }}
+                    onClick={()=>{
+                        setChanging(true)
+                        handlePayClick()
+                    }}
+                    >
+                        Change</AddButton>
+                <AddButton 
+                    style={{
+                        marginTop:'40px',
+                        marginLeft:'50px',
+                        width:'100px'
+                    }}
+                    onClick={()=>{
+                        handlePayClick()
+                    }}
+                    >
+                        Pay</AddButton>
 
             </div>
         </DashboardGrids>

@@ -22,7 +22,6 @@ import {
 import axiosApi from '../Api/axiosAPi'
 import { AxiosResponse } from 'axios';
 import { ForEmployee } from '../Types/StoreTypes';
-import { convertToObject } from 'typescript';
 
 //Watchers
 function* EmployeeSaga():Generator<StrictEffect>{
