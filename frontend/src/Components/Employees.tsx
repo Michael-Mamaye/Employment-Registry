@@ -85,7 +85,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
     const handleSearch=(searchText:string)=>{
 
         searchText=searchText.toLocaleLowerCase();
-        
+        setPageState(1)
         const filt=data.filter((item)=>(
             item.name.toLocaleLowerCase().includes(searchText)||
             item.coreSalary.toString().includes(searchText)||
@@ -150,7 +150,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
             <FilterButton 
                     onClick={async ()=>{
                         await setGenderFilter('male')
-                        
+                        await setFiltered(undefined)
                         await setIsChanged(true);
 
                         await getEmployees()
@@ -159,14 +159,14 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
             <FilterButton 
                     onClick={async ()=>{
                         await setGenderFilter('female')
-                        
+                        await setFiltered(undefined)
                         await setIsChanged(true);
 
                         await getEmployees()
                     }}>Female</FilterButton>
             <FilterButton onClick={async ()=>{
                     await setGenderFilter('both')
-                    
+                    await setFiltered(undefined)
                     await setIsChanged(true);
 
                     await getEmployees()
@@ -178,7 +178,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                 onChange={async (e)=>{
                     
                     await setSortBy(e.target.value)
-                    
+                    await setFiltered(undefined)
                     await setIsChanged(true);
 
                     if(checked==='true')
@@ -210,6 +210,7 @@ const  Employees:React.FC<EmployeePropType>=({emp:{data,topThreeState,employeesS
                 onChange={()=>{
                     
                     checked==='true'?setChecked('false'):setChecked('true')
+                    setFiltered(undefined)
                     setIsChanged(true)
                 }}
                 placeholder='Descending'/>

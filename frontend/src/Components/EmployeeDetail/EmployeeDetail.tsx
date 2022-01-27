@@ -25,7 +25,7 @@ const EmployeeDetail:React.FC<EmployeeDetailProp>=({emp:{data,topThreeState},get
     
     const Items=data.filter((item)=>item._id===param);
     const handleSearch=(searchText:string)=>{
-
+        setPageState(1)
         searchText=searchText.toLocaleLowerCase();
         const filt=Items[0].salary?.filter((item)=>(
             item.salary.toString().includes(searchText)||

@@ -6,9 +6,11 @@ import {EditAlt} from '@styled-icons/boxicons-regular/EditAlt';
 import {Delete} from '@styled-icons/fluentui-system-filled/Delete';
 import {connect} from 'react-redux'
 import {deleteEmployees,setUserStates,getTopThreePaidEmployees} from '../../Actions'
-import { ConfirmationDialog,ConfirmButton,SelectButton,RowGrids,
-         ConfirmationTitle,SearchInput,FilterButton
-} from '../../Styles/CompStyles'
+import { 
+        ConfirmationDialog,ConfirmButton,RowGrids,
+         ConfirmationTitle,SearchInput,
+        } from '../../Styles/CompStyles'
+
 import {Search} from '@styled-icons/fa-solid/Search'
 import { Datum } from '../../Types/StoreTypes';
 import TopThreeTableProp from './TopThreeTableProp';
@@ -27,31 +29,17 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState,e
     const [toBeUpdated,setToBeUpdated]=React.useState({});
     const [opener,setOpener]=React.useState(false)
     const [filtered,setFiltered]=React.useState<Datum[]>() 
-    const [sortBy,setSortBy]=React.useState<string>('startDate')
     
     const [pageState,setPageState]=React.useState(1)
-    var asc='false'
-    if(topThreeState.ascOrDesc===-1)
-    {
-        asc='true'
-    }
-    const [checked,setChecked]=React.useState(asc)
-    const [genderFilter,setGenderFilter]=React.useState<string>()
-    const [isChanged,setIsChanged]=React.useState(false)
+    
     
     useEffect(()=>{
         
-        if(isChanged){
-            setUserStates(employeesState,{
-                sortBy:sortBy,
-                filterBy:genderFilter?genderFilter:'both',
-                ascOrDesc:checked==='true'?-1:1
-            })
-        }
+        
         getTopThreePaidEmployees('startDate',1);
         //getting all employees
 
-    },[getTopThreePaidEmployees,employeesState,isChanged,genderFilter,sortBy,checked,setUserStates])
+    },[getTopThreePaidEmployees])
 
     const handleClick=()=>{
         setDialogOpener(!dialogOpener);
@@ -76,6 +64,7 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState,e
     const handleSearch=(searchText:string)=>{
 
         searchText=searchText.toLocaleLowerCase();
+        setPageState(1)
         const filt=topThree.filter((item)=>(
             item.name.toLocaleLowerCase().includes(searchText)||
             item.coreSalary.toString().includes(searchText)||
@@ -137,48 +126,7 @@ const  TopThreeTable:React.FC<TopThreeTableProp>=({emp:{topThree,topThreeState,e
             }
             <div style={{height:'50vh'}}>
             <SearchInput onChange={(e)=>handleSearch(e.target.value)}/><Search style={{ marginLeft:'-25px',marginRight:'20px',height:'20px',width:'20px'}}/>
-            <FilterButton onClick={()=>{
-                setGenderFilter('male')
-                getTopThreePaidEmployees('startDate',1)
-                }}>Male</FilterButton>
-            <FilterButton onClick={()=>{
-                setGenderFilter('female')
-                getTopThreePaidEmployees('startDate',1)
-                }}>Female</FilterButton>
-            <FilterButton onClick={()=>{
-                    setFiltered(undefined)
-                    setGenderFilter('both')
-                    getTopThreePaidEmployees('startDate',1)
-                    }}>All</FilterButton>
-            <label style={{marginLeft:'10px',fontWeight:'bold'}} htmlFor='orderBy'>Order By:</label>
-            <SelectButton id='orderBy' 
-                onChange={(e)=>{
-                    setSortBy(e.target.value)
-                    if(checked==='true')
-                    {
-                        getTopThreePaidEmployees(e.target.value,-1)
-                    }
-                    else
-                    {
-                       getTopThreePaidEmployees(e.target.value,1)
-                    }
-                }}>
-                    <option value='startDate'>Start Date</option>
-                    <option value='name'>Name</option>
-                    <option value='salary'>Salary</option>
-                    <option value='dateOfBirth'>Birth Date</option>
-                    <option value='gender'>Gender</option>
-            </SelectButton>            
-            
-            <input type='checkbox'value={checked} 
-                style={{marginLeft:'10px'}}
-                onChange={()=>{
-                    checked==='true'?setChecked('false'):setChecked('true')
-                    setIsChanged(true)
-                }}
-                placeholder='Descending'/>
-            <label style={{marginLeft:'0px',fontWeight:'bold'}} htmlFor='orderBy'>Descending</label>
-                
+           
                 <Table>
                     <Thead>
                         <Tr>
